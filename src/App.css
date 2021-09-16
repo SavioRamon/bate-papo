@@ -10,15 +10,21 @@
     min-height: 500px;
 }
 
+input {
+    border: none;
+    outline: 0;
+}
+
 .chat-tela {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat {
     width: 100%;
     height: 90%;
-    background-color: rgb(255, 255, 157);
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -36,4 +42,33 @@
 
 .caixa-mensagem-texto {
     
+}
+
+.area-inputs {
+    flex: 1;
+    border-top: 2px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-mensagem {
+    width: 60%;
+    height: 60%;
+    border-radius: 20px 0px 0px 20px;
+    text-indent: 20px;
+    background-color: rgb(138, 197, 177);
+}
+
+.input-botao-enviar {
+    padding: 10px;
+    height: 60%;
+    border-radius: 0px 10px 10px 0px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: rgb(63, 141, 115);
+}
+
+.input-botao-enviar:hover {
+    background-color: rgb(18, 94, 68);
 }

@@ -13,6 +13,8 @@ function App() {
     }
   ]);
 
+  const [mensagemTexto, setMensagemTexto] = useState("");
+
   return (
     <div className="App">
       <div className="chat-tela">
@@ -29,6 +31,19 @@ function App() {
           }
 
         </div>
+
+        <div className="area-inputs">
+          <input
+            type="text"
+            className="input-mensagem" 
+            placeholder="Mensagem" 
+            value={mensagemTexto}
+            onChange={(value)=>{setMensagemTexto(value.target.value)}} 
+          />
+          
+          <input type="button" className="input-botao-enviar" value="enviar" />
+        </div>
+
       </div>
     </div>
   );
