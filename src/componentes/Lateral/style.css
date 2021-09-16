@@ -1,0 +1,42 @@
+.lateral {
+    width: 300px;
+    min-width: 200px;
+    height: 100vh;
+    border-right: 2px solid rgb(111, 179, 109);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(176, 214, 181);
+}
+
+.chats {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.chats h2 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 30px;
+    text-indent: 20px;
+    font-weight: bold;
+}
+
+.geral {
+    width: 100%;
+    text-indent: 40px;
+
+}
+
+.geral p {
+    padding: 10px;
+    font-weight: bold;
+}
+
+.geral p:hover {
+    background-color: rgb(136, 207, 145);
+    cursor: pointer;
+}

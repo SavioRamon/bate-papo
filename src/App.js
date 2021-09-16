@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import './App.css';
 
+import Lateral from "./componentes/Lateral";
+
 function App() {
 
-  const [mensagens, setMensagens] = useState([
+  const mensagens = [
     {
-      texto: "Olá",
+      texto: "oi"
     },
-
     {
-      texto: "Tudo bem?",
+      texto: "tudo bem?"
     }
-  ]);
+  ]
 
   const [mensagemTexto, setMensagemTexto] = useState("");
 
   return (
     <div className="App">
+
+      <Lateral />
+
       <div className="chat-tela">
         <div className="chat">
           
@@ -40,8 +44,9 @@ function App() {
             value={mensagemTexto}
             onChange={(value)=>{setMensagemTexto(value.target.value)}} 
           />
-          
-          <input type="button" className="input-botao-enviar" value="enviar" />
+
+          <input type="button" className="input-botao-enviar" value="enviar" 
+            onClick={()=>mensagens.push({mensagemTexto})} />
         </div>
 
       </div>
