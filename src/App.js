@@ -25,9 +25,9 @@ function App() {
         <div className="chat">
           
           {
-            mensagens.map((mensagem)=>{
+            mensagens.map((mensagem, key)=>{
               return (
-                <div className="caixa-mensagem">
+                <div className="caixa-mensagem" key={key}>
                   <p className="caixa-mensagem-texto">{mensagem.texto}</p>
                 </div>  
               )
