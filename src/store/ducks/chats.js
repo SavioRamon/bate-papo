@@ -5,6 +5,8 @@ export const Types = {
 }
 
 export const Creators = {
+
+    // Essa creator chama o redux-saga para retornar as mensagens de um determinado chat
     getMensagens: (chatID)=>({
         type: Types.GET_MENSAGENS,
         payload: {
@@ -19,18 +21,22 @@ export const Creators = {
         }
     }),
 
-    setMensagens: (mensagens)=>({
+    // Essa creator armazena no reducer uma função que aceita uma função de callback como parâmetro 
+    // para retornar as tarefas
+    setMensagens: (mensagensFunction)=>({
         type: Types.SET_MENSAGENS,
         payload: {
-            mensagens
+            mensagensFunction
         }
     })
 
 }
 
 const STATE_INICIAL = {
+    // o chatID padrão é o id do chat geral
+    
     chatID: "4PcLEco0kfdGzGqzeFXb",
-    mensagens: null
+    mensagensFunction: null
 }
 
 export default function chats(state=STATE_INICIAL, {type, payload}) {
@@ -45,7 +51,7 @@ export default function chats(state=STATE_INICIAL, {type, payload}) {
         case Types.SET_MENSAGENS:
             return {
                 ...state,
-                mensagens: payload.mensagens
+                mensagensFunction: payload.mensagensFunction
             };
 
         default:
