@@ -8,7 +8,14 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const db = app.firestore();
 
-export const retornaMensagens = async (chatID) => {
-    const mensagens = await db.collection("chats").doc(chatID).get().then(doc=>doc.data().mensagens);
-    return mensagens;
+export const retornaMensagens = (chatID) => {
+    
+    // retorna uma função que aceita uma função de callback como parâmetro
+    // essa função de callback será usada para guardar as mensagens numa react rook
+
+    return function(callback) {
+        db.collection("chats").doc(chatID).onSnapshot(doc=>{
+            callback(doc.data().mensagens);
+        })
+    }
 }
