@@ -3,6 +3,8 @@ import "./style.css";
 
 import { useSelector } from "react-redux";
 
+import { Link } from "react-router-dom";
+
 function Lateral(){
 
     const chatID = useSelector(state=>state.chats.chatID);
@@ -13,6 +15,10 @@ function Lateral(){
 
     return (
         <div className="lateral">
+
+            <Link to="/login">
+                Login
+            </Link>
 
             <div className="chats">
                 <h2>Chats</h2>
