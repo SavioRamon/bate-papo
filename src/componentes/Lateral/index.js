@@ -15,19 +15,21 @@ function Lateral(){
 
     return (
         <div className="lateral">
+            
+            <div className="lateral-cabecalho">
+                
+                <Link to="/login" className="link-login selecao">
+                    Login
+                </Link>
 
-            <Link to="/login">
-                Login
-            </Link>
+            </div>
 
             <div className="chats">
-                <h2>Chats</h2>
-                <div 
-                    className="geral"
-                    style={chatID === 0? estiloChatSelecionado : {backGround: "red"}}
-                >
-                    <p>GERAL</p>
+
+                <div className="geral selecao">
+                    Geral
                 </div>
+
             </div>
 
         </div>

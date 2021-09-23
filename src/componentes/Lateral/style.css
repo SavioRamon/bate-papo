@@ -1,5 +1,5 @@
 .lateral {
-    width: 300px;
+    width: 40%;
     min-width: 200px;
     height: 100vh;
     border-right: 2px solid rgb(111, 179, 109);
@@ -7,6 +7,19 @@
     flex-direction: column;
     align-items: center;
     background-color: rgb(176, 214, 181);
+}
+
+.lateral-cabecalho {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.lateral-cabecalho .link-login {
+    color: black;
+    text-decoration: none;
 }
 
 .chats {
@@ -17,26 +30,15 @@
 
 }
 
-.chats h2 {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 30px;
-    text-indent: 20px;
-    font-weight: bold;
-}
-
-.geral {
+.selecao {
     width: 100%;
     text-indent: 40px;
-
-}
-
-.geral p {
     padding: 10px;
     font-weight: bold;
+    font-size: 20px;
 }
 
-.geral p:hover {
+.selecao:hover {
     background-color: rgb(136, 207, 145);
     cursor: pointer;
 }
