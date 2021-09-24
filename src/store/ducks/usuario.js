@@ -1,5 +1,6 @@
 export const Types = {
     REGISTRAR_USUARIO: "REGISTRAR_USUARIO_ASYNC",
+    LOGIN_USUARIO: "LOGIN_USUARIO_ASYNC",
     SET_USUARIO: "SET_USUARIO"
 }
 
@@ -9,6 +10,14 @@ export const Creators = {
         payload: {
             nome,
             email, 
+            senha
+        }
+    }),
+
+    loginUsuario: (email, senha)=>({
+        type: Types.LOGIN_USUARIO,
+        payload: {
+            email,
             senha
         }
     }),
