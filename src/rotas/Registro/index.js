@@ -2,8 +2,15 @@ import React, { useState } from "react";
 
 import "./style.css";
 
+import { Creators as usuarioCreators } from "../../store/ducks/usuario";
+
+import { useDispatch } from "react-redux";
+
 function Registro(){
 
+    const dispatch = useDispatch();
+
+    const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
@@ -11,6 +18,15 @@ function Registro(){
         <div className="rota registro">
             <form className="formulario-registro">
                 <h1>Registrar</h1>
+
+                <div className="divisao">
+                    <input 
+                        type="text"
+                        name="nome"
+                        value={nome} onChange={e=>setNome(e.target.value)}
+                        placeholder="Nome"
+                    />
+                </div>
                 
                 <div className="divisao">
                     <input 
@@ -34,7 +50,9 @@ function Registro(){
                     <input 
                         type="button"
                         name="Registrar"
-                        value="Registrar" onClick={()=>{}}
+                        value="Registrar" onClick={()=>{
+                            dispatch(usuarioCreators.registrarUsuario(nome, email, senha));
+                        }}
                    /> 
 
                    Já possui uma conta?
