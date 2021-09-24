@@ -8,6 +8,25 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const db = app.firestore();
 
+
+export const novoUsuario = async (nome, email, senha)=>{
+    
+    const usuario = await firebase.auth().createUserWithEmailAndPassword(email, senha)
+        .then(dados => dados.user)
+
+
+    const usuarioDados = {
+        nome,
+        id: usuario.uid
+    }
+
+    const adicionaUsuarioNoBanco = db.collection("usuarios").doc(usuarioDados.id).set({
+        nome: usuarioDados.nome,
+        id: usuarioDados.id
+    })
+    
+}
+
 export const retornaMensagens = (chatID) => {
     
     // retorna uma função que aceita uma função de callback como parâmetro
