@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 import Login from "./rotas/Login";
+import Registro from "./rotas/Registro";
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -17,6 +18,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={App} />
           <Route path="/login" component={Login} />
+          <Route path="/registrar" component={Registro} />
         </Switch>
       </BrowserRouter>
 
