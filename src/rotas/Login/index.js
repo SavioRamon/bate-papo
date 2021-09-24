@@ -2,7 +2,13 @@ import React, { useState } from "react";
 
 import "./style.css";
 
+import { Creators as usuarioCreators } from "../../store/ducks/usuario";
+
+import { useDispatch } from "react-redux";
+
 function Login(){
+
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -34,7 +40,9 @@ function Login(){
                     <input 
                         type="button"
                         name="Entrar"
-                        value="Entrar" onClick={()=>{}}
+                        value="Entrar" onClick={()=>{
+                            dispatch(usuarioCreators.loginUsuario(email, senha));
+                        }}
                    /> 
 
                    ou
