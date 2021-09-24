@@ -9,6 +9,24 @@ const app = firebase.initializeApp(firebaseConfig);
 const db = app.firestore();
 
 
+
+export const fazerLogin = async (email, senha)=>{
+    const usuario = await firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then(dados => dados.user)
+
+    const usuarioDados = await db.collection("usuarios").doc(usuario.uid).get().then(doc=>{
+        const { nome, id } = doc.data();
+
+        return {
+            nome,
+            id
+        }
+    })
+
+}
+
+
+
 export const novoUsuario = async (nome, email, senha)=>{
     
     const usuario = await firebase.auth().createUserWithEmailAndPassword(email, senha)
@@ -26,6 +44,8 @@ export const novoUsuario = async (nome, email, senha)=>{
     })
     
 }
+
+
 
 export const retornaMensagens = (chatID) => {
     
