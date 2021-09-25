@@ -31,7 +31,7 @@ export const Creators = {
 }
 
 const STATE_INICIAL = {
-    usuario: null
+    dadosUsuario: null
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {
@@ -39,7 +39,7 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
         case Types.SET_USUARIO:
             return {
                 ...state,
-                usuario: payload.dadosUsuario
+                dadosUsuario: payload.dadosUsuario
             }
         
         default:
