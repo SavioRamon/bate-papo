@@ -8,21 +8,25 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const db = app.firestore();
 
+export const retornaDadosUsuario = usuarioID => {
+    const usuarioDados = db.collection("usuarios").doc(usuarioID).get()
+        .then(doc => {    
+            const { nome, id } = doc.data();
+            return {
+                nome,
+                id
+            }
+        });
 
+    return usuarioDados;
+
+}
 
 export const fazerLogin = async (email, senha)=>{
     const usuario = await firebase.auth().signInWithEmailAndPassword(email, senha)
-        .then(dados => dados.user)
+        .then(dados => dados.user);
 
-    const usuarioDados = await db.collection("usuarios").doc(usuario.uid).get().then(doc=>{
-        const { nome, id } = doc.data();
-
-        return {
-            nome,
-            id
-        }
-    })
-
+    return usuario.uid;
 }
 
 
@@ -30,19 +34,14 @@ export const fazerLogin = async (email, senha)=>{
 export const novoUsuario = async (nome, email, senha)=>{
     
     const usuario = await firebase.auth().createUserWithEmailAndPassword(email, senha)
-        .then(dados => dados.user)
+        .then(dados => dados.user);
 
-
-    const usuarioDados = {
+    const adicionaUsuarioNoBanco = db.collection("usuarios").doc(usuario.uid).set({
         nome,
         id: usuario.uid
-    }
+    });
 
-    const adicionaUsuarioNoBanco = db.collection("usuarios").doc(usuarioDados.id).set({
-        nome: usuarioDados.nome,
-        id: usuarioDados.id
-    })
-    
+    return usuario.uid;
 }
 
 
