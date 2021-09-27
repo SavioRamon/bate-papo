@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./style.css";
 
 import { Creators as usuarioCreators } from "../../store/ducks/usuario";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useHistory } from "react-router-dom";
 
 function Registro(){
 
+    const history = useHistory();
+
+    const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
 
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+
+    useEffect(()=>{
+        if(dadosUsuario) {
+            history.push("/");
+        }
+    }, [dadosUsuario]);
 
     return (
         <div className="rota registro">
@@ -60,7 +71,9 @@ function Registro(){
                    <input 
                         type="button"
                         name="Entrar"
-                        value="Entrar" onClick={()=>{}}
+                        value="Entrar" onClick={()=>{
+                            history.push("/login");
+                        }}
                     />
                 </div>
 

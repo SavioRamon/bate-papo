@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./style.css";
 
 import { Creators as usuarioCreators } from "../../store/ducks/usuario";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useHistory } from "react-router-dom";
 
 function Login(){
+    
+    const history = useHistory();
 
+    const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+
+    useEffect(()=>{
+        if(dadosUsuario){
+            history.push("/");
+        }
+    }, [dadosUsuario]);
 
     return (
         <div className="rota login">
@@ -50,7 +61,9 @@ function Login(){
                    <input 
                         type="button"
                         name="Registrar"
-                        value="Registrar" onClick={()=>{}}
+                        value="Registrar" onClick={()=>{
+                            history.push("/registrar")
+                        }}
                     />
                 </div>
 
