@@ -24,9 +24,14 @@ export const retornaDadosUsuario = usuarioID => {
 
 export const fazerLogin = async (email, senha)=>{
     const usuario = await firebase.auth().signInWithEmailAndPassword(email, senha)
-        .then(dados => dados.user);
+        .then(dados => dados.user)
+        .catch(erro=>{
+            alert(erro.message);
+        })
 
-    return usuario.uid;
+    if(usuario) {
+        return usuario.uid;
+    }
 }
 
 
@@ -34,14 +39,20 @@ export const fazerLogin = async (email, senha)=>{
 export const novoUsuario = async (nome, email, senha)=>{
     
     const usuario = await firebase.auth().createUserWithEmailAndPassword(email, senha)
-        .then(dados => dados.user);
+        .then(dados => dados.user)
+        .catch(erro=>{
+            alert(erro.message);
+        })
 
-    const adicionaUsuarioNoBanco = db.collection("usuarios").doc(usuario.uid).set({
-        nome,
-        id: usuario.uid
-    });
+    if(usuario) {
+        db.collection("usuarios").doc(usuario.uid).set({
+            nome,
+            id: usuario.uid
+        });
 
-    return usuario.uid;
+        return usuario.uid;
+
+    }
 }
 
 

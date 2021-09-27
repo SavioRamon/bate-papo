@@ -14,8 +14,9 @@ export function* registrarUsuario(dados){
 
     const usuarioID = yield call(novoUsuario, nome, email, senha);
 
-    yield call(setUsuarioNoReducer, usuarioID);
-
+    if(usuarioID) {
+        yield call(setUsuarioNoReducer, usuarioID);
+    }
 }
 
 export function* loginUsuario(dados) {
@@ -23,5 +24,7 @@ export function* loginUsuario(dados) {
 
     const usuarioID = yield call(fazerLogin, email, senha);
 
-    yield call(setUsuarioNoReducer, usuarioID);
+    if(usuarioID) {
+        yield call(setUsuarioNoReducer, usuarioID);
+    }
 }
