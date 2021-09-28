@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import './App.css';
 
-import Lateral from "./componentes/Lateral";
-import Chats from "./componentes/Chats";
+import Rotas from "./rotas";
 
 function App() {
   return (
-    <div className="app">
-      <Lateral />
-      <Chats />
-    </div>
+    <Rotas />
   )
 }
 
