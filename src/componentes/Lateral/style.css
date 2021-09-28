@@ -17,6 +17,28 @@
     border-bottom: 1px solid black;
 }
 
+.cabecalho-conteudo {
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.perfil-usuario {
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.icone-opcoes {
+    width: 25px;
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+
 .lateral-cabecalho .link {
     color: black;
     text-decoration: none;
