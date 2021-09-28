@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { retornaDadosUsuario, novoUsuario, fazerLogin } from "../../firebase";
+import { retornaDadosUsuario, novoUsuario, fazerLogin, automatico } from "../../firebase";
 
 import { Creators as usuarioCreators } from "../ducks/usuario";
 
@@ -27,4 +27,8 @@ export function* loginUsuario(dados) {
     if(usuarioID) {
         yield call(setUsuarioNoReducer, usuarioID);
     }
+}
+
+export function* loginAutomatico(){
+    yield call(automatico);
 }

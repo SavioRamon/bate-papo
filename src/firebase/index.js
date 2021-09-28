@@ -22,6 +22,15 @@ export const retornaDadosUsuario = usuarioID => {
 
 }
 
+export const automatico = async (email, senha)=>{
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          const uid = user.uid;
+          return uid;
+        }
+    })
+}
+
 export const fazerLogin = async (email, senha)=>{
     const usuario = await firebase.auth().signInWithEmailAndPassword(email, senha)
         .then(dados => dados.user)

@@ -1,6 +1,7 @@
 export const Types = {
     REGISTRAR_USUARIO: "REGISTRAR_USUARIO_ASYNC",
     LOGIN_USUARIO: "LOGIN_USUARIO_ASYNC",
+    LOGIN_AUTOMATICO: "LOGIN_AUTOMATICO_ASYNC",
     SET_USUARIO: "SET_USUARIO"
 }
 
@@ -20,6 +21,10 @@ export const Creators = {
             email,
             senha
         }
+    }),
+
+    loginAutomatico: ()=>({
+        type: Types.LOGIN_AUTOMATICO,
     }),
 
     setUsuario: (dadosUsuario)=>({
