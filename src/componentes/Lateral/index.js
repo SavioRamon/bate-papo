@@ -1,6 +1,8 @@
 import React from "react";
 import "./style.css";
 
+import PerfilConfig from "../PerfilConfig";
+
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,16 +19,13 @@ function Lateral(){
 
             <div className="lateral-cabecalho">
                 {dadosUsuario?
+                    <div className="cabecalho-conteudo">       
+                        <PerfilConfig />
 
-                    <div className="cabecalho-conteudo">
-                        <div className="perfil-usuario">
-
-                        </div>
                         <div className="icone-opcoes">
                             <FontAwesomeIcon icon={ faEllipsisV } />
                         </div>
                     </div>
-
                     :
 
                     <React.Fragment>
@@ -38,14 +37,11 @@ function Lateral(){
                             Registrar
                         </Link>
                     </React.Fragment>
-
                 }
                 
-
             </div>
 
             <div className="chats">
-
                 <div className="geral selecao">
                     Geral
                 </div>
