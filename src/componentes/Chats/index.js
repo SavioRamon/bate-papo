@@ -7,22 +7,34 @@ import { useSelector, useDispatch } from "react-redux";
 import { Creators as chatCreators } from "../../store/ducks/chats";
 
 function Chat() {
+    const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
 
-    const chatID = useSelector(state=>state.chats.chatID);
-    const mensagensFunction = useSelector(state=>state.chats.mensagensFunction);
+    const chats = useSelector(state=>state.chats);
     const dispatch = useDispatch();
 
     const [mensagens, setMensagens] = useState("");
 
-    const [mensagemTexto, setMensagemTexto] = useState("");
+    const [mensagemEnviar, setMensagemEnviar] = useState({
+        remetente: dadosUsuario? dadosUsuario.nome : "",
+        texto: ""
+    });
 
     useEffect(()=>{
-        dispatch(chatCreators.getMensagens(chatID));
+        dispatch(chatCreators.getMensagens(chats.chatID));
     }, [])
 
     useEffect(()=>{
-        mensagensFunction && mensagensFunction(setMensagens);
-    }, [mensagensFunction])
+        chats.mensagensFunction && chats.mensagensFunction(setMensagens);
+    }, [chats])
+
+    useEffect(()=>{
+        if(dadosUsuario){
+            setMensagemEnviar({
+                ...mensagemEnviar,
+                remetente: dadosUsuario.nome
+            })
+        }
+    }, [dadosUsuario])
 
     return (
         <div className="chat-componente">
@@ -47,12 +59,26 @@ function Chat() {
                 type="text"
                 className="input-mensagem" 
                 placeholder="Mensagem" 
-                value={mensagemTexto}
-                onChange={(value)=>{setMensagemTexto(value.target.value)}} 
+                value={mensagemEnviar.texto}
+                onChange={(e)=>{
+                    setMensagemEnviar({
+                        ...mensagemEnviar,
+                        texto: e.target.value
+                    })
+                }} 
             />
     
             <input type="button" className="input-botao-enviar" value="enviar" 
-                onClick={()=>mensagens.push({mensagemTexto})} />
+                onClick={()=>{
+                    if(dadosUsuario) {
+                        dispatch(chatCreators.enviaMensagem(chats.chatID, mensagemEnviar))
+                        setMensagemEnviar({
+                            remetente: dadosUsuario.nome,
+                            texto: ""
+                        });
+                    }
+                    
+                }} />
             </div>
     
         </div>

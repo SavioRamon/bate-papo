@@ -81,3 +81,9 @@ export const retornaMensagens = (chatID) => {
         })
     }
 }
+
+export const sendMensagem = ({ chatID, mensagemUsuario }) => {
+    db.collection("chats").doc(chatID).set({
+        mensagens: firebase.firestore.FieldValue.arrayUnion(mensagemUsuario)
+    }, {merge: true})
+}

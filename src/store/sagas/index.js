@@ -3,7 +3,7 @@ import { takeLatest, all } from "redux-saga/effects";
 import { Types as chatTypes } from "../ducks/chats";
 import { Types as usuarioTypes } from "../ducks/usuario";
 
-import { getMensagens } from "./chats";
+import { getMensagens, enviaMensagem } from "./chats";
 import { registrarUsuario, loginUsuario, loginAutomatico } from "./usuario";
 
 export default function* rootSagas() {
@@ -11,6 +11,8 @@ export default function* rootSagas() {
         takeLatest(usuarioTypes.REGISTRAR_USUARIO, registrarUsuario),
         takeLatest(usuarioTypes.LOGIN_USUARIO, loginUsuario),
         takeLatest(usuarioTypes.LOGIN_AUTOMATICO, loginAutomatico),
+
         takeLatest(chatTypes.GET_MENSAGENS, getMensagens),
+        takeLatest(chatTypes.ENVIA_MENSAGEM, enviaMensagem)
     ])
 }

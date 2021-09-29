@@ -1,5 +1,6 @@
 export const Types = {
     GET_MENSAGENS: "GET_MENSAGENS_ASYNC",
+    ENVIA_MENSAGEM: "ENVIA_MENSAGEM_ASYNC",
     CHAT_SELECIONADO: "CHAT_SELECIONADO_ASYNC",
     SET_MENSAGENS: "SET_MENSAGENS"
 }
@@ -11,6 +12,14 @@ export const Creators = {
         type: Types.GET_MENSAGENS,
         payload: {
             chatID
+        }
+    }),
+
+    enviaMensagem: (chatID, mensagemUsuario)=>({
+        type: Types.ENVIA_MENSAGEM,
+        payload: {
+            chatID,
+            mensagemUsuario
         }
     }),
 
