@@ -35,5 +35,7 @@ export function* loginAutomatico(){
 
     if(usuarioID) {
         yield call(setUsuarioNoReducer, usuarioID);
+    } else {
+        yield put(usuarioCreators.setUsuario(null));
     }
 }

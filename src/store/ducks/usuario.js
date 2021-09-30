@@ -36,7 +36,7 @@ export const Creators = {
 }
 
 const STATE_INICIAL = {
-    dadosUsuario: null
+    dadosUsuario: undefined
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {

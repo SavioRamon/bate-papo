@@ -12,7 +12,7 @@ function PerfilConfig() {
             </div>    
             {abrirConfig &&
                 <div className="tela-configuracoes">
-                    <label for='alterar-imagem-perfil' className="imagem-perfil"></label>
+                    <label htmlFor='alterar-imagem-perfil' className="imagem-perfil"></label>
                     <input type='file' id='alterar-imagem-perfil' />
                 </div>
             }

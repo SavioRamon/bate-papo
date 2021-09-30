@@ -4,10 +4,11 @@ import './App.css';
 import Rotas from "./rotas";
 
 import { Creators as usuarioCreators } from "./store/ducks/usuario";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
 
+  const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -15,7 +16,11 @@ function App() {
   }, [])
 
   return (
-    <Rotas />
+    <React.Fragment>
+      {typeof dadosUsuario !== "undefined" &&
+        <Rotas />
+      }
+    </React.Fragment>
   )
 }
 
