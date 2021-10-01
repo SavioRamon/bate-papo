@@ -26,17 +26,22 @@ input {
     align-items: flex-start;
 }
 
-.caixa-mensagem {
-    max-width: 200px;
-    padding: 5px 10px;
-    background-color: grey;
-    border-radius: 10px;
-    margin: 10px;
-    overflow-wrap: break-word;
+.area-mensagem {
+    margin-bottom: 20px;
+    width: 100%;
+    position: relative;
 }
 
-.caixa-mensagem-texto {
-    
+.mensagem {
+    margin: 0px 30px 0px 30px;
+    position: relative;
+}
+.usuario-principal {
+    float: right;
+}
+
+.outro-usuario {
+    float: left;
 }
 
 .area-inputs {

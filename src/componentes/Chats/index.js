@@ -16,6 +16,7 @@ function Chat() {
 
     const [mensagemEnviar, setMensagemEnviar] = useState({
         remetente: dadosUsuario? dadosUsuario.nome : "",
+        idUsuario: dadosUsuario? dadosUsuario.id : "",
         texto: ""
     });
 
@@ -31,7 +32,8 @@ function Chat() {
         if(dadosUsuario){
             setMensagemEnviar({
                 ...mensagemEnviar,
-                remetente: dadosUsuario.nome
+                remetente: dadosUsuario.nome,
+                idUsuario: dadosUsuario.id
             })
         }
     }, [dadosUsuario])
@@ -44,9 +46,17 @@ function Chat() {
               
         { Array.isArray(mensagens) &&
              mensagens.map((mensagem, key)=>{
+                let mensagemRemetente = "outro-usuario";
+                if(dadosUsuario) {
+                    mensagemRemetente = mensagem.idUsuario === dadosUsuario.id?
+                    "usuario-principal"
+                    :
+                    "outro-usuario";
+                }
+                
                 return (
-                    <div className="caixa-mensagem" key={key}>
-                        <p className="caixa-mensagem-texto">{mensagem.texto}</p>
+                    <div className="area-mensagem" key={key}>
+                        <p className={`mensagem ${mensagemRemetente}`}>{mensagem.texto}</p>
                     </div>  
                 )
             })
@@ -73,7 +83,7 @@ function Chat() {
                     if(dadosUsuario) {
                         dispatch(chatCreators.enviaMensagem(chats.chatID, mensagemEnviar))
                         setMensagemEnviar({
-                            remetente: dadosUsuario.nome,
+                            ...mensagemEnviar,
                             texto: ""
                         });
                     }
