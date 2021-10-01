@@ -58,3 +58,25 @@
     background-color: rgb(136, 207, 145);
     cursor: pointer;
 }
+
+
+
+.lista-opcoes {
+    padding: 10px 0px;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.usuario-sair {
+    width: 100%;
+    padding: 4px 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.usuario-sair:hover {
+    background-color: #999;
+}

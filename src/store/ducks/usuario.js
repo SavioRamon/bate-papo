@@ -2,6 +2,7 @@ export const Types = {
     REGISTRAR_USUARIO: "REGISTRAR_USUARIO_ASYNC",
     LOGIN_USUARIO: "LOGIN_USUARIO_ASYNC",
     LOGIN_AUTOMATICO: "LOGIN_AUTOMATICO_ASYNC",
+    USUARIO_SAIR: "USUARIO_SAIR_ASYNC",
     SET_USUARIO: "SET_USUARIO"
 }
 
@@ -32,11 +33,15 @@ export const Creators = {
         payload: {
             dadosUsuario
         }
+    }),
+
+    usuarioSair: ()=>({
+        type: Types.USUARIO_SAIR
     })
 }
 
 const STATE_INICIAL = {
-    dadosUsuario: undefined
+    dadosUsuario: null
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {

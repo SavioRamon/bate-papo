@@ -68,6 +68,12 @@ export const novoUsuario = async (nome, email, senha)=>{
     }
 }
 
+export const sairUsuario = ()=>{
+    firebase.auth().signOut().catch((error) => {
+        alert(error);
+      });
+}
+
 
 
 export const retornaMensagens = (chatID) => {
