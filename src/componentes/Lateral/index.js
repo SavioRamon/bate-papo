@@ -29,9 +29,8 @@ function  OpcoesLateral({ setOpcoesAbrir }) {
 function Lateral(){
 
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
-
+    
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
-
     return (
         <div className="lateral">
 
@@ -50,7 +49,7 @@ function Lateral(){
                     </div>
                 }
                 
-                {!dadosUsuario &&
+                {!dadosUsuario && !localStorage.dadosUsuario && 
                     <React.Fragment>
                         <Link to="/login" className="link selecao">
                             Login
