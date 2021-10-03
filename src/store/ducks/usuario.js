@@ -1,4 +1,5 @@
 export const Types = {
+    EDITAR_IMAGEM: "EDITAR_IMAGEM_ASYNC",
     REGISTRAR_USUARIO: "REGISTRAR_USUARIO_ASYNC",
     LOGIN_USUARIO: "LOGIN_USUARIO_ASYNC",
     LOGIN_AUTOMATICO: "LOGIN_AUTOMATICO_ASYNC",
@@ -7,6 +8,14 @@ export const Types = {
 }
 
 export const Creators = {
+    editarImagem: (usuarioID, imagem)=>({
+        type: Types.EDITAR_IMAGEM,
+        payload: {
+            usuarioID,
+            imagem
+        }
+    }),
+
     registrarUsuario: (nome, email, senha)=>({
         type: Types.REGISTRAR_USUARIO,
         payload: {
@@ -27,6 +36,10 @@ export const Creators = {
     loginAutomatico: ()=>({
         type: Types.LOGIN_AUTOMATICO,
     }),
+    
+    usuarioSair: ()=>({
+        type: Types.USUARIO_SAIR
+    }),
 
     setUsuario: (dadosUsuario)=>({
         type: Types.SET_USUARIO,
@@ -35,9 +48,6 @@ export const Creators = {
         }
     }),
 
-    usuarioSair: ()=>({
-        type: Types.USUARIO_SAIR
-    })
 }
 
 const STATE_INICIAL = {

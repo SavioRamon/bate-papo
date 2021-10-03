@@ -4,10 +4,11 @@ import { Types as chatTypes } from "../ducks/chats";
 import { Types as usuarioTypes } from "../ducks/usuario";
 
 import { getMensagens, enviaMensagem } from "./chats";
-import { registrarUsuario, loginUsuario, loginAutomatico, usuarioSair } from "./usuario";
+import { editarImagem, registrarUsuario, loginUsuario, loginAutomatico, usuarioSair } from "./usuario";
 
 export default function* rootSagas() {
     return yield all([
+        takeLatest(usuarioTypes.EDITAR_IMAGEM, editarImagem),
         takeLatest(usuarioTypes.REGISTRAR_USUARIO, registrarUsuario),
         takeLatest(usuarioTypes.LOGIN_USUARIO, loginUsuario),
         takeLatest(usuarioTypes.LOGIN_AUTOMATICO, loginAutomatico),

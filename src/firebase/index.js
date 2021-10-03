@@ -1,12 +1,23 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 import firebaseConfig from "./firebaseConfig";
 
 const app = firebase.initializeApp(firebaseConfig);
+const storageRef = firebase.storage().ref();
 
 const db = app.firestore();
+
+
+export const editarImagemPerfil = ({ usuarioID, imagem }) => {
+    const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
+    imagemReferencia.put(imagem);
+
+}
+
+
 
 export const retornaDadosUsuario = usuarioID => {
     const usuarioDados = db.collection("usuarios").doc(usuarioID).get()
@@ -57,10 +68,14 @@ export const novoUsuario = async (nome, email, senha)=>{
             alert(erro.message);
         })
 
+
     if(usuario) {
         db.collection("usuarios").doc(usuario.uid).set({
             nome,
-            id: usuario.uid
+            id: usuario.uid,
+            chats: [
+                "chatGeral"
+            ]
         });
 
         return usuario.uid;

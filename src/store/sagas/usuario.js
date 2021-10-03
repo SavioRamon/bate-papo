@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { retornaDadosUsuario, novoUsuario, fazerLogin, autoLogin, sairUsuario } from "../../firebase";
+import { editarImagemPerfil, retornaDadosUsuario, novoUsuario, fazerLogin, autoLogin, sairUsuario } from "../../firebase";
 
 import { Creators as usuarioCreators } from "../ducks/usuario";
 
@@ -14,6 +14,12 @@ function* setUsuarioNoReducer(usuarioID) {
     yield put(usuarioCreators.setUsuario(dadosUsuario));
 }
 
+
+export function* editarImagem(dados) {
+    yield call(editarImagemPerfil, dados.payload);
+}
+
+
 export function* registrarUsuario(dados){
     const { nome, email, senha } = dados.payload;
 
@@ -24,6 +30,7 @@ export function* registrarUsuario(dados){
     }
 }
 
+
 export function* loginUsuario(dados) {
     const { email, senha } = dados.payload;
 
@@ -33,6 +40,7 @@ export function* loginUsuario(dados) {
         yield call(setUsuarioNoReducer, usuarioID);
     }
 }
+
 
 export function* loginAutomatico(){
     
@@ -51,6 +59,7 @@ export function* loginAutomatico(){
     }
     
 }
+
 
 export function* usuarioSair() {
     yield call(sairUsuario);
