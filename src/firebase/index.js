@@ -11,9 +11,27 @@ const storageRef = firebase.storage().ref();
 const db = app.firestore();
 
 
-export const editarImagemPerfil = ({ usuarioID, imagem }) => {
+export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
+    const addImagemUrl = (imagem)=>{
+        db.collection("usuarios").doc(usuarioID).set({
+            imagem
+        }, {merge: true})
+    }
+    
     const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
-    imagemReferencia.put(imagem);
+    if(imagem) {
+        await imagemReferencia.put(imagem);
+        
+        const imagemURL = await storageRef.child(`perfil-imagem/${usuarioID}`).getDownloadURL();
+        addImagemUrl(imagemURL)
+
+    } else {
+        const imagemURL = await storageRef.child("perfil-imagem/imagem-padrao.png").getDownloadURL();
+          
+        await imagemReferencia.put(imagemURL);
+        addImagemUrl(imagemURL);
+    }
+
 
 }
 
@@ -22,10 +40,11 @@ export const editarImagemPerfil = ({ usuarioID, imagem }) => {
 export const retornaDadosUsuario = usuarioID => {
     const usuarioDados = db.collection("usuarios").doc(usuarioID).get()
         .then(doc => {    
-            const { nome, id } = doc.data();
+            const { nome, id, imagem } = doc.data();
             return {
                 nome,
-                id
+                id,
+                imagem
             }
         });
 

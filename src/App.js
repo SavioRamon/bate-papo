@@ -17,9 +17,7 @@ function App() {
 
   return (
     <React.Fragment>
-      {typeof dadosUsuario !== "undefined" &&
-        <Rotas />
-      }
+      <Rotas />
     </React.Fragment>
   )
 }

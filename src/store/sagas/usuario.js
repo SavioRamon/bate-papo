@@ -17,6 +17,8 @@ function* setUsuarioNoReducer(usuarioID) {
 
 export function* editarImagem(dados) {
     yield call(editarImagemPerfil, dados.payload);
+    yield call(setUsuarioNoReducer, dados.payload.usuarioID);
+
 }
 
 
@@ -26,6 +28,8 @@ export function* registrarUsuario(dados){
     const usuarioID = yield call(novoUsuario, nome, email, senha);
 
     if(usuarioID) {
+        console.log(usuarioID)
+        yield call(editarImagemPerfil, {usuarioID});
         yield call(setUsuarioNoReducer, usuarioID);
     }
 }
