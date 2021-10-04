@@ -44,7 +44,7 @@ export const Creators = {
 const STATE_INICIAL = {
     // o chatID padrão é o id do chat geral
     
-    chatID: "4PcLEco0kfdGzGqzeFXb",
+    chatID: "chatGeral",
     mensagensFunction: null
 }
 
