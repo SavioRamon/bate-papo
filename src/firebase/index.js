@@ -10,6 +10,12 @@ const storageRef = firebase.storage().ref();
 
 const db = app.firestore();
 
+export const retornaImagem = async (usuarioID)=>{
+    const idImagem = usuarioID? usuarioID : "imagem-padrao.png";
+    const imagemURL = await storageRef.child(`perfil-imagem/${idImagem}`).getDownloadURL();
+    return imagemURL;
+}
+
 
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     const addImagemUrl = (imagem)=>{
@@ -22,11 +28,11 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     if(imagem) {
         await imagemReferencia.put(imagem);
         
-        const imagemURL = await storageRef.child(`perfil-imagem/${usuarioID}`).getDownloadURL();
+        const imagemURL = await retornaImagem(usuarioID);
         addImagemUrl(imagemURL)
 
     } else {
-        const imagemURL = await storageRef.child("perfil-imagem/imagem-padrao.png").getDownloadURL();
+        const imagemURL = await retornaImagem();
           
         await imagemReferencia.put(imagemURL);
         addImagemUrl(imagemURL);
@@ -39,8 +45,15 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
 
 export const retornaDadosUsuario = usuarioID => {
     const usuarioDados = db.collection("usuarios").doc(usuarioID).get()
-        .then(doc => {    
-            const { nome, id, imagem } = doc.data();
+        .then(async doc => {
+            let { nome, id, imagem } = doc.data();
+
+            // aqui é verificado se a imagem existe, se não existir, irá buscá-la no storage
+            const imagemReq = await fetch(imagem);
+            if(imagemReq.status !== 200) {
+                imagem = await retornaImagem(usuarioID);
+            }
+
             return {
                 nome,
                 id,

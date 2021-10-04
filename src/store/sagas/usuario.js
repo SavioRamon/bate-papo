@@ -6,11 +6,6 @@ import { Creators as usuarioCreators } from "../ducks/usuario";
 function* setUsuarioNoReducer(usuarioID) {
     const dadosUsuario = yield call(retornaDadosUsuario, usuarioID);
 
-    // salvando dados no cache
-    if(dadosUsuario) {
-        localStorage.setItem("dadosUsuario", JSON.stringify(dadosUsuario));
-    }
-
     yield put(usuarioCreators.setUsuario(dadosUsuario));
 }
 
@@ -47,28 +42,20 @@ export function* loginUsuario(dados) {
 
 
 export function* loginAutomatico(){
+
     
-    if(localStorage.dadosUsuario) {
-        const dadosUsuario = JSON.parse(localStorage.dadosUsuario);
-        yield put(usuarioCreators.setUsuario(dadosUsuario));
-    } else {
+    const usuarioID = yield call(autoLogin);
 
-        const usuarioID = yield call(autoLogin);
-
-        if(usuarioID) {
-            yield call(setUsuarioNoReducer, usuarioID);
-        } else {
-            yield put(usuarioCreators.setUsuario(null));
-        }
+    if(usuarioID) {
+        yield call(setUsuarioNoReducer, usuarioID);
     }
+    
     
 }
 
 
 export function* usuarioSair() {
     yield call(sairUsuario);
-
-    localStorage.clear();
 
     yield put(usuarioCreators.setUsuario(null));
 }
