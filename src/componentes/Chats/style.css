@@ -31,16 +31,36 @@ input {
     width: 100%;
     position: relative;
 }
-
 .mensagem {
-    margin: 0px 30px 0px 30px;
-    position: relative;
+    margin: 0px 15px;
+    padding: 2px 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: rgb(173, 255, 173);
 }
+
+.mensagem p {
+    
+}
+
+.mensagem img {
+    margin: 0px 10px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 .usuario-principal {
+    flex-direction: row-reverse;
     float: right;
 }
 
 .outro-usuario {
+    flex-direction: row;
     float: left;
 }
 

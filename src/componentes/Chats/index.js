@@ -15,8 +15,9 @@ function Chat() {
     const [mensagens, setMensagens] = useState("");
 
     const [mensagemEnviar, setMensagemEnviar] = useState({
-        remetente: dadosUsuario? dadosUsuario.nome : "",
-        idUsuario: dadosUsuario? dadosUsuario.id : "",
+        imagem: "",
+        remetente: "",
+        idUsuario: "",
         texto: ""
     });
 
@@ -33,7 +34,8 @@ function Chat() {
             setMensagemEnviar({
                 ...mensagemEnviar,
                 remetente: dadosUsuario.nome,
-                idUsuario: dadosUsuario.id
+                idUsuario: dadosUsuario.id,
+                imagem: dadosUsuario.imagem
             })
         }
     }, [dadosUsuario])
@@ -55,8 +57,12 @@ function Chat() {
                 }
                 
                 return (
-                    <div className="area-mensagem" key={key}>
-                        <p className={`mensagem ${mensagemRemetente}`}>{mensagem.texto}</p>
+                    <div className={`area-mensagem`} key={key}>
+
+                        <div className={`mensagem ${mensagemRemetente}`}>  
+                            <img src={mensagem.imagem} />
+                            <p>{mensagem.texto}</p>
+                        </div>
                     </div>  
                 )
             })
