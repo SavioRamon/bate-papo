@@ -10,59 +10,33 @@ const storageRef = firebase.storage().ref();
 
 const db = app.firestore();
 
-export const retornaImagem = async (usuarioID)=>{
-    const idImagem = usuarioID? usuarioID : "imagem-padrao.png";
-    const imagemURL = await storageRef.child(`perfil-imagem/${idImagem}`).getDownloadURL();
-    return imagemURL;
-}
-
-
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
+    
     const addImagemUrl = (imagem)=>{
         db.collection("usuarios").doc(usuarioID).set({
             imagem
         }, {merge: true})
     }
     
-    const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
     if(imagem) {
-        await imagemReferencia.put(imagem);
         
-        const imagemURL = await retornaImagem(usuarioID);
-        addImagemUrl(imagemURL)
+        const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
+        const imagemUpload = await imagemReferencia.put(imagem);
+        const imagemURL = await imagemUpload.ref.getDownloadURL();
 
-    } else {
-        const imagemURL = await retornaImagem();
-          
-        await imagemReferencia.put(imagemURL);
         addImagemUrl(imagemURL);
+        
+        return retornaDadosUsuario(usuarioID);
     }
-
-
 }
 
 
 
-export const retornaDadosUsuario = usuarioID => {
-    const usuarioDados = db.collection("usuarios").doc(usuarioID).get()
-        .then(async doc => {
-            let { nome, id, imagem } = doc.data();
+export const retornaDadosUsuario = async usuarioID => {
+    const dadosUsuario = await db.collection("usuarios").doc(usuarioID).get().then(doc=>doc.data());
 
-            // aqui é verificado se a imagem existe, se não existir, irá buscá-la no storage
-            const imagemReq = await fetch(imagem);
-            if(imagemReq.status !== 200) {
-                imagem = await retornaImagem(usuarioID);
-            }
-
-            return {
-                nome,
-                id,
-                imagem
-            }
-        });
-
-    return usuarioDados;
-
+    return dadosUsuario;
+    
 }
 
 export const autoLogin = ()=>{
@@ -70,8 +44,8 @@ export const autoLogin = ()=>{
     return new Promise((resolve, reject)=>{
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                const uid = user.uid;
-                resolve(uid);
+                const dadosUsuario = retornaDadosUsuario(user.uid);
+                resolve(dadosUsuario);
             }
         })
     })
@@ -86,7 +60,8 @@ export const fazerLogin = async (email, senha)=>{
         })
 
     if(usuario) {
-        return usuario.uid;
+        const dadosUsuario = retornaDadosUsuario(usuario.uid)
+        return dadosUsuario;
     }
 }
 
@@ -102,15 +77,19 @@ export const novoUsuario = async (nome, email, senha)=>{
 
 
     if(usuario) {
-        db.collection("usuarios").doc(usuario.uid).set({
+        const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
+        const dadosUsuario = {
             nome,
             id: usuario.uid,
             chats: [
                 "chatGeral"
-            ]
-        });
+            ],
+            imagem: imagemPadraoURL
+        }
 
-        return usuario.uid;
+        db.collection("usuarios").doc(usuario.uid).set(dadosUsuario);
+
+        return dadosUsuario;
 
     }
 }

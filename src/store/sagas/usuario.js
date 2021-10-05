@@ -3,40 +3,29 @@ import { editarImagemPerfil, retornaDadosUsuario, novoUsuario, fazerLogin, autoL
 
 import { Creators as usuarioCreators } from "../ducks/usuario";
 
-function* setUsuarioNoReducer(usuarioID) {
-    const dadosUsuario = yield call(retornaDadosUsuario, usuarioID);
-
-    yield put(usuarioCreators.setUsuario(dadosUsuario));
-}
-
 
 export function* editarImagem(dados) {
-    yield call(editarImagemPerfil, dados.payload);
-    yield call(setUsuarioNoReducer, dados.payload.usuarioID);
-
+    const dadosUsuario = yield call(editarImagemPerfil, dados.payload);
+    yield put(usuarioCreators.setUsuario(dadosUsuario));
 }
 
 
 export function* registrarUsuario(dados){
     const { nome, email, senha } = dados.payload;
+    const dadosUsuario = yield call(novoUsuario, nome, email, senha);
 
-    const usuarioID = yield call(novoUsuario, nome, email, senha);
-
-    if(usuarioID) {
-        console.log(usuarioID)
-        yield call(editarImagemPerfil, {usuarioID});
-        yield call(setUsuarioNoReducer, usuarioID);
+    if(dadosUsuario) {
+        yield put(usuarioCreators.setUsuario(dadosUsuario));
     }
 }
 
 
 export function* loginUsuario(dados) {
     const { email, senha } = dados.payload;
+    const dadosUsuario = yield call(fazerLogin, email, senha);
 
-    const usuarioID = yield call(fazerLogin, email, senha);
-
-    if(usuarioID) {
-        yield call(setUsuarioNoReducer, usuarioID);
+    if(dadosUsuario) {
+        yield put(usuarioCreators.setUsuario(dadosUsuario));
     }
 }
 
@@ -44,10 +33,10 @@ export function* loginUsuario(dados) {
 export function* loginAutomatico(){
 
     
-    const usuarioID = yield call(autoLogin);
+    const dadosUsuario = yield call(autoLogin);
 
-    if(usuarioID) {
-        yield call(setUsuarioNoReducer, usuarioID);
+    if(dadosUsuario) {
+        yield put(usuarioCreators.setUsuario(dadosUsuario));
     }
     
     
