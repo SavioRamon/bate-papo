@@ -10,21 +10,24 @@ const storageRef = firebase.storage().ref();
 
 const db = app.firestore();
 
-export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
+
+export const retornaImagemURL = async (usuarioID)=>{
+    const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
     
-    const addImagemUrl = (imagem)=>{
-        db.collection("usuarios").doc(usuarioID).set({
-            imagem
-        }, {merge: true})
-    }
+    const imagemURL = await storageRef.child(`perfil-imagem/${usuarioID}`).getDownloadURL()
+        .then(url=>url)
+        .catch(()=>imagemPadraoURL);
+
+    return imagemURL;
+}
+
+
+export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     
     if(imagem) {
         
         const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
-        const imagemUpload = await imagemReferencia.put(imagem);
-        const imagemURL = await imagemUpload.ref.getDownloadURL();
-
-        addImagemUrl(imagemURL);
+        await imagemReferencia.put(imagem);
         
         return retornaDadosUsuario(usuarioID);
     }
@@ -33,7 +36,14 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
 
 
 export const retornaDadosUsuario = async usuarioID => {
-    const dadosUsuario = await db.collection("usuarios").doc(usuarioID).get().then(doc=>doc.data());
+    const imagemURL = await retornaImagemURL(usuarioID);
+    
+    const dadosUsuario = await db.collection("usuarios").doc(usuarioID).get().then(doc=>({
+        nome: doc.data().nome,
+        id: doc.data().id,
+        chats: doc.data().chats,
+        imagem: imagemURL
+    }));
 
     return dadosUsuario;
     
@@ -75,7 +85,6 @@ export const novoUsuario = async (nome, email, senha)=>{
             alert(erro.message);
         })
 
-
     if(usuario) {
         const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
         const dadosUsuario = {
@@ -84,12 +93,14 @@ export const novoUsuario = async (nome, email, senha)=>{
             chats: [
                 "chatGeral"
             ],
-            imagem: imagemPadraoURL
         }
-
         db.collection("usuarios").doc(usuario.uid).set(dadosUsuario);
 
-        return dadosUsuario;
+        
+        return {
+            ...dadosUsuario,
+            imagem: imagemPadraoURL
+        };
 
     }
 }
