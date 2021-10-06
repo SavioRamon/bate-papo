@@ -43,6 +43,12 @@ function Chat() {
         }
     }, [dadosUsuario])
 
+    useEffect(()=>{
+        const chatTela = document.querySelector(".chat");
+        chatTela.scrollTop = chatTela.scrollHeight;
+    }, [mensagens])
+
+
     return (
     <div className="chat-componente">
         
