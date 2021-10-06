@@ -40,10 +40,6 @@ input {
     background-color: rgb(173, 255, 173);
 }
 
-.mensagem p {
-    
-}
-
 .mensagem img {
     margin: 0px 10px;
     min-width: 40px;
@@ -62,6 +58,20 @@ input {
 .outro-usuario {
     flex-direction: row;
     float: left;
+}
+
+.conteudo {
+    margin: 0 10px;
+}
+
+.conteudo .nome-remetente {
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.conteudo .mensagem-texto {
+    font-size: 17px;
 }
 
 .area-inputs {

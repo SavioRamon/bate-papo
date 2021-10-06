@@ -61,7 +61,15 @@ function Chat() {
 
                         <div className={`mensagem ${mensagemRemetente}`}>  
                             <img src={mensagem.imagem} />
-                            <p>{mensagem.texto}</p>
+
+                            <div className="conteudo">
+                                
+                                {mensagemRemetente === "outro-usuario" &&
+                                    <p className="nome-remetente">{mensagem.remetente}</p>
+                                }
+                                
+                                <p className="mensagem-texto">{mensagem.texto}</p>
+                            </div>
                         </div>
                     </div>  
                 )
