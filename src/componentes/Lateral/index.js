@@ -49,7 +49,7 @@ function Lateral(){
                     </div>
                 }
                 
-                {!dadosUsuario && !localStorage.dadosUsuario && 
+                {!dadosUsuario && 
                     <React.Fragment>
                         <Link to="/login" className="link selecao">
                             Login
