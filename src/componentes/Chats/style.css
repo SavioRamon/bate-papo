@@ -40,7 +40,7 @@ input {
     background-color: rgb(173, 255, 173);
 }
 
-.mensagem img {
+.imagem-perfil {
     margin: 0px 10px;
     min-width: 40px;
     min-height: 40px;
@@ -101,4 +101,88 @@ input {
 
 .input-botao-enviar:hover {
     background-color: rgb(18, 94, 68);
+}
+
+
+
+
+
+
+.tela-escurecida {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-usuario {
+    width: 30%;
+    height: 70vh;
+    min-width: 300px;
+    min-height: 450px;
+    background-color: rgb(121, 255, 150);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-usuario-area-superior {
+    padding: 5px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.info-usuario-area-superior input {
+    background: none;
+    font-size: 30px;
+    color: #fff;
+    text-indent: 10px;
+    cursor: pointer;
+}
+
+.info-nome {
+    width: 100%;
+    text-align: center;
+}
+
+.info-opcoes {
+    padding: 0px 10px;
+    cursor: pointer;
+}
+
+.info-usuario .opcoes {
+    padding: 10px 0px;
+    border-radius: 5px;
+    background: white;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+}
+
+.info-usuario .opcoes p {
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.info-usuario .opcoes p:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.info-usuario img {
+    width: 100%;
+    height: 100%;
 }
