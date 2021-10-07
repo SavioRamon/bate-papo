@@ -21,9 +21,14 @@ input {
     width: 100%;
     height: 90%;
     display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+
+}
+
+.chat-crescente {
+    display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
 }
 
 .area-mensagem {

@@ -58,47 +58,48 @@ function Chat() {
 
         <div className="chat-tela">
 
-            <div className="chat">  
-            { Array.isArray(mensagens) &&
-                mensagens.map((mensagem, key)=>{
-                    
+            <div className="chat">
+                <div className="chat-crescente">
+                    { Array.isArray(mensagens) &&
+                        mensagens.map((mensagem, key)=>{
+                            
 
-                    let mensagemRemetente = "outro-usuario";
-                    if(dadosUsuario) {
-                        mensagemRemetente = mensagem.idUsuario === dadosUsuario.id?
-                        "usuario-principal"
-                        :
-                        "outro-usuario";
+                            let mensagemRemetente = "outro-usuario";
+                            if(dadosUsuario) {
+                                mensagemRemetente = mensagem.idUsuario === dadosUsuario.id?
+                                "usuario-principal"
+                                :
+                                "outro-usuario";
+                            }
+                            
+                            return (
+                                <div className={`area-mensagem`} key={key}>
+
+                                    <div className={`mensagem ${mensagemRemetente}`}>  
+                                        <img 
+                                            className="imagem-perfil-chat" 
+                                            alt="imagem-perfil" 
+                                            src={mensagem.imagem} 
+                                            onClick={()=>{
+                                                dadosUsuario &&
+                                                mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
+                                            }}
+                                        />
+
+                                        <div className="conteudo">
+
+                                            {mensagemRemetente === "outro-usuario" &&
+                                                <p className="nome-remetente">{mensagem.remetente}</p>
+                                            }
+                                            
+                                            <p className="mensagem-texto">{mensagem.texto}</p>
+                                        </div>
+                                    </div>
+                                </div>  
+                            )
+                        })
                     }
-                    
-                    return (
-                        <div className={`area-mensagem`} key={key}>
-
-                            <div className={`mensagem ${mensagemRemetente}`}>  
-                                <img 
-                                    className="imagem-perfil-chat" 
-                                    alt="imagem-perfil" 
-                                    src={mensagem.imagem} 
-                                    onClick={()=>{
-                                        dadosUsuario &&
-                                        mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
-                                    }}
-                                />
-
-                                <div className="conteudo">
-
-                                    {mensagemRemetente === "outro-usuario" &&
-                                        <p className="nome-remetente">{mensagem.remetente}</p>
-                                    }
-                                    
-                                    <p className="mensagem-texto">{mensagem.texto}</p>
-                                </div>
-                            </div>
-                        </div>  
-                    )
-                })
-            }
-    
+                </div>
             </div>
     
             <div className="area-inputs">
