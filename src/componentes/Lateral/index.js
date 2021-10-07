@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 
 import PerfilConfig from "../PerfilConfig";
@@ -8,13 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Link } from "react-router-dom";
 
+import { Creators as chatCreators } from "../../store/ducks/chats";
 import { Creators as usuarioCreators } from "../../store/ducks/usuario";
 import { useDispatch, useSelector } from "react-redux";
 
 function  OpcoesLateral({ setOpcoesAbrir }) {
-
     const dispatch = useDispatch();
-
     return (
         <div className="lista-opcoes" onClick={()=>setOpcoesAbrir(false)}>
             <div className="usuario-sair" onClick={()=>{
@@ -28,9 +27,48 @@ function  OpcoesLateral({ setOpcoesAbrir }) {
 
 function Lateral(){
 
+    const chatSelecionado = useSelector(state=>state.chats.chatID);
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
+    const dispatch = useDispatch();
     
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
+
+    function chatsUsuario() {
+
+        const chatSelecionadoEstilo = {
+            backgroundColor: "rgba(0, 0, 0, 0.2)"
+        }
+
+        return (
+            <div className="chats">
+                {dadosUsuario? 
+                    dadosUsuario.chats.map((chat, key)=>{
+                        return (
+                            <div 
+                                className="chats-selecao" key={key} 
+                                onClick={()=>{
+                                    dispatch(chatCreators.chatSelecionado(chat.id));
+                                }}
+                                style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
+                            >
+                                {chat.chatNome}
+                            </div>
+                        )
+                    })
+                    
+                    :
+
+                    <div 
+                        className="chats-selecao" 
+                        style={chatSelecionadoEstilo}
+                    >
+                        Geral
+                    </div>
+                }
+            </div>
+        )
+    }
+
     return (
         <div className="lateral">
 
@@ -51,11 +89,11 @@ function Lateral(){
                 
                 {!dadosUsuario && 
                     <React.Fragment>
-                        <Link to="/login" className="link selecao">
+                        <Link to="/login" className="link-selecao">
                             Login
                         </Link>
 
-                        <Link to="/registrar" className="link selecao">
+                        <Link to="/registrar" className="link-selecao">
                             Registrar
                         </Link>
                     </React.Fragment>
@@ -63,12 +101,9 @@ function Lateral(){
                 
             </div>
 
-            <div className="chats">
-                <div className="geral selecao">
-                    Geral
-                </div>
-
-            </div>
+            {
+                chatsUsuario()
+            }
 
         </div>
     )

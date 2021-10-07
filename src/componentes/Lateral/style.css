@@ -33,12 +33,14 @@
     cursor: pointer;
 }
 
-.lateral-cabecalho .link {
+.link-selecao {
     color: black;
     text-decoration: none;
+    
 }
 
 .chats {
+    margin-top: 20px;
     width: 100%;
     height: 50%;
     display: flex;
@@ -46,7 +48,7 @@
 
 }
 
-.selecao {
+.chats-selecao, .link-selecao {
     width: 100%;
     text-indent: 40px;
     padding: 10px;
@@ -54,7 +56,7 @@
     font-size: 20px;
 }
 
-.selecao:hover {
+.chats-selecao:hover, .link-selecao:hover {
     background-color: rgb(136, 207, 145);
     cursor: pointer;
 }

@@ -91,7 +91,10 @@ export const novoUsuario = async (nome, email, senha)=>{
             nome,
             id: usuario.uid,
             chats: [
-                "chatGeral"
+                {
+                    id: "chatGeral",
+                    chatNome: "Geral"
+                }
             ],
         }
         db.collection("usuarios").doc(usuario.uid).set(dadosUsuario);
