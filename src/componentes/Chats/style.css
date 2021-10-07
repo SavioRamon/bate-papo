@@ -40,7 +40,7 @@ input {
     background-color: rgb(173, 255, 173);
 }
 
-.imagem-perfil {
+.imagem-perfil-chat {
     margin: 0px 10px;
     min-width: 40px;
     min-height: 40px;
@@ -126,23 +126,25 @@ input {
     height: 70vh;
     min-width: 300px;
     min-height: 450px;
-    background-color: rgb(121, 255, 150);
+    background-color: #000;
     border-radius: 20px;
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .info-usuario-area-superior {
     padding: 5px;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
-    font-size: 30px;
+    font-size: 25px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: absolute;
+    top: 0;
 }
 
 .info-usuario-area-superior input {
@@ -155,7 +157,7 @@ input {
 
 .info-nome {
     width: 100%;
-    text-align: center;
+    text-indent: 30px;
 }
 
 .info-opcoes {
@@ -184,5 +186,5 @@ input {
 
 .info-usuario img {
     width: 100%;
-    height: 100%;
+    height: 60%;
 }

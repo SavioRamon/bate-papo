@@ -76,10 +76,11 @@ function Chat() {
 
                             <div className={`mensagem ${mensagemRemetente}`}>  
                                 <img 
-                                    className="imagem-perfil" 
+                                    className="imagem-perfil-chat" 
                                     alt="imagem-perfil" 
                                     src={mensagem.imagem} 
                                     onClick={()=>{
+                                        dadosUsuario &&
                                         mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
                                     }}
                                 />
