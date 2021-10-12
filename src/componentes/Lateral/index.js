@@ -32,6 +32,8 @@ function Lateral(){
     const chatSelecionado = useSelector(state=>state.chats.chatID);
     const usuario = useSelector(state=>state.usuario);
     const dispatch = useDispatch();
+
+    console.log(usuario)
     
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
 
@@ -47,7 +49,7 @@ function Lateral(){
         <div className="lateral">
 
             <div className="lateral-cabecalho">
-                {usuario &&
+                {usuario.dadosUsuario &&
                     <div className="cabecalho-conteudo">       
                         <PerfilConfig />
 
@@ -61,7 +63,7 @@ function Lateral(){
                     </div>
                 }
                 
-                {!usuario && 
+                {!usuario.dadosUsuario && 
                     <React.Fragment>
                         <Link to="/login" className="link-selecao">
                             Login

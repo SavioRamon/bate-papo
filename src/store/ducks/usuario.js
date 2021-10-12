@@ -6,7 +6,8 @@ export const Types = {
     USUARIO_SAIR: "USUARIO_SAIR_ASYNC",
 
     SET_CHATS: "SET_CHATS",
-    SET_USUARIO: "SET_USUARIO"
+    SET_USUARIO: "SET_USUARIO",
+    SET_USUARIO_SAIR: "SET_USUARIO_SAIR"
 }
 
 export const Creators = {
@@ -57,24 +58,22 @@ export const Creators = {
         }
     }),
 
+    setUsuarioSair: ()=>({
+        type: Types.SET_USUARIO_SAIR
+    })
+
 }
 
 const STATE_INICIAL = {
-    dadosUsuario: {
-        nome: "",
-        id: "",
-        imagem: ""
-    },
-    
-    chats: []
+    dadosUsuario: null,
+    chats: null
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {
     switch(type) {
         case Types.SET_USUARIO:
-            return {
-                ...payload.dadosUsuario
-            }
+
+            return payload.dadosUsuario;
             
         case Types.SET_CHATS:
             const novoState = {
@@ -85,6 +84,10 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
             return {
                 ...novoState
             }
+
+        case Types.SET_USUARIO_SAIR:
+            
+            return STATE_INICIAL;
 
         default:
             return state;

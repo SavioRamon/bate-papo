@@ -44,7 +44,7 @@ export function* loginAutomatico(){
 
 
 export function* usuarioSair() {
+    
+    yield put(usuarioCreators.setUsuarioSair());
     yield call(sairUsuario);
-
-    yield put(usuarioCreators.setUsuario(null));
 }
