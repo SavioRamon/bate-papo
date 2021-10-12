@@ -26,7 +26,7 @@ function Chat() {
 
     useEffect(()=>{
         dispatch(chatCreators.getMensagens(chats.chatID));
-    }, [])
+    }, [chats.chatID])
 
     useEffect(()=>{
         chats.mensagensFunction && chats.mensagensFunction(setMensagens);
@@ -136,6 +136,16 @@ function Chat() {
 
 function InfoUsuario({ dados, mostraInfo }) {
 
+    const usuarioPrincipal = useSelector(state=>state.usuario.dadosUsuario);
+    const dispatch = useDispatch();
+    
+
+    const segundoUsuario = {
+        nome: dados.remetente,
+        imagem: dados.imagem,
+        id: dados.idUsuario
+    }
+
     const [infoOpcoes, setInfoOpcoes] = useState(false);
 
     return (
@@ -148,7 +158,9 @@ function InfoUsuario({ dados, mostraInfo }) {
                     <p className="info-nome">{dados.remetente}</p>
 
                     <div className="info-opcoes" onClick={()=>{
+
                         setInfoOpcoes(!infoOpcoes);
+
                     }}>
                         <FontAwesomeIcon icon={ faEllipsisV } />
                     </div>
@@ -157,7 +169,12 @@ function InfoUsuario({ dados, mostraInfo }) {
                 {infoOpcoes &&
                     <div className="opcoes">
                         <p onClick={()=>{
+                            
+                            dispatch(chatCreators.novoChatPrivado(usuarioPrincipal, segundoUsuario));
+
                             setInfoOpcoes(false);
+                            mostraInfo(false);
+
                         }}>Conversar com {dados.remetente}</p>
                     </div>
                 }

@@ -45,7 +45,15 @@ export const retornaDadosUsuario = async usuarioID => {
         imagem: imagemURL
     }));
 
-    return dadosUsuario;
+    return {        
+        dadosUsuario: {
+            nome: dadosUsuario.nome,
+            id: dadosUsuario.id,
+            imagem: dadosUsuario.imagem
+        },
+
+        chats: dadosUsuario.chats
+    }
     
 }
 
@@ -99,10 +107,15 @@ export const novoUsuario = async (nome, email, senha)=>{
         }
         db.collection("usuarios").doc(usuario.uid).set(dadosUsuario);
 
-        
         return {
-            ...dadosUsuario,
-            imagem: imagemPadraoURL
+
+            dadosUsuario: {
+                nome: dadosUsuario.nome,
+                id: dadosUsuario.id,
+                imagem: imagemPadraoURL
+            },
+
+            chats: dadosUsuario.chats
         };
 
     }
@@ -113,6 +126,10 @@ export const sairUsuario = ()=>{
         alert(error);
       });
 }
+
+
+
+
 
 
 
@@ -128,8 +145,41 @@ export const retornaMensagens = (chatID) => {
     }
 }
 
+
 export const sendMensagem = ({ chatID, mensagemUsuario }) => {
     db.collection("chats").doc(chatID).set({
         mensagens: firebase.firestore.FieldValue.arrayUnion(mensagemUsuario)
     }, {merge: true})
+}
+
+
+export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
+
+    const chatID = `${usuarioPrincipal.id}${segundoUsuario.id}`;
+    const novoChat = await db.collection("chats").doc(chatID).set({
+        
+    })
+
+    await db.collection("usuarios").doc(usuarioPrincipal.id).update({
+        chats: firebase.firestore.FieldValue.arrayUnion({
+            chatNome: segundoUsuario.nome,
+            imagem: segundoUsuario.imagem,
+            id: chatID
+        })
+    })
+
+    await db.collection("usuarios").doc(segundoUsuario.id).update({
+        chats: firebase.firestore.FieldValue.arrayUnion({
+            chatNome: usuarioPrincipal.nome,
+            imagem: usuarioPrincipal.imagem,
+            id: chatID
+        })
+    })
+
+    return {
+        chatNome: segundoUsuario.nome,
+        imagem: segundoUsuario.imagem,
+        id: chatID
+    }
+    
 }

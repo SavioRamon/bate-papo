@@ -2,6 +2,7 @@ export const Types = {
     GET_MENSAGENS: "GET_MENSAGENS_ASYNC",
     ENVIA_MENSAGEM: "ENVIA_MENSAGEM_ASYNC",
     CHAT_SELECIONADO: "CHAT_SELECIONADO_ASYNC",
+    NOVO_CHAT: "NOVO_CHAT_ASYNC",
     SET_MENSAGENS: "SET_MENSAGENS"
 }
 
@@ -27,6 +28,14 @@ export const Creators = {
         type: Types.CHAT_SELECIONADO,
         payload: {
             chatID
+        }
+    }),
+
+    novoChatPrivado: (usuarioPrincipal, segundoUsuario)=>({
+        type: Types.NOVO_CHAT,
+        payload: {
+            usuarioPrincipal,
+            segundoUsuario
         }
     }),
 
@@ -62,7 +71,7 @@ export default function chats(state=STATE_INICIAL, {type, payload}) {
                 ...state,
                 mensagensFunction: payload.mensagensFunction
             };
-
+            
         default:
             return state;
     }

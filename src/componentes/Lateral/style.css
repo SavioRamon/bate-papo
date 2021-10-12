@@ -50,10 +50,21 @@
 
 .chats-selecao, .link-selecao {
     width: 100%;
-    text-indent: 40px;
     padding: 10px;
     font-weight: bold;
     font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.chats-selecao p {
+    text-indent: 20px;
+}
+
+.chats-selecao img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 .chats-selecao:hover, .link-selecao:hover {

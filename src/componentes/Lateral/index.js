@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 
+import chatGeralImg from "../../imagens/chatGeral.jpg";
+
 import PerfilConfig from "../PerfilConfig";
 
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
@@ -28,52 +30,24 @@ function  OpcoesLateral({ setOpcoesAbrir }) {
 function Lateral(){
 
     const chatSelecionado = useSelector(state=>state.chats.chatID);
-    const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
+    const usuario = useSelector(state=>state.usuario);
     const dispatch = useDispatch();
     
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
 
-    function chatsUsuario() {
-
-        const chatSelecionadoEstilo = {
-            backgroundColor: "rgba(0, 0, 0, 0.2)"
-        }
-
-        return (
-            <div className="chats">
-                {dadosUsuario? 
-                    dadosUsuario.chats.map((chat, key)=>{
-                        return (
-                            <div 
-                                className="chats-selecao" key={key} 
-                                onClick={()=>{
-                                    dispatch(chatCreators.chatSelecionado(chat.id));
-                                }}
-                                style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
-                            >
-                                {chat.chatNome}
-                            </div>
-                        )
-                    })
-                    
-                    :
-
-                    <div 
-                        className="chats-selecao" 
-                        style={chatSelecionadoEstilo}
-                    >
-                        Geral
-                    </div>
-                }
-            </div>
-        )
+    const chatSelecionadoEstilo = {
+        backgroundColor: "rgba(0, 0, 0, 0.2)"
     }
+
+    useEffect(()=>{
+
+    })
 
     return (
         <div className="lateral">
 
             <div className="lateral-cabecalho">
-                {dadosUsuario &&
+                {usuario &&
                     <div className="cabecalho-conteudo">       
                         <PerfilConfig />
 
@@ -87,7 +61,7 @@ function Lateral(){
                     </div>
                 }
                 
-                {!dadosUsuario && 
+                {!usuario && 
                     <React.Fragment>
                         <Link to="/login" className="link-selecao">
                             Login
@@ -101,9 +75,35 @@ function Lateral(){
                 
             </div>
 
-            {
-                chatsUsuario()
-            }
+
+            <div className="chats">
+                {usuario.chats? 
+                    usuario.chats.map((chat, key)=>{
+                        return (
+                            <div 
+                                className="chats-selecao" key={key} 
+                                onClick={()=>{
+                                    dispatch(chatCreators.chatSelecionado(chat.id));
+                                }}
+                                style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
+                            >
+                                <img src={chat.imagem? chat.imagem : chatGeralImg} />
+                                <p>{chat.chatNome}</p>
+                            </div>
+                        )
+                    })
+                    
+                    :
+
+                    <div 
+                        className="chats-selecao" 
+                        style={chatSelecionadoEstilo}
+                    >
+                        <img src={chatGeralImg} />
+                        <p>Geral</p>
+                    </div>
+                }
+            </div>
 
         </div>
     )
