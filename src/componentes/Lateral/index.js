@@ -32,8 +32,6 @@ function Lateral(){
     const chatSelecionado = useSelector(state=>state.chats.chatID);
     const usuario = useSelector(state=>state.usuario);
     const dispatch = useDispatch();
-
-    console.log(usuario)
     
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
 
