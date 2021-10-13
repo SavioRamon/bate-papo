@@ -6,9 +6,24 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+.icone-voltar {
+    z-index: 4;
+    padding: 10px;
+    font-size: 30px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+}
+
+.icone-voltar:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .tela-configuracoes {
     z-index: 3;
-    padding-top: 40px;
+    padding-top: 60px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -20,9 +35,19 @@
     align-items: center;
 }
 
+.area-superior {
+    position: relative;
+    width: 100%;
+    height: clamp(40px, 100%, 110px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 label[class="imagem-perfil"] {
-    width: clamp(40px, 50%, 110px);
-    height: clamp(40px, 50%, 110px);
+    width: clamp(40px, 100%, 110px);
+    height: clamp(40px, 100%, 110px);
     border-radius: 50%;
     border: 1px solid rgb(116, 116, 116);
     cursor: pointer;
