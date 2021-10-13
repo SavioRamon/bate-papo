@@ -9,6 +9,10 @@ function PerfilConfig() {
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
 
+    const dadosUsuarioEdicao = {
+        ...dadosUsuario
+    }
+
     const [alteraNome, setAlteraNome] = useState(dadosUsuario.nome);
 
     const [abrirConfig, setAbrirConfig] = useState(false);
@@ -46,7 +50,10 @@ function PerfilConfig() {
                             type="button" 
                             value="Salvar" 
                             onClick={()=>{
-
+                                dispatch(usuarioCreators.editarUsuario({
+                                    ...dadosUsuarioEdicao,
+                                    nome: alteraNome
+                                }))
                             }}
                             className="salvar-alteracoes"
                         />

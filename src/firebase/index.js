@@ -11,6 +11,21 @@ const storageRef = firebase.storage().ref();
 const db = app.firestore();
 
 
+function analisaInputNome(nome) {
+    if(nome.length > 10) {
+        alert("Nome de usuário não pode exceder 10 caracteres")
+        return false;
+
+    } else if(nome.length === 0) {
+        alert("campo de nome de usuário não pode ser vazio");
+        return false;
+    }
+
+    return true;
+
+}
+
+
 export const retornaImagemURL = async (usuarioID)=>{
     const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
     
@@ -33,6 +48,21 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     }
 }
 
+
+
+export const editarDadosUsuario = async (dadosEditados) => {
+
+    const nomeAnalise = analisaInputNome(dadosEditados.nome);
+    if(!nomeAnalise) {
+        return false;
+    }
+
+    const situacao = await db.collection("usuarios").doc(dadosEditados.id).update({
+        nome: dadosEditados.nome
+    }).then( () => true);
+
+    return situacao;
+}
 
 
 export const retornaDadosUsuario = async usuarioID => {
@@ -86,12 +116,9 @@ export const fazerLogin = async (email, senha)=>{
 
 
 export const novoUsuario = async (nome, email, senha)=>{
-    if(nome.length > 10) {
-        alert("Nome de usuário não pode exceder 10 caracteres")
-        return null;
-    }
-    if(nome.length === 0) {
-        alert("campo de nome de usuário não pode ser vazio");
+
+    const nomeAnalise = analisaInputNome(nome);
+    if(!nomeAnalise) {
         return null;
     }
 

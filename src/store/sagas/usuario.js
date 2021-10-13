@@ -1,5 +1,14 @@
 import { call, put } from "redux-saga/effects";
-import { editarImagemPerfil, retornaDadosUsuario, novoUsuario, fazerLogin, autoLogin, sairUsuario } from "../../firebase";
+import { 
+    editarImagemPerfil, 
+    editarDadosUsuario,
+
+    novoUsuario, 
+    fazerLogin, 
+    autoLogin, 
+    sairUsuario 
+
+} from "../../firebase";
 
 import { Creators as usuarioCreators } from "../ducks/usuario";
 
@@ -7,6 +16,15 @@ import { Creators as usuarioCreators } from "../ducks/usuario";
 export function* editarImagem(dados) {
     const dadosUsuario = yield call(editarImagemPerfil, dados.payload);
     yield put(usuarioCreators.setUsuario(dadosUsuario));
+}
+
+
+export function* editarUsuario(dados) {
+    const situacao = yield call(editarDadosUsuario, dados.payload.dadosEditados);
+    
+    if(situacao === true) {
+        yield put(usuarioCreators.setUsuarioEditado(dados.payload.dadosEditados))
+    }
 }
 
 
