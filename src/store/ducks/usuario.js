@@ -79,7 +79,11 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
             const novoState = {
                 ...state,
             }
-            novoState.chats.push(payload.chat);
+            const verificaExistencia = novoState.chats.filter(chat=>{
+                return chat.id === payload.chat.id;
+            })
+
+            !verificaExistencia && novoState.chats.push(payload.chat);
 
             return {
                 ...novoState
