@@ -9,6 +9,8 @@ function PerfilConfig() {
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
 
+    const [alteraNome, setAlteraNome] = useState(dadosUsuario.nome);
+
     const [abrirConfig, setAbrirConfig] = useState(false);
     return (
         <React.Fragment>
@@ -27,7 +29,30 @@ function PerfilConfig() {
                     <input type='file' id='alterar-imagem-perfil' onChange={e=>{
                         dispatch(usuarioCreators.editarImagem(dadosUsuario.id, e.target.files[0]));
                     }}/>
+
+                    <div className="alterar-dados-conta">
+                        <div className="area-alterar-nome">
+                            <label htmlFor="alterar-nome">Nome: </label>
+                            <input 
+                                type="text"
+                                id="alterar-nome"
+                                value={alteraNome} onChange={(e)=>setAlteraNome(e.target.value)} 
+                                className="alterar-nome"
+                                maxLength="10"
+                            />
+                        </div>
+                        
+                        <input 
+                            type="button" 
+                            value="Salvar" 
+                            onClick={()=>{
+
+                            }}
+                            className="salvar-alteracoes"
+                        />
+                    </div>
                 </div>
+
             }
         </React.Fragment>
     )
