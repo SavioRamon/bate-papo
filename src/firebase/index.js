@@ -86,7 +86,15 @@ export const fazerLogin = async (email, senha)=>{
 
 
 export const novoUsuario = async (nome, email, senha)=>{
-    
+    if(nome.length > 10) {
+        alert("Nome de usuário não pode exceder 10 caracteres")
+        return null;
+    }
+    if(nome.length === 0) {
+        alert("campo de nome de usuário não pode ser vazio");
+        return null;
+    }
+
     const usuario = await firebase.auth().createUserWithEmailAndPassword(email, senha)
         .then(dados => dados.user)
         .catch(erro=>{
@@ -158,7 +166,7 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
     const chatID = `${usuarioPrincipal.id}${segundoUsuario.id}`;
     const novoChat = await db.collection("chats").doc(chatID).set({
         
-    })
+    }, {merge: true})
 
     await db.collection("usuarios").doc(usuarioPrincipal.id).update({
         chats: firebase.firestore.FieldValue.arrayUnion({
