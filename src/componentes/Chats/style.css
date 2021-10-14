@@ -17,6 +17,39 @@ input {
     flex-direction: column;
 }
 
+.cabecalho-chat {
+    z-index: 3;
+    height: 60px;
+    width: 100%;
+    background-color: rgb(126, 255, 126);
+    display: flex;
+    align-items: center;
+}
+
+.abrir-lateral {
+    padding: 0px 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: clamp(25px, 2vw, 70px);
+    cursor: pointer;
+}
+
+.abrir-lateral:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.cabecalho-chat img {
+    margin-left: 10px;
+    width: clamp(40px, 3vw, 70px);
+    height: clamp(40px, 3vw, 70px);
+    border: 1px solid #000;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}
+
 .chat {
     width: 100%;
     height: 90%;
@@ -82,7 +115,7 @@ input {
 }
 
 .area-inputs {
-    flex: 1;
+    height: 80px;
     border-top: 2px solid gray;
     display: flex;
     justify-content: center;
@@ -194,4 +227,19 @@ input {
 .info-usuario img {
     width: 100%;
     height: 60%;
+}
+
+
+
+
+@media(max-width: 800px) {
+    .chat-componente {
+        width: 100%;
+    }
+}
+
+@media(min-width: 800px) {
+    .abrir-lateral {
+        display: none;
+    }
 }

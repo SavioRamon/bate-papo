@@ -2,15 +2,20 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import chatGeralIMG from "../../imagens/chatGeral.jpg";
+
+import { faEllipsisV, faBars} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { Creators as componentesCreators } from "../../store/ducks/componentes";
 import { Creators as chatCreators } from "../../store/ducks/chats";
 
 function Chat() {
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
+    const chatsUsuarioData = useSelector(state=>state.usuario.chats);
+
     const chats = useSelector(state=>state.chats);
     const dispatch = useDispatch();
 
@@ -49,6 +54,21 @@ function Chat() {
     }, [mensagens])
 
 
+
+    function getImagemChat() {
+        const dados = chatsUsuarioData.filter((chatDados)=>{
+            return chats.chatID === chatDados.id
+        })
+
+        if(dados[0].imagem) {
+            return dados[0].imagem;
+
+        } else if(!dados[0].imagem) {
+            return chatGeralIMG;
+        }
+    }
+
+
     return (
     <div className="chat-componente">
         
@@ -57,6 +77,20 @@ function Chat() {
         }
 
         <div className="chat-tela">
+
+            <div className="cabecalho-chat">
+            
+                <div className="abrir-lateral" onClick={()=>{
+                    dispatch(componentesCreators.setLateralAbrir(true));
+                }}>
+                    <FontAwesomeIcon icon={faBars} />
+                </div>
+
+                {
+                    <img src={ chatsUsuarioData? getImagemChat() : chatGeralIMG} />
+                }
+
+            </div>
 
             <div className="chat">
                 <div className="chat-crescente">

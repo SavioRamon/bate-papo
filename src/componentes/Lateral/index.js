@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Link } from "react-router-dom";
 
+import { Creators as componentesCreators } from "../../store/ducks/componentes";
 import { Creators as chatCreators } from "../../store/ducks/chats";
 import { Creators as usuarioCreators } from "../../store/ducks/usuario";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,68 +45,83 @@ function Lateral(){
     })
 
     return (
-        <div className="lateral">
-
-            <div className="lateral-cabecalho">
-                {usuario.dadosUsuario &&
-                    <div className="cabecalho-conteudo">       
-                        <PerfilConfig />
-
-                        <div className="icone-opcoes" onClick={()=>setOpcoesAbrir(!opcoesAbrir)}>
-                            <FontAwesomeIcon icon={ faEllipsisV } />
-                        </div>
-
-                        {opcoesAbrir &&
-                            <OpcoesLateral setOpcoesAbrir={setOpcoesAbrir} />
-                        }
-                    </div>
-                }
-                
-                {!usuario.dadosUsuario && 
-                    <React.Fragment>
-                        <Link to="/login" className="link-selecao">
-                            Login
-                        </Link>
-
-                        <Link to="/registrar" className="link-selecao">
-                            Registrar
-                        </Link>
-                    </React.Fragment>
-                }
-                
-            </div>
-
-
-            <div className="chats">
-                {usuario.chats? 
-                    usuario.chats.map((chat, key)=>{
-                        return (
-                            <div 
-                                className="chats-selecao" key={key} 
-                                onClick={()=>{
-                                    dispatch(chatCreators.chatSelecionado(chat.id));
-                                }}
-                                style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
-                            >
-                                <img src={chat.imagem? chat.imagem : chatGeralImg} />
-                                <p>{chat.chatNome}</p>
-                            </div>
-                        )
-                    })
+        <React.Fragment>
                     
-                    :
+            <div className="efeito-escuro" onClick={()=>{
+                dispatch(componentesCreators.setLateralAbrir(false));
+            }}>
 
-                    <div 
-                        className="chats-selecao" 
-                        style={chatSelecionadoEstilo}
-                    >
-                        <img src={chatGeralImg} />
-                        <p>Geral</p>
-                    </div>
-                }
             </div>
 
-        </div>
+            <div className="lateral">
+
+                <div className="lateral-cabecalho">
+                    {usuario.dadosUsuario &&
+                        <div className="cabecalho-conteudo">       
+                            <PerfilConfig />
+
+                             <div className="icone-opcoes" onClick={()=>setOpcoesAbrir(!opcoesAbrir)}>
+                                <FontAwesomeIcon icon={ faEllipsisV } />
+                            </div>
+
+                            {opcoesAbrir &&
+                                <OpcoesLateral setOpcoesAbrir={setOpcoesAbrir} />
+                            }
+                        </div>
+                    }
+                            
+                    {!usuario.dadosUsuario && 
+                        <React.Fragment>
+                            <Link to="/login" className="link-selecao">
+                                Login
+                            </Link>
+
+                            <Link to="/registrar" className="link-selecao">
+                                Registrar
+                            </Link>
+                        </React.Fragment>
+                    }
+                            
+                </div>
+
+
+                <div className="chats">
+                    {usuario.chats? 
+                        usuario.chats.map((chat, key)=>{
+                            return (
+                                <div 
+                                    className="chats-selecao" key={key} 
+                                    onClick={()=>{
+                                        dispatch(chatCreators.chatSelecionado(chat.id));
+                                        if(document.body.clientWidth <= 800) {
+                                            dispatch(componentesCreators.setLateralAbrir(false));
+                                        }
+                                    }}
+                                    style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
+                                >
+                                    <img src={chat.imagem? chat.imagem : chatGeralImg} />
+                                    <p>{chat.chatNome}</p>
+                                </div>
+                            )
+                        })
+                                
+                        :
+
+                        <div 
+                            className="chats-selecao" 
+                            style={chatSelecionadoEstilo}
+                        >
+                            <img src={chatGeralImg} />
+                            <p>Geral</p>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+        </React.Fragment>
+            
+        
     )
 }
 
