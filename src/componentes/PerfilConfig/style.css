@@ -75,6 +75,7 @@ input[type="file"] {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    
 }
 
 .area-alterar-nome label {
