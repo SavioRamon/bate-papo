@@ -1,14 +1,16 @@
 .lateral {
     z-index: 5;
     width: 30%;
-    min-width: 250px;
-    height: 100vh;
+    min-width: 300px;
     border-right: 2px solid rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgb(82, 82, 82);
-    position: relative;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
 }
 
 .lateral-cabecalho {
@@ -103,11 +105,7 @@
 
 
 
-@media(max-width: 800px) {
-    .lateral {
-        position: absolute;
-        left: 0;
-    }
+@media(max-width: 1000px) {
 
     .efeito-escuro {
         z-index: 4;
@@ -126,5 +124,11 @@
         left: 10px;
         font-size: 30px;
         cursor: pointer;
+    }
+}
+
+@media(max-width: 400px) {
+    .lateral {
+        width: 100%;
     }
 }

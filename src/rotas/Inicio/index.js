@@ -14,7 +14,7 @@ function Inicio() {
     const dispatch = useDispatch();
     
     window.addEventListener("resize", ()=>{
-        if(document.body.clientWidth >= 800 && !lateralAberta){
+        if(document.body.clientWidth >= 1000 && !lateralAberta){
             dispatch(componentesCreators.setLateralAbrir(true));
         };
     })

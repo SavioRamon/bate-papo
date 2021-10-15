@@ -93,7 +93,7 @@ function Lateral(){
                                     className="chats-selecao" key={key} 
                                     onClick={()=>{
                                         dispatch(chatCreators.chatSelecionado(chat.id));
-                                        if(document.body.clientWidth <= 800) {
+                                        if(document.body.clientWidth <= 1000) {
                                             dispatch(componentesCreators.setLateralAbrir(false));
                                         }
                                     }}

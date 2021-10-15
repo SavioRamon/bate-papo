@@ -3,6 +3,7 @@
     height: 100vh;
     min-height: 500px;
     display: flex;
+    margin-left: 30%;
 }
 
 input {
@@ -240,7 +241,11 @@ input {
 
 
 
-@media(max-width: 800px) {
+@media(max-width: 1000px) {
+    .chat-componente {
+        margin-left: 0;
+    }
+
     .chat-componente {
         width: 100%;
     }
