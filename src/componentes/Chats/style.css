@@ -15,20 +15,25 @@ input {
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .cabecalho-chat {
     z-index: 3;
-    height: 60px;
-    width: 100%;
-    background-color: rgb(126, 255, 126);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10vh;
+    background-color: #797979;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
 .abrir-lateral {
-    padding: 0px 10px;
-    height: 100%;
+    padding: 13px;
+    height: max-content;
     display: flex;
     align-items: center;
     font-size: clamp(25px, 2vw, 70px);
@@ -40,7 +45,7 @@ input {
 }
 
 .cabecalho-chat img {
-    margin-left: 10px;
+    margin: 2px 20px;
     width: clamp(40px, 3vw, 70px);
     height: clamp(40px, 3vw, 70px);
     border: 1px solid #000;
@@ -52,10 +57,11 @@ input {
 
 .chat {
     width: 100%;
-    height: 90%;
+    height: 80vh;
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto;
+    background-color: rgb(48, 48, 48);
 
 }
 
@@ -71,28 +77,24 @@ input {
 }
 .mensagem {
     max-width: 90%;
+    height: min-content;
     margin: 0px 15px;
-    padding: 2px 5px;
     word-break: break-all;
     display: flex;
-    align-items: center;
     border-radius: 10px;
-    background-color: rgb(173, 255, 173);
+    background-color: rgb(85, 218, 92);
 }
 
 .imagem-perfil-chat {
-    margin: 0px 10px;
-    min-width: 40px;
-    min-height: 40px;
-    max-width: 40px;
-    max-height: 40px;
-    border-radius: 50%;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
 }
 
 .usuario-principal {
     flex-direction: row-reverse;
     float: right;
+    background-color: green;
 }
 
 .outro-usuario {
@@ -102,24 +104,31 @@ input {
 
 .conteudo {
     margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .conteudo .nome-remetente {
-    font-size: 14px;
+    font-size: clamp(13px, 2vw, 15px);
     line-height: 30px;
     font-weight: bold;
 }
 
 .conteudo .mensagem-texto {
-    font-size: 17px;
+    font-size: clamp(15px, 2vw, 17px);
 }
 
 .area-inputs {
-    height: 80px;
-    border-top: 2px solid gray;
+    width: 80%;
+    height: 10vh;
+    border-top: 2px solid rgb(63, 63, 63);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(75, 75, 75);
 }
 
 .input-mensagem {
@@ -127,7 +136,7 @@ input {
     height: 60%;
     border-radius: 20px 0px 0px 20px;
     text-indent: 20px;
-    background-color: rgb(138, 197, 177);
+    background-color: rgb(165, 165, 165);
 }
 
 .input-botao-enviar {
@@ -136,11 +145,11 @@ input {
     border-radius: 0px 10px 10px 0px;
     font-weight: bold;
     cursor: pointer;
-    background-color: rgb(63, 141, 115);
+    background-color: rgb(23, 139, 48);
 }
 
 .input-botao-enviar:hover {
-    background-color: rgb(18, 94, 68);
+    background-color: rgb(8, 119, 32);
 }
 
 
@@ -162,12 +171,11 @@ input {
 }
 
 .info-usuario {
-    width: 30%;
+    width: 40%;
     height: 70vh;
-    min-width: 300px;
-    min-height: 450px;
+    min-width: 250px;
+    min-height: 300px;
     background-color: #000;
-    border-radius: 20px;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -236,10 +244,33 @@ input {
     .chat-componente {
         width: 100%;
     }
+
+    .area-inputs {
+        width: 100%;
+    }
 }
 
-@media(min-width: 800px) {
-    .abrir-lateral {
-        display: none;
+@media(max-width: 500px) {
+    .info-usuario {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+@media(max-height: 550px) {
+
+    .chat {
+        height: 100%;
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+
+    .cabecalho-chat {
+        height: 60px;
+    }
+
+    .area-inputs {
+        height: 60px;
     }
 }

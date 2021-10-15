@@ -37,7 +37,7 @@ function Lateral(){
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
 
     const chatSelecionadoEstilo = {
-        backgroundColor: "rgba(0, 0, 0, 0.2)"
+        backgroundColor: "rgb(53, 53, 53)"
     }
 
     useEffect(()=>{
