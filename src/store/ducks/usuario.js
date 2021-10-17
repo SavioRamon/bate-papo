@@ -99,7 +99,7 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
                 return chat.id === payload.chat.id;
             })
 
-            !verificaExistencia && novoState.chats.push(payload.chat);
+            !verificaExistencia[0] && novoState.chats.push(payload.chat);
 
             return {
                 ...novoState

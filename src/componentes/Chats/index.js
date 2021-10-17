@@ -59,11 +59,14 @@ function Chat() {
         const dados = chatsUsuarioData.filter((chatDados)=>{
             return chats.chatID === chatDados.id
         })
-
-        if(dados[0].imagem) {
-            return dados[0].imagem;
-
-        } else if(!dados[0].imagem) {
+        if(dados[0]) {
+            if(dados[0].imagem) {
+                return dados[0].imagem;
+    
+            } else if(!dados[0].imagem) {
+                return chatGeralIMG;
+            } 
+        } else {
             return chatGeralIMG;
         }
     }

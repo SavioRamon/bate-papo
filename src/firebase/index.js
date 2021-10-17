@@ -43,7 +43,7 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
         
         const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
         await imagemReferencia.put(imagem);
-        
+
         return retornaDadosUsuario(usuarioID);
     }
 }
@@ -191,30 +191,49 @@ export const sendMensagem = ({ chatID, mensagemUsuario }) => {
 export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
 
     const chatID = `${usuarioPrincipal.id}${segundoUsuario.id}`;
-    const novoChat = await db.collection("chats").doc(chatID).set({
+
+    const verificaChatExistencia = await db.collection("usuarios").doc(usuarioPrincipal.id).get().then(doc=>{
+        let existe = false;
+        for(let chat of doc.data().chats) {
+            if(chat.id === chatID) {
+                existe = true;
+                break;
+            }
+        }
+        return existe;
+    })
+
+    if(!verificaChatExistencia) {
         
-    }, {merge: true})
+        const novoChat = await db.collection("chats").doc(chatID).set({
+            
+        }, {merge: true})
 
-    await db.collection("usuarios").doc(usuarioPrincipal.id).update({
-        chats: firebase.firestore.FieldValue.arrayUnion({
-            chatNome: segundoUsuario.nome,
-            imagem: segundoUsuario.imagem,
-            id: chatID
+        await db.collection("usuarios").doc(usuarioPrincipal.id).update({
+            chats: firebase.firestore.FieldValue.arrayUnion({
+                chatNome: segundoUsuario.nome,
+                idUsuario: segundoUsuario.id,
+                imagem: segundoUsuario.imagem,
+                id: chatID
+            })
         })
-    })
 
-    await db.collection("usuarios").doc(segundoUsuario.id).update({
-        chats: firebase.firestore.FieldValue.arrayUnion({
-            chatNome: usuarioPrincipal.nome,
-            imagem: usuarioPrincipal.imagem,
-            id: chatID
+
+        await db.collection("usuarios").doc(segundoUsuario.id).update({
+            chats: firebase.firestore.FieldValue.arrayUnion({
+                chatNome: usuarioPrincipal.nome,
+                idUsuario: usuarioPrincipal.id,
+                imagem: usuarioPrincipal.imagem,
+                id: chatID
+            })
         })
-    })
+    }
 
     return {
         chatNome: segundoUsuario.nome,
+        idUsuario: segundoUsuario.id,
         imagem: segundoUsuario.imagem,
-        id: chatID
+        id: chatID,
     }
     
 }
