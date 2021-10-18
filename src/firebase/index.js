@@ -25,6 +25,17 @@ function analisaInputNome(nome) {
 
 }
 
+export const carregaDadosChatsPrivados = ({chat})=>{
+    return new Promise((resolve, reject)=>{
+        const dadosChat = db.collection("usuarios").doc(chat.idUsuario).get().then(doc=>({
+            chatNome: doc.data().nome,
+            idUsuario: chat.idUsuario,
+            imagem: doc.data().imagem,
+            id: chat.id
+        }));
+        resolve(dadosChat)
+    })
+}
 
 export const retornaImagemURL = async (usuarioID)=>{
     const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
@@ -43,6 +54,10 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
         
         const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
         await imagemReferencia.put(imagem);
+
+        db.collection("usuarios").doc(usuarioID).set({
+            imagem: await imagemReferencia.getDownloadURL().then(url=>url)
+        }, {merge: true})
 
         return retornaDadosUsuario(usuarioID);
     }
@@ -75,6 +90,17 @@ export const retornaDadosUsuario = async usuarioID => {
         imagem: imagemURL
     }));
 
+    const listaChats = [];
+    for(let chat of dadosUsuario.chats){
+
+        if(chat.id === "chatGeral") {
+            listaChats.push(chat);
+
+        } else if(chat.idUsuario) {
+            await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
+        }
+    }
+
     return {        
         dadosUsuario: {
             nome: dadosUsuario.nome,
@@ -82,7 +108,7 @@ export const retornaDadosUsuario = async usuarioID => {
             imagem: dadosUsuario.imagem
         },
 
-        chats: dadosUsuario.chats
+        chats: listaChats
     }
     
 }
@@ -139,6 +165,7 @@ export const novoUsuario = async (nome, email, senha)=>{
                     chatNome: "Geral"
                 }
             ],
+            imagem: imagemPadraoURL
         }
         db.collection("usuarios").doc(usuario.uid).set(dadosUsuario);
 
@@ -211,9 +238,7 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
 
         await db.collection("usuarios").doc(usuarioPrincipal.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
-                chatNome: segundoUsuario.nome,
                 idUsuario: segundoUsuario.id,
-                imagem: segundoUsuario.imagem,
                 id: chatID
             })
         })
@@ -221,9 +246,7 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
 
         await db.collection("usuarios").doc(segundoUsuario.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
-                chatNome: usuarioPrincipal.nome,
                 idUsuario: usuarioPrincipal.id,
-                imagem: usuarioPrincipal.imagem,
                 id: chatID
             })
         })
