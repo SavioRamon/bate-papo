@@ -156,11 +156,20 @@ function Chat() {
                 <input type="button" className="input-botao-enviar" value="enviar" 
                     onClick={()=>{
                         if(dadosUsuario) {
-                            dispatch(chatCreators.enviaMensagem(chats.chatID, mensagemEnviar))
-                            setMensagemEnviar({
+
+                            const preparaMensagem = {
                                 ...mensagemEnviar,
-                                texto: ""
-                            });
+                                texto: mensagemEnviar.texto.trim()
+                            }
+
+                            if(preparaMensagem.texto) {
+                                dispatch(chatCreators.enviaMensagem(chats.chatID, mensagemEnviar))
+                                setMensagemEnviar({
+                                    ...mensagemEnviar,
+                                    texto: ""
+                                });
+                            }
+                            
                         }
                         
                     }} />
