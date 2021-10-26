@@ -80,6 +80,7 @@ export const Creators = {
 }
 
 const STATE_INICIAL = {
+    load: false,
     dadosUsuario: null,
     chats: null
 }
@@ -114,7 +115,10 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
 
 
         case Types.SET_USUARIO_SAIR:
-            return STATE_INICIAL;
+            return {
+                ...STATE_INICIAL,
+                load: true,
+            };
 
 
         default:

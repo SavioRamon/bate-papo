@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
+import gifLoader from "../../imagens/Loader.gif";
 
 import { faEllipsisV, faBars} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -114,8 +115,7 @@ function Chat() {
 
                                     <div className={`mensagem ${mensagemRemetente}`}>  
                                         <img 
-                                            className="imagem-perfil-chat" 
-                                            alt="imagem-perfil" 
+                                            className="imagem-perfil-chat"
                                             src={mensagem.imagem} 
                                             onClick={()=>{
                                                 dadosUsuario &&

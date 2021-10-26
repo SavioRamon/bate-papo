@@ -115,12 +115,15 @@ export const retornaDadosUsuario = async usuarioID => {
 
 export const autoLogin = ()=>{
 
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve)=>{
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 const dadosUsuario = retornaDadosUsuario(user.uid);
                 resolve(dadosUsuario);
+            } else {
+                resolve(null);
             }
+
         })
     })
     
