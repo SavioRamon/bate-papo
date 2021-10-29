@@ -40,7 +40,11 @@ export const carregaDadosChatsPrivados = ({chat})=>{
 export const retornaImagemURL = async (usuarioID)=>{
     const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
     
-    const imagemURL = await storageRef.child(`perfil-imagem/${usuarioID}`).getDownloadURL()
+    const nomeImagemAtual = await db.collection("usuarios").doc(usuarioID).get()
+    .then(doc=>doc.data().imagem)
+    .catch(()=>imagemPadraoURL);
+
+    const imagemURL = await storageRef.child(`perfil-imagem/${usuarioID}/${nomeImagemAtual}`).getDownloadURL()
         .then(url=>url)
         .catch(()=>imagemPadraoURL);
 
@@ -51,13 +55,29 @@ export const retornaImagemURL = async (usuarioID)=>{
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     
     if(imagem) {
-        
-        const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}`);
-        await imagemReferencia.put(imagem);
 
-        db.collection("usuarios").doc(usuarioID).set({
-            imagem: await imagemReferencia.getDownloadURL().then(url=>url)
-        }, {merge: true})
+        const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}/${imagem.name}`);
+
+        const imagemJaExiste = await imagemReferencia.getDownloadURL()
+            .then((url)=>url)
+            .catch(()=>false);
+
+            
+        if(!imagemJaExiste) {
+
+            await imagemReferencia.put(imagem);
+
+            db.collection("usuarios").doc(usuarioID).set({
+                imagem: imagem.name
+            }, {merge: true});
+
+        } else if(imagemJaExiste) {
+            db.collection("usuarios").doc(usuarioID).set({
+                imagem: imagem.name
+            }, {merge: true});
+        }
+
+        
 
         return retornaDadosUsuario(usuarioID);
     }

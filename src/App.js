@@ -4,14 +4,15 @@ import './App.css';
 import Rotas from "./rotas";
 
 import { Creators as usuarioCreators } from "./store/ducks/usuario";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 
+  const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(usuarioCreators.loginAutomatico());
+    !dadosUsuario && dispatch(usuarioCreators.loginAutomatico());
   }, [])
 
   return (
