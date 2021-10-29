@@ -100,7 +100,13 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
                 return chat.id === payload.chat.id;
             })
 
-            !verificaExistencia[0] && novoState.chats.push(payload.chat);
+            if(!verificaExistencia[0]) {
+                novoState.chats.push(payload.chat);
+                localStorage.setItem("dados", JSON.stringify({
+                    dadosUsuario: state.dadosUsuario,
+                    chats: state.chats
+                }))
+            }
 
             return {
                 ...novoState

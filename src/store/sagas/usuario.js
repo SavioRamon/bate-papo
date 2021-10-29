@@ -31,6 +31,11 @@ export function* editaReducer(dados) {
 
 export function* editarImagem(dados) {
     const dadosUsuario = yield call(editarImagemPerfil, dados.payload);
+
+    localStorage.clear();
+
+    localStorage.setItem("dados", JSON.stringify(dadosUsuario));
+
     yield call(editaReducer, dadosUsuario);
 }
 
@@ -39,6 +44,7 @@ export function* editarUsuario(dados) {
     const situacao = yield call(editarDadosUsuario, dados.payload.dadosEditados);
     
     if(situacao === true) {
+        localStorage.setItem("dados", JSON.stringify(dados.payload.dadosEditados));
         yield put(usuarioCreators.setUsuarioEditado(dados.payload.dadosEditados))
     }
 }
@@ -48,6 +54,8 @@ export function* registrarUsuario(dados){
     const { nome, email, senha } = dados.payload;
     const dadosUsuario = yield call(novoUsuario, nome, email, senha);
 
+    localStorage.setItem("dados", JSON.stringify(dadosUsuario));
+
     yield call(editaReducer, dadosUsuario);
 }
 
@@ -55,19 +63,33 @@ export function* loginUsuario(dados) {
     const { email, senha } = dados.payload;
     const dadosUsuario = yield call(fazerLogin, email, senha);
 
+    localStorage.setItem("dados", JSON.stringify(dadosUsuario));
+
     yield call(editaReducer, dadosUsuario);
 }
 
 
 export function* loginAutomatico(){
-    const dadosUsuario = yield call(autoLogin);
+    if(!localStorage.dados) {
+        const dadosUsuario = yield call(autoLogin);
 
-    yield call(editaReducer, dadosUsuario);
+        if(dadosUsuario) {
+            localStorage.setItem("dados", JSON.stringify(dadosUsuario))
+        }
+        
+        yield call(editaReducer, dadosUsuario);
+        
+    } else if(localStorage.dados) {
+
+        yield call(editaReducer, JSON.parse(localStorage.getItem("dados")));
+    }
+
 }
 
 
 export function* usuarioSair() {
     
     yield put(usuarioCreators.setUsuarioSair());
+    localStorage.clear();
     yield call(sairUsuario);
 }
