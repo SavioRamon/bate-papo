@@ -17,7 +17,12 @@ export function* enviaMensagem(dados) {
 export function* newChatPrivado(dados) {
     const dadosChat = yield call(novoChatPrivado, dados.payload);
 
-    yield put(chatCreators.chatSelecionado(dadosChat.id))
+    if(dadosChat.novoChat) {
+        
+        yield put(chatCreators.chatSelecionado(dadosChat.id));
+        yield put(usuarioCreators.setChats(dadosChat));
 
-    yield put(usuarioCreators.setChats(dadosChat));
+    } else {
+        yield put(chatCreators.chatSelecionado(dadosChat.id));
+    }
 }

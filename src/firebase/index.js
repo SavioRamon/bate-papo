@@ -26,14 +26,19 @@ function analisaInputNome(nome) {
 }
 
 export const carregaDadosChatsPrivados = ({chat})=>{
-    return new Promise((resolve, reject)=>{
-        const dadosChat = db.collection("usuarios").doc(chat.idUsuario).get().then(doc=>({
+    return new Promise(async(resolve, reject)=>{
+        const dadosChat = await db.collection("usuarios").doc(chat.idUsuario).get().then(doc=>({
             chatNome: doc.data().nome,
             idUsuario: chat.idUsuario,
             imagem: doc.data().imagem,
             id: chat.id
         }));
-        resolve(dadosChat)
+        const imagemURL = await retornaImagemURL(dadosChat.idUsuario);
+
+        resolve({
+            ...dadosChat,
+            imagem: imagemURL
+        })
     })
 }
 
@@ -241,12 +246,18 @@ export const sendMensagem = ({ chatID, mensagemUsuario }) => {
 export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
 
     const chatID = `${usuarioPrincipal.id}${segundoUsuario.id}`;
+    const chatIdAlternativo = `${segundoUsuario.id}${usuarioPrincipal.id}`;
+
+    let chatExisteId;
 
     const verificaChatExistencia = await db.collection("usuarios").doc(usuarioPrincipal.id).get().then(doc=>{
         let existe = false;
         for(let chat of doc.data().chats) {
-            if(chat.id === chatID) {
+            if(chat.id === chatID || chat.id === chatIdAlternativo) {
                 existe = true;
+
+                chatExisteId = chat.id;
+
                 break;
             }
         }
@@ -273,13 +284,22 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
                 id: chatID
             })
         })
+
+        return {
+            novoChat: true,
+            chatNome: segundoUsuario.nome,
+            idUsuario: segundoUsuario.id,
+            imagem: segundoUsuario.imagem,
+            id: chatID,
+        }
+
+    } else {
+        return  {
+            novoChat: false,
+            id: chatExisteId
+        }
     }
 
-    return {
-        chatNome: segundoUsuario.nome,
-        idUsuario: segundoUsuario.id,
-        imagem: segundoUsuario.imagem,
-        id: chatID,
-    }
+    
     
 }
