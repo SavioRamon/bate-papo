@@ -12,12 +12,14 @@ import {
     registrarUsuario, 
     loginUsuario, 
     loginAutomatico, 
-    usuarioSair 
+    usuarioSair, 
+    criaOuvinteChatsUsuario
 
 } from "./usuario";
 
 export default function* rootSagas() {
     return yield all([
+        takeEvery(usuarioTypes.ATUALIZA_TODOS_CHATS, criaOuvinteChatsUsuario),
         takeEvery(usuarioTypes.EDITAR_IMAGEM, editarImagem),
         takeEvery(usuarioTypes.EDITAR_USUARIO, editarUsuario),
 

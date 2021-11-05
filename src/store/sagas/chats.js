@@ -20,7 +20,7 @@ export function* newChatPrivado(dados) {
     if(dadosChat.novoChat) {
         
         yield put(chatCreators.chatSelecionado(dadosChat.id));
-        yield put(usuarioCreators.setChats(dadosChat));
+        yield put(usuarioCreators.setChat(dadosChat));
 
     } else {
         yield put(chatCreators.chatSelecionado(dadosChat.id));

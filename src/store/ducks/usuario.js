@@ -1,4 +1,5 @@
 export const Types = {
+    ATUALIZA_TODOS_CHATS: "ATUALIZA_TODOS_CHATS_ASYNC",
     EDITAR_IMAGEM: "EDITAR_IMAGEM_ASYNC",
     EDITAR_USUARIO: "EDITAR_USUARIO_ASYNC",
 
@@ -7,7 +8,9 @@ export const Types = {
     LOGIN_AUTOMATICO: "LOGIN_AUTOMATICO_ASYNC",
     USUARIO_SAIR: "USUARIO_SAIR_ASYNC",
 
-    SET_CHATS: "SET_CHATS",
+    SET_ALL_CHATS: "SET_ALL_CHATS",
+    SET_OUVINTE_CHAT: "SET_OUVINTE_CHAT",
+    SET_CHAT: "SET_CHAT",
     SET_USUARIO: "SET_USUARIO",
     USUARIO_EDITADO: "SET_USUARIO_EDITADO",
     SET_USUARIO_SAIR: "SET_USUARIO_SAIR"
@@ -54,11 +57,30 @@ export const Creators = {
         type: Types.USUARIO_SAIR
     }),
 
-    setChats: (chat)=>({
-        type: Types.SET_CHATS,
+
+    criaOuvinteChats: (usuarioID)=>({
+        type: Types.ATUALIZA_TODOS_CHATS,
+        payload: usuarioID
+    }),
+
+
+    setChat: (chat)=>({
+        type: Types.SET_CHAT,
         payload: {
             chat
         }
+    }),
+
+    setAllChats: (chats)=>({
+        type: Types.SET_ALL_CHATS,
+        payload: {
+            chats
+        }
+    }),
+
+    setOuvinteChat: (func)=>({
+        type: Types.SET_OUVINTE_CHAT,
+        payload: func
     }),
 
     setUsuario: (dadosUsuario)=>({
@@ -82,7 +104,8 @@ export const Creators = {
 const STATE_INICIAL = {
     load: false,
     dadosUsuario: null,
-    chats: null
+    chats: null,
+    atualizaChatsOuvinte: null
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {
@@ -90,9 +113,22 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
         
         case Types.SET_USUARIO:
             return payload.dadosUsuario;
-           
+         
+        case Types.SET_ALL_CHATS: 
+        
+            return {
+                ...state,
+                chats: payload.chats
+            }
+        
 
-        case Types.SET_CHATS:
+        case Types.SET_OUVINTE_CHAT:
+            return {
+                ...state,
+                atualizaChatsOuvinte: payload
+            }
+
+        case Types.SET_CHAT:
             const novoState = {
                 ...state,
             }

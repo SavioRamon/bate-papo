@@ -22,8 +22,26 @@ function analisaInputNome(nome) {
     }
 
     return true;
-
 }
+
+export const criaOuvinteChats = (usuarioID)=>{
+    return function(callback) {        
+        db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
+            const listaChats = [];
+            for(let chat of doc.data().chats){
+
+                if(chat.id === "chatGeral") {
+                    listaChats.push(chat);
+
+                } else if(chat.idUsuario) {
+                    await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
+                }
+            }
+            callback(listaChats);
+        })
+    }
+}
+
 
 export const carregaDadosChatsPrivados = ({chat})=>{
     return new Promise(async(resolve, reject)=>{

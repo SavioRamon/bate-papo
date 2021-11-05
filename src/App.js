@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
 
 import Rotas from "./rotas";
@@ -8,12 +8,29 @@ import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 
-  const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
+  const [chatsAtualizados, setChatsAtualizados] = useState("");
+
+  const usuario = useSelector(state=>state.usuario);
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    !dadosUsuario && dispatch(usuarioCreators.loginAutomatico());
-  }, [])
+    !usuario.dadosUsuario && dispatch(usuarioCreators.loginAutomatico());
+  }, []);
+
+
+  useEffect(()=>{
+    usuario.dadosUsuario && dispatch(usuarioCreators.criaOuvinteChats(usuario.dadosUsuario.id));
+  }, [usuario.dadosUsuario]);
+
+
+  useEffect(()=>{
+    usuario.atualizaChatsOuvinte && usuario.atualizaChatsOuvinte(setChatsAtualizados);
+  }, [usuario.atualizaChatsOuvinte]);
+
+
+  useEffect(()=>{
+    chatsAtualizados && dispatch(usuarioCreators.setAllChats(chatsAtualizados));
+  }, [chatsAtualizados]);
 
   return (
     <React.Fragment>

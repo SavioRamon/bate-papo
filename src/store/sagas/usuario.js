@@ -6,11 +6,12 @@ import {
     novoUsuario, 
     fazerLogin, 
     autoLogin, 
-    sairUsuario 
+    sairUsuario, 
+    criaOuvinteChats
 
 } from "../../firebase";
 
-import { Creators as usuarioCreators } from "../ducks/usuario";
+import usuario, { Creators as usuarioCreators } from "../ducks/usuario";
 
 export function* editaReducer(dados) {
     if(dados) {
@@ -28,6 +29,15 @@ export function* editaReducer(dados) {
         yield put(usuarioCreators.setUsuario(semUsuario));
     }
 }
+
+export function* criaOuvinteChatsUsuario(dados) {
+    
+    const ouvinte = yield call(criaOuvinteChats, dados.payload);
+    
+    yield put(usuarioCreators.setOuvinteChat(ouvinte));
+    
+}
+
 
 export function* editarImagem(dados) {
     const dadosUsuario = yield call(editarImagemPerfil, dados.payload);
