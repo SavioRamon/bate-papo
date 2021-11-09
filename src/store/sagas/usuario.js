@@ -42,11 +42,13 @@ export function* criaOuvinteChatsUsuario(dados) {
 export function* editarImagem(dados) {
     const dadosUsuario = yield call(editarImagemPerfil, dados.payload);
 
-    localStorage.clear();
+    if(dadosUsuario) {
+        localStorage.clear();
 
-    localStorage.setItem("dados", JSON.stringify(dadosUsuario));
+        localStorage.setItem("dados", JSON.stringify(dadosUsuario));
 
-    yield call(editaReducer, dadosUsuario);
+        yield call(editaReducer, dadosUsuario);
+    }
 }
 
 
