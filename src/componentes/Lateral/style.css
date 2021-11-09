@@ -95,12 +95,12 @@
 
 
 .lista-opcoes {
-    padding: 10px 0px;
+    padding: 7px 0px;
     position: absolute;
     top: 50px;
     right: 10px;
-    background-color: rgb(53, 53, 53);
-    color: rgb(199, 199, 199);
+    background-color: rgb(119, 119, 119);
+    color: rgb(29, 29, 29);
     border-radius: 5px;
 }
 
