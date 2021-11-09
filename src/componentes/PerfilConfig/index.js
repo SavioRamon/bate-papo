@@ -40,7 +40,7 @@ function PerfilConfig() {
                                 htmlFor='alterar-imagem-perfil' 
                                 className="imagem-perfil"
                                 style={{backgroundImage: `url(${dadosUsuario.imagem})`}}></label>
-                            <input type='file' id='alterar-imagem-perfil' onChange={e=>{
+                            <input type='file' accept="image/*" id='alterar-imagem-perfil' onChange={e=>{
                                 dispatch(usuarioCreators.editarImagem(dadosUsuario.id, e.target.files[0]));
                             }}/>
                         </div>
