@@ -114,20 +114,26 @@ function Chat() {
                                 <div className={`area-mensagem`} key={key}>
 
                                     <div className={`mensagem ${mensagemRemetente}`}>  
-                                        <img 
-                                            className="imagem-perfil-chat"
-                                            src={mensagem.imagem} 
-                                            onClick={()=>{
-                                                dadosUsuario &&
-                                                mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
-                                            }}
-                                        />
+                                        <div className="extra-info">
+                                            <img 
+                                                className="imagem-perfil-chat"
+                                                src={mensagem.imagem} 
+                                                onClick={()=>{
+                                                    dadosUsuario &&
+                                                    mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
+                                                }}
+                                            />
+                                            <div className="horario">
+                                                8:29
+                                            </div>
+                                        </div>
+                                        
 
                                         <div className="conteudo">
 
-                                            {mensagemRemetente === "outro-usuario" &&
-                                                <p className="nome-remetente">{mensagem.remetente}</p>
-                                            }
+                                            
+                                            <p className="nome-remetente">{mensagem.remetente}</p>
+                                            
                                             
                                             <p className="mensagem-texto">{mensagem.texto}</p>
                                         </div>

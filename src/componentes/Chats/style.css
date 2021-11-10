@@ -84,16 +84,37 @@ input {
     display: flex;
     border-radius: 10px;
     background-color: rgb(90, 90, 90);
+    position: relative;
+}
+
+:root {
+    --cor-escura-transparente: rgba(0, 0, 0, 0.2);
+  }
+
+.extra-info {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--cor-escura-transparente);
 }
 
 .imagem-perfil-chat {
-    width: 35px;
-    height: 35px;
+    width: 33px;
+    height: 33px;
     cursor: pointer;
+    border-radius: 50%;
     background-image: url(../../imagens/Loader.gif);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.extra-info .horario {
+    margin: 2px 0px;
+    font-size: clamp(10px, 2vw, 14px);
+    color: #fff;
 }
 
 .usuario-principal {
@@ -108,19 +129,21 @@ input {
 }
 
 .conteudo {
-    margin: 0 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .conteudo .nome-remetente {
-    font-size: clamp(13px, 2vw, 15px);
+    width: 100%;
+    padding: 0px 5px;
+    font-size: clamp(12px, 2vw, 15px);
     line-height: 30px;
     font-weight: bold;
+    background-color: var(--cor-escura-transparente);
 }
 
 .conteudo .mensagem-texto {
+    margin: 0px 10px 0px 10px;
     font-size: clamp(15px, 2vw, 17px);
 }
 
