@@ -123,7 +123,7 @@ function Chat() {
                                                 }}
                                             />
                                             <div className="horario">
-                                                8:29
+                                                {mensagem.horarioEnvio}
                                             </div>
                                         </div>
                                         
@@ -211,7 +211,7 @@ function InfoUsuario({ dados, mostraInfo }) {
 
                         </FontAwesomeIcon>
                     </div>
-                    
+
                     <p className="info-nome">{dados.remetente}</p>
 
                     <div className="info-opcoes" onClick={()=>{

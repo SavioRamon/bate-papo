@@ -255,8 +255,14 @@ export const retornaMensagens = (chatID) => {
 
 
 export const sendMensagem = ({ chatID, mensagemUsuario }) => {
+    const data = new Date();
+    const horario = `${data.getHours()}:${data.getMinutes()}`;
+
     db.collection("chats").doc(chatID).set({
-        mensagens: firebase.firestore.FieldValue.arrayUnion(mensagemUsuario)
+        mensagens: firebase.firestore.FieldValue.arrayUnion({
+            ...mensagemUsuario,
+            horarioEnvio:  horario
+        })
     }, {merge: true})
 }
 
