@@ -33,6 +33,7 @@ input {
 }
 
 .abrir-lateral {
+    color: #999;
     padding: 13px;
     height: max-content;
     display: flex;
@@ -212,7 +213,6 @@ input {
 }
 
 .info-usuario-area-superior {
-    padding: 5px;
     width: 100%;
     color: #fff;
     font-size: 25px;
@@ -223,12 +223,15 @@ input {
     top: 0;
 }
 
-.info-usuario-area-superior input {
+.info-usuario-sair {
+    padding: 5px;
     background: none;
     font-size: 30px;
     color: #fff;
-    text-indent: 10px;
     cursor: pointer;
+}
+.info-usuario-sair:hover {
+    background-color: rgb(44, 44, 44);
 }
 
 .info-nome {

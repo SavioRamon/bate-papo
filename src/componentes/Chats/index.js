@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
-import gifLoader from "../../imagens/Loader.gif";
 
-import { faEllipsisV, faBars} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faBars, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -205,8 +204,14 @@ function InfoUsuario({ dados, mostraInfo }) {
             <div className="info-usuario">
 
                 <div className="info-usuario-area-superior">
-                    <input type="button" value={"<"} onClick={()=>mostraInfo(false)} />
+                    <div className="info-usuario-sair" onClick={()=>{
+                        mostraInfo(false);
+                    }}>
+                        <FontAwesomeIcon icon={faArrowLeft}>
 
+                        </FontAwesomeIcon>
+                    </div>
+                    
                     <p className="info-nome">{dados.remetente}</p>
 
                     <div className="info-opcoes" onClick={()=>{
