@@ -1,0 +1,55 @@
+.area-anexo {
+    margin-right: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    transition: all ease 0.5s;
+}
+
+.icone-anexo {
+    padding: 10px 12px;
+    color: rgb(216, 216, 216);
+    font-size: clamp(15px, 2vw, 17px);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    float: inline-start;
+}
+
+.icone-anexo:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.anexo {
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    width: min-content;
+    color: #999;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: rgb(165, 3, 197);
+}
+
+
+.tipo-anexo {
+    margin-bottom: 50px;
+    position: absolute;
+    display: flex;
+    height: min-content;
+    flex-direction: column-reverse;
+}
+
+@media(max-width: 500px) {
+    .area-anexo {
+        margin-right: 0;
+    }
+
+    .icone-anexo {
+        color: #888;
+        padding: 8.8px;
+        font-weight: bold;
+        background-color: rgb(83, 83, 83);
+        border-radius: 20px 0px 0px 20px;
+    }
+}

@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 
+import Anexos from "./Anexos";
+
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
 
-import { faEllipsisV, faBars, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faBars, faArrowLeft, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -145,6 +147,9 @@ function Chat() {
             </div>
     
             <div className="area-inputs">
+                
+                <Anexos />
+
                 <input
                     type="text"
                     className="input-mensagem" 
@@ -157,27 +162,29 @@ function Chat() {
                         })
                     }} 
                 />
-        
-                <input type="button" className="input-botao-enviar" value="enviar" 
-                    onClick={()=>{
-                        if(dadosUsuario) {
 
-                            const preparaMensagem = {
-                                ...mensagemEnviar,
-                                texto: mensagemEnviar.texto.trim()
-                            }
+                <div className="botao-enviar" onClick={()=>{
+                    if(dadosUsuario) {
 
-                            if(preparaMensagem.texto) {
-                                dispatch(chatCreators.enviaMensagem(chats.chatID, preparaMensagem))
-                                setMensagemEnviar({
-                                    ...mensagemEnviar,
-                                    texto: ""
-                                });
-                            }
-                            
+                        const preparaMensagem = {
+                            ...mensagemEnviar,
+                            texto: mensagemEnviar.texto.trim()
                         }
+
+                        if(preparaMensagem.texto) {
+                            dispatch(chatCreators.enviaMensagem(chats.chatID, preparaMensagem))
+                            setMensagemEnviar({
+                                ...mensagemEnviar,
+                                texto: ""
+                            });
+                        }
+                            
+                    }
                         
-                    }} />
+                }}>
+                    <FontAwesomeIcon icon={ faPaperPlane }/>
+                </div>
+                
             </div>
         
         </div>
