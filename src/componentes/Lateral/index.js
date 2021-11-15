@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 
 import chatGeralImg from "../../imagens/chatGeral.jpg";
@@ -36,18 +36,11 @@ function Lateral(){
     const dispatch = useDispatch();
 
     
-    const [telaCarregamento, setTelaCarregamento] = useState(true);
     const [opcoesAbrir, setOpcoesAbrir] = useState(false);
 
     const chatSelecionadoEstilo = {
         backgroundColor: "rgb(53, 53, 53)"
     }
-    
-    useEffect(()=>{
-        if(usuario.load) {
-          setTelaCarregamento(false);
-        }
-      }, [usuario.load]);
 
     return (
         <React.Fragment>
@@ -64,6 +57,7 @@ function Lateral(){
                         <img 
                             src={ gifLoader? gifLoader : "" }
                             className="gif-carregando" 
+                            alt="gif de carregamento"
                         />
                     </div>
                     
@@ -114,7 +108,7 @@ function Lateral(){
                                             }}
                                             style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
                                         >
-                                            <img src={chat.imagem? chat.imagem : chatGeralImg} />
+                                            <img src={chat.imagem? chat.imagem : chatGeralImg} alt="imagem de perfil do usuário" />
                                             <p>{chat.chatNome}</p>
                                         </div>
                                     )
@@ -131,7 +125,7 @@ function Lateral(){
                                         }
                                     }}
                                 >
-                                    <img src={chatGeralImg} />
+                                    <img src={chatGeralImg} alt="imagem do chat geral" />
                                     <p>Geral</p>
                                 </div>
                             }
