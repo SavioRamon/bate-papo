@@ -271,6 +271,7 @@ export const retornaMensagens = (chatID) => {
 }
 
 
+
 export const sendMensagemTexto = ({ chatID, mensagemUsuario }) => {
     const horario = retornaHorario();
 
@@ -280,6 +281,61 @@ export const sendMensagemTexto = ({ chatID, mensagemUsuario }) => {
             horarioEnvio:  horario
         })
     }, {merge: true});
+}
+
+
+
+export const sendMensagemMidia = async ({ chatID, mensagemUsuario }) => {
+
+    const horario = retornaHorario();
+    const midia = mensagemUsuario.midia;
+
+    const tiposMidia = [
+        "video",
+        "image"
+    ]
+
+    for(let tipo of tiposMidia) {
+        if(midia.type.includes(tipo)) {
+
+            const midiaRef = storageRef.child(`midia/${mensagemUsuario.idUsuario}/${tipo}/${midia.name}`);  
+            
+            const verificaExistenciaMidia = await midiaRef.getDownloadURL()
+                .then((url)=>url)
+                .catch(()=>false);
+
+            if(!verificaExistenciaMidia) {
+                await midiaRef.put(midia);
+
+                const midiaURL = await midiaRef.getDownloadURL().then(url=>url).catch(()=>false);
+
+                db.collection("chats").doc(chatID).set({
+                    mensagens: firebase.firestore.FieldValue.arrayUnion({
+                        ...mensagemUsuario,
+                        horarioEnvio:  horario,
+                        midia: midiaURL,
+                        tipoMidia: tipo
+                    })
+                }, {merge: true});
+
+            } else if(verificaExistenciaMidia) {
+                db.collection("chats").doc(chatID).set({
+                    mensagens: firebase.firestore.FieldValue.arrayUnion({
+                        ...mensagemUsuario,
+                        horarioEnvio:  horario,
+                        midia: verificaExistenciaMidia,
+                        tipoMidia: tipo
+                    })
+                }, {merge: true});
+            }
+
+
+
+            break;
+        }
+    }
+    
+    
 }
 
 export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
