@@ -3,7 +3,7 @@ import { takeEvery, all } from "redux-saga/effects";
 import { Types as chatTypes } from "../ducks/chats";
 import { Types as usuarioTypes } from "../ducks/usuario";
 
-import { getMensagens, enviaMensagem, newChatPrivado } from "./chats";
+import { getMensagens, enviaMensagemTexto, enviaMensagemMidia, newChatPrivado } from "./chats";
 
 import { 
     editarUsuario,
@@ -29,7 +29,8 @@ export default function* rootSagas() {
         takeEvery(usuarioTypes.USUARIO_SAIR, usuarioSair),
 
         takeEvery(chatTypes.GET_MENSAGENS, getMensagens),
-        takeEvery(chatTypes.ENVIA_MENSAGEM, enviaMensagem),
+        takeEvery(chatTypes.ENVIA_MENSAGEM, enviaMensagemTexto),
+        takeEvery(chatTypes.ENVIA_MIDIA, enviaMensagemMidia),
         takeEvery(chatTypes.NOVO_CHAT, newChatPrivado)
     ])
 }

@@ -1,6 +1,7 @@
 export const Types = {
     GET_MENSAGENS: "GET_MENSAGENS_ASYNC",
     ENVIA_MENSAGEM: "ENVIA_MENSAGEM_ASYNC",
+    ENVIA_MIDIA: "ENVIA_MIDIA_ASYNC",
     CHAT_SELECIONADO: "CHAT_SELECIONADO_ASYNC",
     NOVO_CHAT: "NOVO_CHAT_ASYNC",
     SET_MENSAGENS: "SET_MENSAGENS"
@@ -16,8 +17,16 @@ export const Creators = {
         }
     }),
 
-    enviaMensagem: (chatID, mensagemUsuario)=>({
+    enviaMensagemTexto: (chatID, mensagemUsuario)=>({
         type: Types.ENVIA_MENSAGEM,
+        payload: {
+            chatID,
+            mensagemUsuario
+        }
+    }),
+
+    enviaMensagemMidia: (chatID, mensagemUsuario)=>({
+        type: Types.ENVIA_MIDIA,
         payload: {
             chatID,
             mensagemUsuario

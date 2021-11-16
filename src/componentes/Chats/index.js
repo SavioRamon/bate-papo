@@ -135,8 +135,21 @@ function Chat() {
                                             
                                             <p className="nome-remetente">{mensagem.remetente}</p>
                                             
-                                            
-                                            <p className="mensagem-texto">{mensagem.texto}</p>
+                                            {mensagem.texto && 
+                                                <p className="mensagem-texto">{mensagem.texto}</p>
+                                            }
+
+                                            {mensagem.midia && mensagem.tipoMidia === "image" &&
+                                                <img src={mensagem.midia} className="mensagem-midia" />
+                                            }
+
+                                            {mensagem.midia && mensagem.tipoMidia === "video" &&
+                                                <video className="mensagem-midia" controls>
+                                                    <source src={mensagem.midia} />
+                                                </video>
+                                            }
+
+
                                         </div>
                                     </div>
                                 </div>  
