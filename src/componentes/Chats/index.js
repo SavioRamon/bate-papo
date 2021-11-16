@@ -185,7 +185,7 @@ function Chat() {
                         }
 
                         if(preparaMensagem.texto) {
-                            dispatch(chatCreators.enviaMensagem(chats.chatID, preparaMensagem))
+                            dispatch(chatCreators.enviaMensagemTexto(chats.chatID, preparaMensagem))
                             setMensagemEnviar({
                                 ...mensagemEnviar,
                                 texto: ""
