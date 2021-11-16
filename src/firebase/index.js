@@ -10,6 +10,23 @@ const storageRef = firebase.storage().ref();
 
 const db = app.firestore();
 
+function retornaHorario() {
+    const data = new Date();
+
+    let hora = data.getHours();
+    let minuto = data.getMinutes();
+
+    if(hora < 10) {
+        hora = `0${hora}`;
+    }
+    if(minuto < 10) {
+        minuto = `0${minuto}`;
+    }
+
+    const horario = `${hora}:${minuto}`;
+
+    return horario;
+}
 
 function analisaInputNome(nome) {
     if(nome.length > 10) {
@@ -254,18 +271,16 @@ export const retornaMensagens = (chatID) => {
 }
 
 
-export const sendMensagem = ({ chatID, mensagemUsuario }) => {
-    const data = new Date();
-    const horario = `${data.getHours()}:${data.getMinutes()}`;
+export const sendMensagemTexto = ({ chatID, mensagemUsuario }) => {
+    const horario = retornaHorario();
 
     db.collection("chats").doc(chatID).set({
         mensagens: firebase.firestore.FieldValue.arrayUnion({
             ...mensagemUsuario,
             horarioEnvio:  horario
         })
-    }, {merge: true})
+    }, {merge: true});
 }
-
 
 export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
 
