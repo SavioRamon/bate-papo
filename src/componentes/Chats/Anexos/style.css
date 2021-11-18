@@ -1,14 +1,16 @@
 
 .icone-anexo {
-    padding: 10px 12px;
+    padding: 0.8em;
     margin-right: 20px;
-    height: 60%;
+    width: clamp(40px, 7vh, 7vh);
+    height: clamp(40px, 7vh, 7vh);
     color: rgb(177, 177, 177);
-    font-size: clamp(15px, 2vw, 17px);
+    font-size: clamp(15px, 1vw, 1vw);
     border-radius: 50%;
     cursor: pointer;
     float: inline-start;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -17,11 +19,11 @@
 }
 
 .anexo {
-    padding: 10px 12px;
+    padding: 0.8em 0.9em;
     margin-bottom: 20px;
     width: min-content;
     color: rgb(255, 255, 255);
-    font-size: 20px;
+    font-size: clamp(15px, 1vw, 1vw);
     border-radius: 50%;
     cursor: pointer;
     background-color: rgb(212, 0, 255);
@@ -45,12 +47,6 @@ input[tipe="file"] {
 @media(max-width: 500px) {
     .icone-anexo {
         margin-right: 0;
-    }
-
-    .icone-anexo {
-        color: rgb(221, 221, 221);
-        padding: 10.5px;
-        font-weight: bold;
         background-color: rgb(83, 83, 83);
         border-radius: 20px 0px 0px 20px;
     }

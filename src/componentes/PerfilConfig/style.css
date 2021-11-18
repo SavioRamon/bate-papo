@@ -1,7 +1,7 @@
 
 .perfil-botao {
-    width: 40px;
-    height: 40px;
+    width: clamp(40px, 1vw, 1vw);
+    height: clamp(40px, 1vw, 1vw);
     background-color: #000;
     border-radius: 50%;
     cursor: pointer;
@@ -10,7 +10,7 @@
 .icone-voltar {
     z-index: 4;
     padding: 10px;
-    font-size: 30px;
+    font-size: clamp(40px, 1vw, 1vw);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -24,7 +24,7 @@
 
 .tela-configuracoes {
     z-index: 3;
-    padding-top: 60px;
+    padding-top: clamp(60px, 2vw, 2vw);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -39,7 +39,7 @@
 .area-superior {
     position: relative;
     width: 100%;
-    height: clamp(40px, 100%, 110px);
+    height: clamp(40px, 10vw, 10vw);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,8 +47,8 @@
 
 
 label[class="imagem-perfil"] {
-    width: clamp(40px, 100%, 110px);
-    height: clamp(40px, 100%, 110px);
+    width: clamp(40px, 8vw, 8vw);
+    height: clamp(40px, 8vw, 8vw);
     border-radius: 50%;
     border: 1px solid rgb(116, 116, 116);
     cursor: pointer;
@@ -83,6 +83,7 @@ input[type="file"] {
     cursor: pointer;
     color: rgb(228, 228, 228);
     font-weight: bold;
+    font-size: clamp(15px, 0.5vw, 0.5vw);
 }
 
 .alterar-nome {
@@ -90,7 +91,7 @@ input[type="file"] {
     padding: 3px;
     text-align: center;
     line-height: 20px;
-    font-size: 15px;
+    font-size: clamp(15px, 0.5vw, 0.5vw);
     background-color: rgb(151, 151, 151);
 }
 
@@ -101,12 +102,13 @@ input[type="file"] {
 .salvar-alteracoes {
     width: 80%;
     padding: 6px 20px;
-    margin-top: 20px;
+    margin-top: clamp(20px, 0.5vw, 0.5vw);
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
     background-color: rgb(44, 51, 45);
     color: rgb(199, 199, 199);
+    font-size: clamp(15px, 0.5vw, 0.5vw);
 }
 
 .salvar-alteracoes:hover {
