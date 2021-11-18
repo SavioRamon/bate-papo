@@ -79,29 +79,39 @@ input {
     position: relative;
 }
 .mensagem {
+    padding: 5px;
+    padding-bottom: 15px;
     max-width: 90%;
     height: min-content;
     margin: 0px 15px;
-    word-break: break-all;
     display: flex;
+    flex-direction: column;
     border-radius: 10px;
     background-color: rgb(61, 61, 61);
     position: relative;
 }
 
+.usuario-principal {
+    float: right;
+    background-color: #013d36;
+}
+
+.outro-usuario {
+    float: left;
+}
+
 :root {
     --cor-escura-transparente: rgba(0, 0, 0, 0.2);
-  }
+}
 
-.extra-info {
-    padding: 2px;
+.mensagem-conteudo-superior {
+    margin-bottom: 2px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
 }
 
 .imagem-perfil-chat {
+    margin-right: 10px;
     width: 33px;
     height: 33px;
     cursor: pointer;
@@ -112,30 +122,7 @@ input {
     background-size: cover;
 }
 
-.extra-info .horario {
-    margin: 2px 0px;
-    font-size: clamp(10px, 2vw, 12px);
-    color: rgb(172, 172, 172);
-    font-weight: bold;
-}
-
-.usuario-principal {
-    flex-direction: row-reverse;
-    float: right;
-    background-color: #013d36;
-}
-
-.outro-usuario {
-    flex-direction: row;
-    float: left;
-}
-
-.conteudo {
-    display: flex;
-    flex-direction: column;
-}
-
-.conteudo .nome-remetente {
+.nome-remetente {
     width: 100%;
     padding: 0px 5px;
     font-size: clamp(10px, 2vw, 13px);
@@ -143,15 +130,32 @@ input {
     font-weight: bold;
 }
 
-.conteudo .mensagem-texto {
+.horario {
+    margin: 2px 0px;
+    font-size: clamp(10px, 2vw, 12px);
+    color: rgb(172, 172, 172);
+    font-weight: bold;
+    position: absolute;
+    right: 5px;
+    bottom: -2px;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+}
+
+.mensagem-texto {
     margin: 0px 10px 0px 10px;
     font-size: clamp(15px, 2vw, 17px);
     color: rgb(190, 190, 190);
 }
 
-.conteudo .mensagem-midia {
+.mensagem-midia {
     width: clamp(100px, 15vw, 300px);
     height: clamp(150px, 20vw, 350px);
+    border-radius: 10px;
+    background-color: rgba(22, 20, 20, 0.7);
 }
 
 .area-inputs {

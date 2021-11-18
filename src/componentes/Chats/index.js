@@ -103,9 +103,9 @@ function Chat() {
                         mensagens.map((mensagem, key)=>{
                             
 
-                            let mensagemRemetente = "outro-usuario";
+                            let remetente = "outro-usuario";
                             if(dadosUsuario) {
-                                mensagemRemetente = mensagem.idUsuario === dadosUsuario.id?
+                                remetente = mensagem.idUsuario === dadosUsuario.id?
                                 "usuario-principal"
                                 :
                                 "outro-usuario";
@@ -114,31 +114,35 @@ function Chat() {
                             return (
                                 <div className={`area-mensagem`} key={key}>
 
-                                    <div className={`mensagem ${mensagemRemetente}`}>  
-                                        <div className="extra-info">
-                                            <img 
-                                                className="imagem-perfil-chat"
-                                                src={mensagem.imagem} 
-                                                onClick={()=>{
-                                                    dadosUsuario &&
-                                                    mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
-                                                }}
-                                            />
-                                            <div className="horario">
-                                                {mensagem.horarioEnvio}
-                                            </div>
+                                    <div className={`mensagem ${remetente}`}>
+                                        <div className="mensagem-conteudo-superior">
+                                            {remetente === "outro-usuario" &&
+                                                <img 
+                                                    className="imagem-perfil-chat"
+                                                    src={mensagem.imagem} 
+                                                    onClick={()=>{
+                                                        dadosUsuario &&
+                                                        mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
+                                                    }}
+                                                />
+                                            }
+                                            {remetente === "outro-usuario" &&
+                                                <p className="nome-remetente">{mensagem.remetente}</p>
+                                            }
                                         </div>
                                         
+                                        <div className="horario">
+                                            {mensagem.horarioEnvio}
+                                        </div>
 
                                         <div className="conteudo">
 
                                             
-                                            <p className="nome-remetente">{mensagem.remetente}</p>
-                                            
-                                            {mensagem.texto && 
+                                            {mensagem.texto &&
                                                 <p className="mensagem-texto">{mensagem.texto}</p>
                                             }
-
+                                            
+                                            
                                             {mensagem.midia && mensagem.tipoMidia === "image" &&
                                                 <img src={mensagem.midia} className="mensagem-midia" />
                                             }
