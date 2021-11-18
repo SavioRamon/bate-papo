@@ -39,7 +39,7 @@ function Anexos() {
     }, [dadosUsuario])
 
     return (
-        <div className="area-anexo">
+        <React.Fragment>
             <div style={anexoAberto? estiloAnexoAberto : {}} className="icone-anexo" onClick={()=>{
                     setAnexoAberto(!anexoAberto);
                 }}>
@@ -58,11 +58,12 @@ function Anexos() {
                             ...mensagemEnviar,
                             midia: e.target.files[0]
                         }))
-                    
+                        
                     }}/>
                 </div>
             }
-        </div>
+            
+        </React.Fragment>
             
     )
 }

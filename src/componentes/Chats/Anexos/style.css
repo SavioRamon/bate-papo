@@ -1,19 +1,15 @@
-.area-anexo {
-    margin-right: 20px;
-    position: relative;
-    display: flex;
-    flex-direction: column-reverse;
-    transition: all ease 0.5s;
-}
 
 .icone-anexo {
     padding: 10px 12px;
+    margin-right: 20px;
+    height: 60%;
     color: rgb(177, 177, 177);
     font-size: clamp(15px, 2vw, 17px);
     border-radius: 50%;
     cursor: pointer;
-    position: relative;
     float: inline-start;
+    display: flex;
+    align-items: center;
 }
 
 .icone-anexo:hover {
@@ -33,8 +29,10 @@
 
 
 .tipo-anexo {
-    margin-bottom: 50px;
+    
     position: absolute;
+    bottom: clamp(60px, 10vh, 10vh);
+    left: 10px;
     display: flex;
     height: min-content;
     flex-direction: column-reverse;
@@ -45,7 +43,7 @@ input[tipe="file"] {
 }
 
 @media(max-width: 500px) {
-    .area-anexo {
+    .icone-anexo {
         margin-right: 0;
     }
 
