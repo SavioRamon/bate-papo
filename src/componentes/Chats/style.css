@@ -79,8 +79,6 @@ input {
     position: relative;
 }
 .mensagem {
-    padding: 5px;
-    padding-bottom: 15px;
     max-width: 90%;
     height: min-content;
     margin: 0px 15px;
@@ -105,9 +103,12 @@ input {
 }
 
 .mensagem-conteudo-superior {
+    padding: 5px;
     margin-bottom: 2px;
+    border-radius: 10px 10px 0px 0px;
     display: flex;
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .imagem-perfil-chat {
@@ -125,9 +126,10 @@ input {
 .nome-remetente {
     width: 100%;
     padding: 0px 5px;
-    font-size: clamp(10px, 2vw, 13px);
+    font-size: clamp(11px, 2vw, 14px);
     line-height: 30px;
     font-weight: bold;
+    color: #999;
 }
 
 .horario {
@@ -141,6 +143,8 @@ input {
 }
 
 .conteudo {
+    padding: 5px;
+    padding-bottom: 15px;
     display: flex;
     flex-direction: column;
 }

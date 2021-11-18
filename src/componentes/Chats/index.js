@@ -115,8 +115,8 @@ function Chat() {
                                 <div className={`area-mensagem`} key={key}>
 
                                     <div className={`mensagem ${remetente}`}>
-                                        <div className="mensagem-conteudo-superior">
-                                            {remetente === "outro-usuario" &&
+                                        {remetente === "outro-usuario" &&
+                                            <div className="mensagem-conteudo-superior">
                                                 <img 
                                                     className="imagem-perfil-chat"
                                                     src={mensagem.imagem} 
@@ -125,11 +125,11 @@ function Chat() {
                                                         mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
                                                     }}
                                                 />
-                                            }
-                                            {remetente === "outro-usuario" &&
+                                                
                                                 <p className="nome-remetente">{mensagem.remetente}</p>
-                                            }
-                                        </div>
+                                            </div>  
+                                        }
+                                        
                                         
                                         <div className="horario">
                                             {mensagem.horarioEnvio}
