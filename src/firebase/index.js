@@ -68,29 +68,10 @@ export const carregaDadosChatsPrivados = ({chat})=>{
             imagem: doc.data().imagem,
             id: chat.id
         }));
-        const imagemURL = await retornaImagemURL(dadosChat.idUsuario);
-
-        resolve({
-            ...dadosChat,
-            imagem: imagemURL
-        })
+        
+        resolve(dadosChat)
     })
 }
-
-export const retornaImagemURL = async (usuarioID)=>{
-    const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
-    
-    const nomeImagemAtual = await db.collection("usuarios").doc(usuarioID).get()
-    .then(doc=>doc.data().imagem)
-    .catch(()=>imagemPadraoURL);
-
-    const imagemURL = await storageRef.child(`perfil-imagem/${usuarioID}/${nomeImagemAtual}`).getDownloadURL()
-        .then(url=>url)
-        .catch(()=>imagemPadraoURL);
-
-    return imagemURL;
-}
-
 
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     
@@ -107,13 +88,15 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
 
             await imagemReferencia.put(imagem);
 
+            const imgURL = await imagemReferencia.getDownloadURL().then(url=>url).catch(erro=>alert(erro));
+
             db.collection("usuarios").doc(usuarioID).set({
-                imagem: imagem.name
+                imagem: imgURL
             }, {merge: true});
 
         } else if(imagemJaExiste) {
             db.collection("usuarios").doc(usuarioID).set({
-                imagem: imagem.name
+                imagem: imagemJaExiste
             }, {merge: true});
         }
 
@@ -141,13 +124,12 @@ export const editarDadosUsuario = async (dadosEditados) => {
 
 
 export const retornaDadosUsuario = async usuarioID => {
-    const imagemURL = await retornaImagemURL(usuarioID);
     
     const dadosUsuario = await db.collection("usuarios").doc(usuarioID).get().then(doc=>({
         nome: doc.data().nome,
         id: doc.data().id,
         chats: doc.data().chats,
-        imagem: imagemURL
+        imagem: doc.data().imagem
     }));
 
     const listaChats = [];
