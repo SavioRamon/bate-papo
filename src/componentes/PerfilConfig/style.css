@@ -24,7 +24,7 @@
 
 .tela-configuracoes {
     z-index: 3;
-    padding-top: clamp(60px, 2vw, 2vw);
+    padding-top: clamp(100px, 2vw, 2vw);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -47,8 +47,8 @@
 
 
 label[class="imagem-perfil"] {
-    width: clamp(40px, 8vw, 8vw);
-    height: clamp(40px, 8vw, 8vw);
+    width: clamp(100px, 8vw, 8vw);
+    height: clamp(100px, 8vw, 8vw);
     border-radius: 50%;
     border: 1px solid rgb(116, 116, 116);
     cursor: pointer;

@@ -115,6 +115,8 @@ input {
     margin-right: 10px;
     width: clamp(30px, 1vw, 1vw);
     height: clamp(30px, 1vw, 1vw);
+    min-width: 30px;
+    min-height: 30px;
     cursor: pointer;
     border-radius: 50%;
     background-image: url(../../imagens/Loader.gif);
@@ -156,8 +158,9 @@ input {
 }
 
 .mensagem-midia {
-    width: clamp(100px, 18vw, 18vw);
-    height: clamp(150px, 20vw, 20vw);
+    margin: -2px;
+    width: clamp(130px, 18vw, 18vw);
+    height: clamp(180px, 20vw, 20vw);
     border-radius: 10px;
     background-color: rgba(22, 20, 20, 0.7);
 }
