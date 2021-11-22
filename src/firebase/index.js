@@ -76,20 +76,21 @@ export const carregaDadosChatsPrivados = ({chat})=>{
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     
     if(imagem) {
-
-        const imagemReferencia = storageRef.child(`perfil-imagem/${usuarioID}/${imagem.name}`);
+        console.log(imagem)
+        const imagemReferencia = storageRef.child(
+            `perfil-imagem/${usuarioID}/${imagem.name}${imagem.lastModified}${imagem.size}`
+        );
 
         const imagemJaExiste = await imagemReferencia.getDownloadURL()
             .then((url)=>url)
             .catch(()=>false);
 
-            
         if(!imagemJaExiste) {
 
             await imagemReferencia.put(imagem);
 
             const imgURL = await imagemReferencia.getDownloadURL().then(url=>url).catch(erro=>alert(erro));
-
+            
             db.collection("usuarios").doc(usuarioID).set({
                 imagem: imgURL
             }, {merge: true});
@@ -156,7 +157,6 @@ export const retornaDadosUsuario = async usuarioID => {
 }
 
 export const autoLogin = ()=>{
-
     return new Promise((resolve)=>{
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -280,8 +280,9 @@ export const sendMensagemMidia = async ({ chatID, mensagemUsuario }) => {
     for(let tipo of tiposMidia) {
         if(midia.type.includes(tipo)) {
 
-            const midiaRef = storageRef.child(`midia/${mensagemUsuario.idUsuario}/${tipo}/${midia.name}`);  
-            
+            const midiaRef = storageRef.child(
+                `midia/${mensagemUsuario.idUsuario}/${tipo}/${midia.name}${midia.lastModified}${midia.size}`);  
+            console.log(midia)
             const verificaExistenciaMidia = await midiaRef.getDownloadURL()
                 .then((url)=>url)
                 .catch(()=>false);
