@@ -7,7 +7,7 @@ import {
     fazerLogin, 
     autoLogin, 
     sairUsuario, 
-    criaOuvinteChats
+    atualizaUsuario
 
 } from "../../firebase";
 
@@ -30,35 +30,23 @@ export function* editaReducer(dados) {
     }
 }
 
-export function* criaOuvinteChatsUsuario(dados) {
+export function* atualizandoUsuario(dados) {
     
-    const ouvinte = yield call(criaOuvinteChats, dados.payload);
+    const ouvinteUsuario = yield call(atualizaUsuario, dados.payload);
     
-    yield put(usuarioCreators.setOuvinteChat(ouvinte));
+    yield put(usuarioCreators.setOuvinteUsuario(ouvinteUsuario));
     
 }
 
 
 export function* editarImagem(dados) {
-    const dadosUsuario = yield call(editarImagemPerfil, dados.payload);
-
-    if(dadosUsuario) {
-        localStorage.clear();
-
-        localStorage.setItem("dados", JSON.stringify(dadosUsuario));
-
-        yield call(editaReducer, dadosUsuario);
-    }
+    yield call(editarImagemPerfil, dados.payload);
 }
 
 
 export function* editarUsuario(dados) {
-    const situacao = yield call(editarDadosUsuario, dados.payload.dadosEditados);
+    yield call(editarDadosUsuario, dados.payload.dadosEditados);
     
-    if(situacao === true) {
-        localStorage.setItem("dados", JSON.stringify(dados.payload.dadosEditados));
-        yield put(usuarioCreators.setUsuarioEditado(dados.payload.dadosEditados))
-    }
 }
 
 

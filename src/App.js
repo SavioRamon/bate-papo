@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 
-  const [chatsAtualizados, setChatsAtualizados] = useState("");
+  const [usuarioAtualizado, setUsuarioAtualizado] = useState("");
 
   const usuario = useSelector(state=>state.usuario);
   const dispatch = useDispatch();
@@ -19,18 +19,24 @@ function App() {
 
 
   useEffect(()=>{
-    usuario.dadosUsuario && dispatch(usuarioCreators.criaOuvinteChats(usuario.dadosUsuario.id));
-  }, [usuario.dadosUsuario]);
+    usuario.dadosUsuario && dispatch(usuarioCreators.atualizaUsuario(usuario.dadosUsuario.id));
+  }, [!!usuario.dadosUsuario && !usuario.ouvinteUsuario]);
 
 
   useEffect(()=>{
-    usuario.atualizaChatsOuvinte && usuario.atualizaChatsOuvinte(setChatsAtualizados);
-  }, [usuario.atualizaChatsOuvinte]);
+    usuario.ouvinteUsuario && usuario.ouvinteUsuario(setUsuarioAtualizado);
+  }, [!!usuario.ouvinteUsuario]);
 
 
   useEffect(()=>{
-    chatsAtualizados && dispatch(usuarioCreators.setAllChats(chatsAtualizados));
-  }, [chatsAtualizados]);
+    
+    if(usuarioAtualizado){
+      dispatch(usuarioCreators.setUsuario(usuarioAtualizado));
+      localStorage.clear();
+      localStorage.setItem("dados", JSON.stringify(usuarioAtualizado));
+
+    }
+  }, [usuarioAtualizado]);
 
   return (
     <React.Fragment>

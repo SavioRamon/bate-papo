@@ -41,9 +41,10 @@ function analisaInputNome(nome) {
     return true;
 }
 
-export const criaOuvinteChats = (usuarioID)=>{
-    return function(callback) {        
+export const atualizaUsuario = (usuarioID)=>{
+    return function(callback) {
         db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
+            console.log("Oi")
             const listaChats = [];
             for(let chat of doc.data().chats){
 
@@ -54,7 +55,16 @@ export const criaOuvinteChats = (usuarioID)=>{
                     await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
                 }
             }
-            callback(listaChats);
+            
+            callback({
+                dadosUsuario: {
+                    nome: doc.data().nome,
+                    id: doc.data().id,
+                    imagem: doc.data().imagem
+                },
+        
+                chats: listaChats
+            });
         })
     }
 }
@@ -76,7 +86,6 @@ export const carregaDadosChatsPrivados = ({chat})=>{
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
     
     if(imagem) {
-        console.log(imagem)
         const imagemReferencia = storageRef.child(
             `perfil-imagem/${usuarioID}/${imagem.name}${imagem.lastModified}${imagem.size}`
         );
@@ -100,10 +109,6 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
                 imagem: imagemJaExiste
             }, {merge: true});
         }
-
-        
-
-        return retornaDadosUsuario(usuarioID);
     }
 }
 
@@ -112,15 +117,12 @@ export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
 export const editarDadosUsuario = async (dadosEditados) => {
 
     const nomeAnalise = analisaInputNome(dadosEditados.nome);
-    if(!nomeAnalise) {
-        return false;
+    if(nomeAnalise) {
+        await db.collection("usuarios").doc(dadosEditados.id).update({
+            nome: dadosEditados.nome
+        });
     }
 
-    const situacao = await db.collection("usuarios").doc(dadosEditados.id).update({
-        nome: dadosEditados.nome
-    }).then( () => true);
-
-    return situacao;
 }
 
 
@@ -282,7 +284,7 @@ export const sendMensagemMidia = async ({ chatID, mensagemUsuario }) => {
 
             const midiaRef = storageRef.child(
                 `midia/${mensagemUsuario.idUsuario}/${tipo}/${midia.name}${midia.lastModified}${midia.size}`);  
-            console.log(midia)
+            
             const verificaExistenciaMidia = await midiaRef.getDownloadURL()
                 .then((url)=>url)
                 .catch(()=>false);

@@ -1,5 +1,5 @@
 export const Types = {
-    ATUALIZA_TODOS_CHATS: "ATUALIZA_TODOS_CHATS_ASYNC",
+    ATUALIZA_USUARIO: "ATUALIZA_USUARIO_ASYNC",
     EDITAR_IMAGEM: "EDITAR_IMAGEM_ASYNC",
     EDITAR_USUARIO: "EDITAR_USUARIO_ASYNC",
 
@@ -9,7 +9,7 @@ export const Types = {
     USUARIO_SAIR: "USUARIO_SAIR_ASYNC",
 
     SET_ALL_CHATS: "SET_ALL_CHATS",
-    SET_OUVINTE_CHAT: "SET_OUVINTE_CHAT",
+    SET_OUVINTE_USUARIO: "SET_OUVINTE_CHAT",
     SET_CHAT: "SET_CHAT",
     SET_USUARIO: "SET_USUARIO",
     USUARIO_EDITADO: "SET_USUARIO_EDITADO",
@@ -58,8 +58,8 @@ export const Creators = {
     }),
 
 
-    criaOuvinteChats: (usuarioID)=>({
-        type: Types.ATUALIZA_TODOS_CHATS,
+    atualizaUsuario: (usuarioID)=>({
+        type: Types.ATUALIZA_USUARIO,
         payload: usuarioID
     }),
 
@@ -78,8 +78,8 @@ export const Creators = {
         }
     }),
 
-    setOuvinteChat: (func)=>({
-        type: Types.SET_OUVINTE_CHAT,
+    setOuvinteUsuario: (func)=>({
+        type: Types.SET_OUVINTE_USUARIO,
         payload: func
     }),
 
@@ -105,14 +105,17 @@ const STATE_INICIAL = {
     load: false,
     dadosUsuario: null,
     chats: null,
-    atualizaChatsOuvinte: null
+    ouvinteUsuario: null
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {
     switch(type) {
         
         case Types.SET_USUARIO:
-            return payload.dadosUsuario;
+            return {
+                ...state,
+                ...payload.dadosUsuario
+            };
          
         case Types.SET_ALL_CHATS: 
         
@@ -122,10 +125,10 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
             }
         
 
-        case Types.SET_OUVINTE_CHAT:
+        case Types.SET_OUVINTE_USUARIO:
             return {
                 ...state,
-                atualizaChatsOuvinte: payload
+                ouvinteUsuario: payload
             }
 
         case Types.SET_CHAT:
