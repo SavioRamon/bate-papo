@@ -44,7 +44,6 @@ function analisaInputNome(nome) {
 export const atualizaUsuario = (usuarioID)=>{
     return function(callback) {
         db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
-            console.log("Oi")
             const listaChats = [];
             for(let chat of doc.data().chats){
 
