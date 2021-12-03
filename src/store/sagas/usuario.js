@@ -54,16 +54,12 @@ export function* registrarUsuario(dados){
     const { nome, email, senha } = dados.payload;
     const dadosUsuario = yield call(novoUsuario, nome, email, senha);
 
-    localStorage.setItem("dados", JSON.stringify(dadosUsuario));
-
     yield call(editaReducer, dadosUsuario);
 }
 
 export function* loginUsuario(dados) {
     const { email, senha } = dados.payload;
     const dadosUsuario = yield call(fazerLogin, email, senha);
-
-    localStorage.setItem("dados", JSON.stringify(dadosUsuario));
 
     yield call(editaReducer, dadosUsuario);
 }
