@@ -6,7 +6,7 @@ import Anexos from "./Anexos";
 
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
 
-import { faEllipsisV, faBars, faArrowLeft, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import { faComments, faBars, faTimes, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -221,8 +221,6 @@ function InfoUsuario({ dados, mostraInfo }) {
         id: dados.idUsuario
     }
 
-    const [infoOpcoes, setInfoOpcoes] = useState(false);
-
     return (
         <div className="tela-escurecida">
             <div className="info-usuario">
@@ -231,36 +229,32 @@ function InfoUsuario({ dados, mostraInfo }) {
                     <div className="info-usuario-sair" onClick={()=>{
                         mostraInfo(false);
                     }}>
-                        <FontAwesomeIcon icon={faArrowLeft}>
+                        <FontAwesomeIcon icon={faTimes}>
 
                         </FontAwesomeIcon>
                     </div>
 
-                    <p className="info-nome">{dados.remetente}</p>
-
-                    <div className="info-opcoes" onClick={()=>{
-
-                        setInfoOpcoes(!infoOpcoes);
-
-                    }}>
-                        <FontAwesomeIcon icon={ faEllipsisV } />
-                    </div>
                 </div>
 
-                {infoOpcoes &&
-                    <div className="opcoes">
-                        <p onClick={()=>{
-                            
-                            dispatch(chatCreators.novoChatPrivado(usuarioPrincipal, segundoUsuario));
+                <div className="info-usuario-dados">
+                    
+                    <img src={dados.imagem} alt="imagem-perfil"/>
+                    <p className="info-nome">{dados.remetente}</p>
 
-                            setInfoOpcoes(false);
-                            mostraInfo(false);
+                </div>
 
-                        }}>Conversar com {dados.remetente}</p>
+                <div className="info-opcoes">
+                    <div onClick={()=>{
+                        dispatch(chatCreators.novoChatPrivado(usuarioPrincipal, segundoUsuario));
+
+                        mostraInfo(false);
+                    }}>
+                        <FontAwesomeIcon icon={faComments}></FontAwesomeIcon>
+                        <p>conversar</p>
                     </div>
-                }
+                    
+                </div>
 
-                <img src={dados.imagem} alt="imagem-perfil"/>
             </div>
         </div>
     )
