@@ -1,14 +1,9 @@
 import { call, put } from "redux-saga/effects";
 
-import { retornaMensagens, sendMensagemTexto, sendMensagemMidia, novoChatPrivado } from "../../firebase";
+import { sendMensagemTexto, sendMensagemMidia, novoChatPrivado } from "../../firebase";
 
 import { Creators as chatCreators } from "../ducks/chats";
 import { Creators as usuarioCreators } from "../ducks/usuario";
-
-export function* getMensagens(dados) {
-    const mensagensFunction = yield call(retornaMensagens, dados.payload.chatID);
-    yield put(chatCreators.setMensagens(mensagensFunction));
-}
 
 export function* enviaMensagemTexto(dados) {
     yield call(sendMensagemTexto, dados.payload);

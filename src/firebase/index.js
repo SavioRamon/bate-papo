@@ -44,6 +44,7 @@ function analisaInputNome(nome) {
 export const atualizaUsuario = (usuarioID)=>{
     return function(callback) {
         db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
+            
             const listaChats = [];
             for(let chat of doc.data().chats){
 
@@ -241,16 +242,15 @@ export const sairUsuario = ()=>{
 
 
 
-export const retornaMensagens = (chatID) => {
+export const retornaMensagens = (callback, chatID) => {
     
     // retorna uma função que aceita uma função de callback como parâmetro
     // essa função de callback será usada para guardar as mensagens numa react rook
 
-    return function(callback) {
-        db.collection("chats").doc(chatID).onSnapshot(doc=>{
-            callback(doc.data().mensagens);
-        })
-    }
+    db.collection("chats").doc(chatID).onSnapshot(doc=>{
+        callback(doc.data().mensagens);
+    })
+    
 }
 
 

@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 
+import { retornaMensagens } from "../../firebase";
+
 import Anexos from "./Anexos";
 
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
@@ -32,12 +34,8 @@ function Chat() {
     const [mostraInfoUsuario, setMostraInfoUsuario] = useState(false);
 
     useEffect(()=>{
-        dispatch(chatCreators.getMensagens(chats.chatID));
-    }, [chats.chatID])
-
-    useEffect(()=>{
-        chats.mensagensFunction && chats.mensagensFunction(setMensagens);
-    }, [chats])
+        retornaMensagens(setMensagens, chats.chatID);
+    }, [chats.chatID]);
 
     useEffect(()=>{
         if(dadosUsuario){
