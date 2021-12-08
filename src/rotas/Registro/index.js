@@ -23,7 +23,7 @@ function Registro(){
         if(dadosUsuario) {
             history.push("/");
         }
-    }, [dadosUsuario]);
+    }, [history, dadosUsuario]);
 
     return (
         <div className="rota registro">

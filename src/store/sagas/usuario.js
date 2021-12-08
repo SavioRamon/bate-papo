@@ -10,7 +10,7 @@ import {
 
 } from "../../firebase";
 
-import usuario, { Creators as usuarioCreators } from "../ducks/usuario";
+import { Creators as usuarioCreators } from "../ducks/usuario";
 
 export function* editaReducer(dados) {
     if(dados) {

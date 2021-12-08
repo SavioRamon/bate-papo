@@ -17,7 +17,7 @@ function App() {
 
   useEffect(()=>{
     !usuario.dadosUsuario && dispatch(usuarioCreators.loginAutomatico());
-  }, []);
+  }, [dispatch, usuario.dadosUsuario]);
 
 
   useEffect(()=>{
@@ -26,14 +26,13 @@ function App() {
 
 
   useEffect(()=>{
-    
     if(usuarioAtualizado){
       dispatch(usuarioCreators.setUsuario(usuarioAtualizado));
       localStorage.clear();
       localStorage.setItem("dados", JSON.stringify(usuarioAtualizado));
 
     }
-  }, [usuarioAtualizado]);
+  }, [dispatch, usuarioAtualizado]);
 
   return (
     <React.Fragment>

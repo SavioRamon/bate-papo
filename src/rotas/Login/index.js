@@ -22,7 +22,7 @@ function Login(){
         if(dadosUsuario){
             history.push("/");
         }
-    }, [dadosUsuario]);
+    }, [history, dadosUsuario]);
 
     return (
         <div className="rota login">
