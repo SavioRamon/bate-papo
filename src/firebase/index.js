@@ -41,32 +41,30 @@ function analisaInputNome(nome) {
     return true;
 }
 
-export const atualizaUsuario = (usuarioID)=>{
-    return function(callback) {
-        db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
+export const atualizaUsuario = (callback, usuarioID)=>{
+    db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
             
-            const listaChats = [];
-            for(let chat of doc.data().chats){
+        const listaChats = [];
+        for(let chat of doc.data().chats){
 
-                if(chat.id === "chatGeral") {
-                    listaChats.push(chat);
+            if(chat.id === "chatGeral") {
+                listaChats.push(chat);
 
-                } else if(chat.idUsuario) {
-                    await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
-                }
+            } else if(chat.idUsuario) {
+                await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
             }
+        }
             
-            callback({
-                dadosUsuario: {
-                    nome: doc.data().nome,
-                    id: doc.data().id,
-                    imagem: doc.data().imagem
-                },
+        callback({
+            dadosUsuario: {
+                nome: doc.data().nome,
+                id: doc.data().id,
+                imagem: doc.data().imagem
+            },
         
-                chats: listaChats
-            });
-        })
-    }
+            chats: listaChats
+        });
+    }) 
 }
 
 

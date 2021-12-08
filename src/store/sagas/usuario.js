@@ -7,7 +7,6 @@ import {
     fazerLogin, 
     autoLogin, 
     sairUsuario, 
-    atualizaUsuario
 
 } from "../../firebase";
 
@@ -28,14 +27,6 @@ export function* editaReducer(dados) {
         }
         yield put(usuarioCreators.setUsuario(semUsuario));
     }
-}
-
-export function* atualizandoUsuario(dados) {
-    
-    const ouvinteUsuario = yield call(atualizaUsuario, dados.payload);
-    
-    yield put(usuarioCreators.setOuvinteUsuario(ouvinteUsuario));
-    
 }
 
 

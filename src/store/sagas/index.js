@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, all } from "redux-saga/effects";
+import { takeEvery, all } from "redux-saga/effects";
 
 import { Types as chatTypes } from "../ducks/chats";
 import { Types as usuarioTypes } from "../ducks/usuario";
@@ -13,13 +13,11 @@ import {
     loginUsuario, 
     loginAutomatico, 
     usuarioSair, 
-    atualizandoUsuario
 
 } from "./usuario";
 
 export default function* rootSagas() {
     return yield all([
-        takeLatest(usuarioTypes.ATUALIZA_USUARIO, atualizandoUsuario),
         takeEvery(usuarioTypes.EDITAR_IMAGEM, editarImagem),
         takeEvery(usuarioTypes.EDITAR_USUARIO, editarUsuario),
 

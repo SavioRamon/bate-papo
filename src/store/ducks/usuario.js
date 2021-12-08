@@ -1,5 +1,4 @@
 export const Types = {
-    ATUALIZA_USUARIO: "ATUALIZA_USUARIO_ASYNC",
     EDITAR_IMAGEM: "EDITAR_IMAGEM_ASYNC",
     EDITAR_USUARIO: "EDITAR_USUARIO_ASYNC",
 
@@ -9,7 +8,6 @@ export const Types = {
     USUARIO_SAIR: "USUARIO_SAIR_ASYNC",
 
     SET_ALL_CHATS: "SET_ALL_CHATS",
-    SET_OUVINTE_USUARIO: "SET_OUVINTE_CHAT",
     SET_CHAT: "SET_CHAT",
     SET_USUARIO: "SET_USUARIO",
     USUARIO_EDITADO: "SET_USUARIO_EDITADO",
@@ -57,13 +55,6 @@ export const Creators = {
         type: Types.USUARIO_SAIR
     }),
 
-
-    atualizaUsuario: (usuarioID)=>({
-        type: Types.ATUALIZA_USUARIO,
-        payload: usuarioID
-    }),
-
-
     setChat: (chat)=>({
         type: Types.SET_CHAT,
         payload: {
@@ -76,11 +67,6 @@ export const Creators = {
         payload: {
             chats
         }
-    }),
-
-    setOuvinteUsuario: (func)=>({
-        type: Types.SET_OUVINTE_USUARIO,
-        payload: func
     }),
 
     setUsuario: (dadosUsuario)=>({
@@ -104,8 +90,7 @@ export const Creators = {
 const STATE_INICIAL = {
     load: false,
     dadosUsuario: null,
-    chats: null,
-    ouvinteUsuario: null
+    chats: null
 }
 
 export default function usuario(state=STATE_INICIAL, { type, payload }) {
@@ -124,12 +109,6 @@ export default function usuario(state=STATE_INICIAL, { type, payload }) {
                 chats: payload.chats
             }
         
-
-        case Types.SET_OUVINTE_USUARIO:
-            return {
-                ...state,
-                ouvinteUsuario: payload
-            }
 
         case Types.SET_CHAT:
             const novoState = {
