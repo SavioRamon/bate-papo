@@ -69,7 +69,6 @@
 
 .chats-selecao, .link-selecao {
     width: 100%;
-    padding: 10px;
     font-weight: bold;
     font-size: clamp(20px, 1vw, 1vw);
     display: flex;
@@ -77,11 +76,21 @@
     color: rgb(167, 167, 167);
 }
 
+.link-selecao {
+    padding: clamp(10px, 0.8vw, 0.8vw);
+}
+
 .chats-selecao p {
+    height: 100%;
+    width: 100%;
     text-indent: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .chats-selecao img {
+    
+    margin: 10px;
     width: clamp(40px, 1vw, 1vw);
     height: clamp(40px, 1vw, 1vw);
     border-radius: 50%;

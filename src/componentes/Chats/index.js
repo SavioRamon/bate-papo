@@ -8,7 +8,7 @@ import Anexos from "./Anexos";
 
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
 
-import { faComments, faBars, faTimes, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -26,12 +26,10 @@ function Chat() {
     const [mensagens, setMensagens] = useState("");
     const [mensagemEnviar, setMensagemEnviar] = useState({
         imagem: "",
-        remetente: "",
-        idUsuario: "",
+        nome: "",
+        id: "",
         texto: ""
     });
-
-    const [mostraInfoUsuario, setMostraInfoUsuario] = useState(false);
 
     useEffect(()=>{
         retornaMensagens(setMensagens, chats.chatID);
@@ -41,8 +39,8 @@ function Chat() {
         if(dadosUsuario){
             setMensagemEnviar({
                 ...mensagemEnviar,
-                remetente: dadosUsuario.nome,
-                idUsuario: dadosUsuario.id,
+                nome: dadosUsuario.nome,
+                id: dadosUsuario.id,
                 imagem: dadosUsuario.imagem
             })
         }
@@ -57,12 +55,12 @@ function Chat() {
 
     function getImagemChat() {
         const dados = chatsUsuarioData.filter((chatDados)=>{
-            return chats.chatID === chatDados.id
+            return chats.chatID === chatDados.idChat
         })
         if(dados[0]) {
             if(dados[0].imagem) {
                 return dados[0].imagem;
-    
+
             } else if(!dados[0].imagem) {
                 return chatGeralIMG;
             } 
@@ -75,9 +73,6 @@ function Chat() {
     return (
     <div className="chat-componente">
         
-        {mostraInfoUsuario && 
-            <InfoUsuario dados={mostraInfoUsuario} mostraInfo={setMostraInfoUsuario} />
-        }
 
         <div className="chat-tela">
 
@@ -90,7 +85,9 @@ function Chat() {
                 </div>
 
                 {
-                    <img src={ chatsUsuarioData? getImagemChat() : chatGeralIMG} />
+                    <img src={ chatsUsuarioData? getImagemChat() : chatGeralIMG} onClick={()=>{
+                        
+                    }} />
                 }
 
             </div>
@@ -103,7 +100,7 @@ function Chat() {
 
                             let remetente = "outro-usuario";
                             if(dadosUsuario) {
-                                remetente = mensagem.idUsuario === dadosUsuario.id?
+                                remetente = mensagem.id === dadosUsuario.id?
                                 "usuario-principal"
                                 :
                                 "outro-usuario";
@@ -119,12 +116,15 @@ function Chat() {
                                                     className="imagem-perfil-chat"
                                                     src={mensagem.imagem} 
                                                     onClick={()=>{
+
                                                         dadosUsuario &&
-                                                        mensagem.idUsuario !== dadosUsuario.id && setMostraInfoUsuario(mensagem);
+                                                        dispatch(componentesCreators.setTelaDetalharUsuarioAbrir(
+                                                            mensagem
+                                                        ))
                                                     }}
                                                 />
                                                 
-                                                <p className="nome-remetente">{mensagem.remetente}</p>
+                                                <p className="nome-remetente">{mensagem.nome}</p>
                                             </div>  
                                         }
                                         
@@ -205,57 +205,6 @@ function Chat() {
         </div>
     </div>
     );
-}
-
-function InfoUsuario({ dados, mostraInfo }) {
-
-    const usuarioPrincipal = useSelector(state=>state.usuario.dadosUsuario);
-    const dispatch = useDispatch();
-    
-
-    const segundoUsuario = {
-        nome: dados.remetente,
-        imagem: dados.imagem,
-        id: dados.idUsuario
-    }
-
-    return (
-        <div className="tela-escurecida">
-            <div className="info-usuario">
-
-                <div className="info-usuario-area-superior">
-                    <div className="info-usuario-sair" onClick={()=>{
-                        mostraInfo(false);
-                    }}>
-                        <FontAwesomeIcon icon={faTimes}>
-
-                        </FontAwesomeIcon>
-                    </div>
-
-                </div>
-
-                <div className="info-usuario-dados">
-                    
-                    <img src={dados.imagem} alt="imagem-perfil"/>
-                    <p className="info-nome">{dados.remetente}</p>
-
-                </div>
-
-                <div className="info-opcoes">
-                    <div onClick={()=>{
-                        dispatch(chatCreators.novoChatPrivado(usuarioPrincipal, segundoUsuario));
-
-                        mostraInfo(false);
-                    }}>
-                        <FontAwesomeIcon icon={faComments}></FontAwesomeIcon>
-                        <p>conversar</p>
-                    </div>
-                    
-                </div>
-
-            </div>
-        </div>
-    )
 }
 
 export default Chat;

@@ -4,6 +4,7 @@ import "./style.css";
 
 import Lateral from "../../componentes/Lateral";
 import Chats from "../../componentes/Chats";
+import DetalharUsuario from "../../componentes/DetalharUsuario";
 
 import { Creators as componentesCreators } from "../../store/ducks/componentes";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 function Inicio() {
 
     const lateralAberta = useSelector(state=>state.componentes.lateralAbrir);
+    const detalharUsuario = useSelector(state=>state.componentes.usuarioDetalhar);
+
     const dispatch = useDispatch();
+
+
     
     window.addEventListener("resize", ()=>{
         if(document.body.clientWidth >= 1000 && !lateralAberta){
@@ -22,6 +27,11 @@ function Inicio() {
 
     return (
         <div className="inicio">
+
+            {detalharUsuario &&
+                <DetalharUsuario />
+            }
+
             {lateralAberta &&
                 <Lateral />
             }

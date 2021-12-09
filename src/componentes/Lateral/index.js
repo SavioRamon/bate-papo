@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Creators as componentesCreators } from "../../store/ducks/componentes";
 import { Creators as chatCreators } from "../../store/ducks/chats";
 import { Creators as usuarioCreators } from "../../store/ducks/usuario";
+
 import { useDispatch, useSelector } from "react-redux";
 
 function  OpcoesLateral({ setOpcoesAbrir }) {
@@ -33,6 +34,7 @@ function Lateral(){
 
     const chatSelecionado = useSelector(state=>state.chats.chatID);
     const usuario = useSelector(state=>state.usuario);
+
     const dispatch = useDispatch();
 
     
@@ -100,16 +102,22 @@ function Lateral(){
                                     return (
                                         <div 
                                             className="chats-selecao" key={key} 
-                                            onClick={()=>{
-                                                dispatch(chatCreators.chatSelecionado(chat.id));
+                                            style={chatSelecionado === chat.idChat? chatSelecionadoEstilo : {} }
+                                        >
+                                            <img 
+                                                src={chat.imagem? chat.imagem : chatGeralImg} 
+                                                alt="imagem de perfil do usuário" 
+                                                onClick={()=>{
+                                                    dispatch(componentesCreators.setTelaDetalharUsuarioAbrir(chat))
+                                                }}
+                                                />
+                                            <p onClick={()=>{
+                                                
+                                                dispatch(chatCreators.chatSelecionado(chat.idChat));
                                                 if(document.body.clientWidth <= 1000) {
                                                     dispatch(componentesCreators.setLateralAbrir(false));
                                                 }
-                                            }}
-                                            style={chatSelecionado === chat.id? chatSelecionadoEstilo : {} }
-                                        >
-                                            <img src={chat.imagem? chat.imagem : chatGeralImg} alt="imagem de perfil do usuário" />
-                                            <p>{chat.chatNome}</p>
+                                            }}>{chat.nome}</p>
                                         </div>
                                     )
                                 })

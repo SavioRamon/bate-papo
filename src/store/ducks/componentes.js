@@ -1,5 +1,6 @@
 export const Types = {
-    LATERAL_ABRIR: "SET_LATERAL_ABRIR"
+    LATERAL_ABRIR: "SET_LATERAL_ABRIR",
+    DETALHAR_USUARIO: "SET_DETALHAR_USUARIO",
 }
 
 export const Creators = {
@@ -8,11 +9,19 @@ export const Creators = {
         payload: {
             situacao
         }
+    }),
+
+    setTelaDetalharUsuarioAbrir: (usuario)=>({
+        type: Types.DETALHAR_USUARIO,
+        payload: {usuario}
     })
 }
 
 const STATE_INICIAL = {
-    lateralAbrir: true
+    lateralAbrir: true,
+
+    // Informacoes de algum usuario em específico
+    usuarioDetalhar: null
 }
 
 export default function componentes(state=STATE_INICIAL, {type, payload}) {
@@ -21,6 +30,12 @@ export default function componentes(state=STATE_INICIAL, {type, payload}) {
             return {
                 ...state,
                 lateralAbrir: payload.situacao
+            }
+
+        case Types.DETALHAR_USUARIO:
+            return {
+                ...state,
+                usuarioDetalhar: payload.usuario
             }
 
         default: 
