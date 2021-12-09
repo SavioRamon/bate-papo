@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 
+  const att = atualizaUsuario();
   const [usuarioAtualizado, setUsuarioAtualizado] = useState("");
 
   const usuario = useSelector(state=>state.usuario);
@@ -21,7 +22,11 @@ function App() {
 
 
   useEffect(()=>{
-    usuario.dadosUsuario && atualizaUsuario(setUsuarioAtualizado, usuario.dadosUsuario.id);
+    /* Lembrar!
+      existe um bug aqui
+    */
+    usuario.dadosUsuario && att(setUsuarioAtualizado, usuario.dadosUsuario.id);
+    
   }, [!!usuario.dadosUsuario]);
 
 

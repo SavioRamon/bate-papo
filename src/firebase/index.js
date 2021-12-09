@@ -41,40 +41,45 @@ function analisaInputNome(nome) {
     return true;
 }
 
-export const atualizaUsuario = (callback, usuarioID)=>{
-    db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
+export const atualizaUsuario = ()=>{
+    return function(callback, usuarioID) {
+        db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
             
-        const listaChats = [];
-        for(let chat of doc.data().chats){
-
-            if(chat.id === "chatGeral") {
-                listaChats.push(chat);
-
-            } else if(chat.idUsuario) {
-                await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
+            const listaChats = [];
+            for(let chat of doc.data().chats){
+    
+                if(chat.idChat === "chatGeral") {
+                    
+                    listaChats.push(chat);
+    
+                } else if(chat.idUsuario) {
+                    await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
+                }
             }
-        }
+                
+            callback({
+                dadosUsuario: {
+                    nome: doc.data().nome,
+                    id: doc.data().id,
+                    imagem: doc.data().imagem
+                },
             
-        callback({
-            dadosUsuario: {
-                nome: doc.data().nome,
-                id: doc.data().id,
-                imagem: doc.data().imagem
-            },
-        
-            chats: listaChats
-        });
-    }) 
+                chats: listaChats
+            });
+        }) 
+    
+    }
+    
 }
 
 
 export const carregaDadosChatsPrivados = ({chat})=>{
     return new Promise(async(resolve, reject)=>{
         const dadosChat = await db.collection("usuarios").doc(chat.idUsuario).get().then(doc=>({
-            chatNome: doc.data().nome,
-            idUsuario: chat.idUsuario,
+            nome: doc.data().nome,
+            id: chat.idUsuario,
             imagem: doc.data().imagem,
-            id: chat.id
+            idChat: chat.idChat
         }));
         
         resolve(dadosChat)
@@ -206,8 +211,8 @@ export const novoUsuario = async (nome, email, senha)=>{
             id: usuario.uid,
             chats: [
                 {
-                    id: "chatGeral",
-                    chatNome: "Geral"
+                    idChat: "chatGeral",
+                    nome: "Geral"
                 }
             ],
             imagem: imagemPadraoURL
@@ -330,10 +335,10 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
     const verificaChatExistencia = await db.collection("usuarios").doc(usuarioPrincipal.id).get().then(doc=>{
         let existe = false;
         for(let chat of doc.data().chats) {
-            if(chat.id === chatID || chat.id === chatIdAlternativo) {
+            if(chat.idChat === chatID || chat.idChat === chatIdAlternativo) {
                 existe = true;
 
-                chatExisteId = chat.id;
+                chatExisteId = chat.idChat;
 
                 break;
             }
@@ -350,7 +355,7 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
         await db.collection("usuarios").doc(usuarioPrincipal.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 idUsuario: segundoUsuario.id,
-                id: chatID
+                idChat: chatID
             })
         })
 
@@ -358,22 +363,22 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
         await db.collection("usuarios").doc(segundoUsuario.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 idUsuario: usuarioPrincipal.id,
-                id: chatID
+                idChat: chatID
             })
         })
 
         return {
             novoChat: true,
-            chatNome: segundoUsuario.nome,
-            idUsuario: segundoUsuario.id,
+            nome: segundoUsuario.nome,
+            id: segundoUsuario.id,
             imagem: segundoUsuario.imagem,
-            id: chatID,
+            idChat: chatID,
         }
 
     } else {
         return  {
             novoChat: false,
-            id: chatExisteId
+            idChat: chatExisteId
         }
     }
 
