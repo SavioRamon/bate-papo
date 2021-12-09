@@ -26,7 +26,8 @@ input {
     left: 0;
     right: 0;
     height: 10vh;
-    background-color: #2c2c2c;
+    background-color: #202420;
+    box-shadow: 0px 0px 10px rgb(5, 31, 0);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,7 +65,7 @@ input {
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto;
-    background-color: rgb(15, 15, 15);
+    background-color: rgb(12, 14, 12);
 
 }
 
@@ -128,7 +129,7 @@ input {
 .nome-remetente {
     width: 100%;
     padding: 0px 5px;
-    font-size: clamp(11px, 0.3vw, 0.3vw);
+    font-size: clamp(11px, 0.7vw, 0.7vw);
     line-height: 30px;
     font-weight: bold;
     color: #999;
@@ -168,13 +169,13 @@ input {
 .area-inputs {
     width: 70%;
     height: 10vh;
-    border-top: 2px solid rgb(63, 63, 63);
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     bottom: 0;
-    background-color: #2c2c2c;
+    background-color: #202420;
+    box-shadow: 0px 0px 10px rgb(5, 31, 0);
 }
 
 .input-mensagem {
@@ -203,8 +204,8 @@ input {
     align-items: center;
 }
 
-.input-botao-enviar:hover {
-    background-color: rgb(8, 119, 32);
+.botao-enviar:hover {
+    background-color: rgb(13, 156, 85);
 }
 
 

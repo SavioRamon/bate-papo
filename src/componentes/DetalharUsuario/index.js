@@ -15,8 +15,6 @@ function DetalharUsuario() {
     const usuarioDetalhado = useSelector(state=>state.componentes.usuarioDetalhar);
 
     const dispatch = useDispatch();
-    console.log(usuarioPrincipal);
-    console.log(usuarioDetalhado);
 
     return (
         
@@ -46,6 +44,9 @@ function DetalharUsuario() {
                         dispatch(chatCreators.novoChatPrivado(usuarioPrincipal, usuarioDetalhado));
 
                         dispatch(componentesCreators.setTelaDetalharUsuarioAbrir(null));
+                        if(document.body.clientWidth <= 1000) {
+                            dispatch(componentesCreators.setLateralAbrir(false));
+                        }
                     }}>
                         <FontAwesomeIcon icon={faComments}></FontAwesomeIcon>
                         <p>conversar</p>

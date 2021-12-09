@@ -108,7 +108,9 @@ function Lateral(){
                                                 src={chat.imagem? chat.imagem : chatGeralImg} 
                                                 alt="imagem de perfil do usuário" 
                                                 onClick={()=>{
-                                                    dispatch(componentesCreators.setTelaDetalharUsuarioAbrir(chat))
+                                                    if(chat.idChat !== "chatGeral"){
+                                                        dispatch(componentesCreators.setTelaDetalharUsuarioAbrir(chat));
+                                                    }
                                                 }}
                                                 />
                                             <p onClick={()=>{
