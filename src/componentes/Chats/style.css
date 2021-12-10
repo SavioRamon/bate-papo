@@ -156,6 +156,7 @@ input {
     margin: 0px 10px 0px 10px;
     font-size: clamp(15px, 0.5vw, 0.5vw);
     color: rgb(190, 190, 190);
+    word-break: break-all;
 }
 
 .mensagem-midia {
