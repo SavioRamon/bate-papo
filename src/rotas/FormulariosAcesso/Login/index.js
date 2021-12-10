@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "./style.css";
 
-import { Creators as usuarioCreators } from "../../store/ducks/usuario";
+import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
 
 import { useSelector, useDispatch } from "react-redux";
 

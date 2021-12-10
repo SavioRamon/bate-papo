@@ -1,7 +1,7 @@
 
 import Inicio from "./Inicio";
-import Login from "./Login";
-import Registro from "./Registro";
+import Login from "./FormulariosAcesso/Login";
+import Registro from "./FormulariosAcesso/Registro";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
