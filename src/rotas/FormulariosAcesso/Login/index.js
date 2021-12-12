@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import "./style.css";
+import "../style.css";
 
 import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
 
@@ -26,8 +26,8 @@ function Login(){
 
     return (
         <div className="rota login">
-            <form className="formulario-login">
-                <h1>Login</h1>
+            <form className="formulario-acesso" autoComplete="off">
+                <h1 className="formulario-titulo">Login</h1>
                 
                 <div className="divisao">
                     <input 
@@ -49,19 +49,20 @@ function Login(){
                 
                 <div className="divisao-botoes">
                     <input 
+                        className="prioridade"
                         type="button"
-                        name="Entrar"
-                        value="Entrar" onClick={()=>{
+                        name="Login"
+                        value="Login" onClick={()=>{
                             dispatch(usuarioCreators.loginUsuario(email, senha));
                         }}
                    /> 
 
-                   ou
 
                    <input 
+                        className="comum"
                         type="button"
-                        name="Registrar"
-                        value="Registrar" onClick={()=>{
+                        name="criar"
+                        value="Criar conta" onClick={()=>{
                             history.push("/registrar")
                         }}
                     />

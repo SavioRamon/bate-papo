@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import "./style.css";
+import "../style.css";
 
 import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
 
@@ -27,8 +27,10 @@ function Registro(){
 
     return (
         <div className="rota registro">
-            <form className="formulario-registro">
-                <h1>Registrar</h1>
+            <form className="formulario-acesso" autoComplete="off">
+                <h1 className="formulario-titulo">
+                    Criar conta
+                </h1>
 
                 <div className="divisao">
                     <input 
@@ -49,7 +51,7 @@ function Registro(){
                 </div>
 
                 <div className="divisao">
-                    <input 
+                    <input
                     type="password" 
                     name="senha" 
                     value={senha} onChange={e=>setSenha(e.target.value)}
@@ -59,19 +61,19 @@ function Registro(){
                 
                 <div className="divisao-botoes">
                     <input 
+                        className="prioridade"
                         type="button"
-                        name="Registrar"
-                        value="Registrar" onClick={()=>{
+                        name="criar"
+                        value="Criar conta" onClick={()=>{
                             dispatch(usuarioCreators.registrarUsuario(nome, email, senha));
                         }}
                    /> 
 
-                   Já possui uma conta?
-
                    <input 
+                        className="comum"
                         type="button"
-                        name="Entrar"
-                        value="Entrar" onClick={()=>{
+                        name="Login"
+                        value="Login" onClick={()=>{
                             history.push("/login");
                         }}
                     />
