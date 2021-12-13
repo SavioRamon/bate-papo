@@ -33,9 +33,6 @@ function App() {
   useEffect(()=>{
     if(usuarioAtualizado){
       dispatch(usuarioCreators.setUsuario(usuarioAtualizado));
-      localStorage.clear();
-      localStorage.setItem("dados", JSON.stringify(usuarioAtualizado));
-
     }
   }, [dispatch, usuarioAtualizado]);
 

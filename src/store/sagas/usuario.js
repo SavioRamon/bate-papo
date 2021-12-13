@@ -57,26 +57,13 @@ export function* loginUsuario(dados) {
 
 
 export function* loginAutomatico(){
-    if(!localStorage.dados) {
-        const dadosUsuario = yield call(autoLogin);
-
-        if(dadosUsuario) {
-            localStorage.setItem("dados", JSON.stringify(dadosUsuario))
-        }
-        
-        yield call(editaReducer, dadosUsuario);
-        
-    } else if(localStorage.dados) {
-
-        yield call(editaReducer, JSON.parse(localStorage.getItem("dados")));
-    }
-
+    const dadosUsuario = yield call(autoLogin);
+    yield call(editaReducer, dadosUsuario);
 }
 
 
 export function* usuarioSair() {
     
     yield put(usuarioCreators.setUsuarioSair());
-    localStorage.clear();
     yield call(sairUsuario);
 }
