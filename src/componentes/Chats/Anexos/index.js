@@ -17,8 +17,8 @@ function Anexos() {
     
     const [mensagemEnviar, setMensagemEnviar] = useState({
         imagem: "",
-        remetente: "",
-        idUsuario: "",
+        nome: "",
+        id: "",
         texto: "",
         midia: ""
     });
@@ -31,8 +31,8 @@ function Anexos() {
         if(dadosUsuario) {
             setMensagemEnviar({
                 ...mensagemEnviar,
-                remetente: dadosUsuario.nome,
-                idUsuario: dadosUsuario.id,
+                nome: dadosUsuario.nome,
+                id: dadosUsuario.id,
                 imagem: dadosUsuario.imagem
             })
         }

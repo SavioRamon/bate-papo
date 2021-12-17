@@ -41,7 +41,7 @@ function analisaInputNome(nome) {
     return true;
 }
 
-export const atualizaUsuario = ()=>{
+export const recebeInfoUsuario = ()=>{
     return function(callback, usuarioID) {
         db.collection("usuarios").doc(usuarioID).onSnapshot( async (doc)=>{
             
@@ -56,7 +56,7 @@ export const atualizaUsuario = ()=>{
                     await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
                 }
             }
-                
+
             callback({
                 dadosUsuario: {
                     nome: doc.data().nome,
@@ -87,7 +87,7 @@ export const carregaDadosChatsPrivados = ({chat})=>{
 }
 
 export const editarImagemPerfil = async ({ usuarioID, imagem }) => {
-    
+
     if(imagem) {
         const imagemReferencia = storageRef.child(
             `perfil-imagem/${usuarioID}/${imagem.name}${imagem.lastModified}${imagem.size}`
@@ -128,65 +128,23 @@ export const editarDadosUsuario = async (dadosEditados) => {
 
 }
 
-
-export const retornaDadosUsuario = async usuarioID => {
-    
-    const dadosUsuario = await db.collection("usuarios").doc(usuarioID).get().then(doc=>({
-        nome: doc.data().nome,
-        id: doc.data().id,
-        chats: doc.data().chats,
-        imagem: doc.data().imagem
-    }));
-
-    const listaChats = [];
-    for(let chat of dadosUsuario.chats){
-
-        if(chat.id === "chatGeral") {
-            listaChats.push(chat);
-
-        } else if(chat.idUsuario) {
-            await carregaDadosChatsPrivados({chat}).then(dados=>listaChats.push(dados));
+export const buscaUsuarioLogado = (callback) => {
+    firebase.auth().onAuthStateChanged(user=>{
+        if(user){
+            callback(user.uid);
+        } else {
+            callback(null);
         }
-    }
-
-    return {        
-        dadosUsuario: {
-            nome: dadosUsuario.nome,
-            id: dadosUsuario.id,
-            imagem: dadosUsuario.imagem
-        },
-
-        chats: listaChats
-    }
-    
-}
-
-export const autoLogin = ()=>{
-    return new Promise((resolve)=>{
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                const dadosUsuario = retornaDadosUsuario(user.uid);
-                resolve(dadosUsuario);
-            } else {
-                resolve(null);
-            }
-
-        })
     })
-    
 }
 
 export const fazerLogin = async (email, senha)=>{
-    const usuario = await firebase.auth().signInWithEmailAndPassword(email, senha)
-        .then(dados => dados.user)
-        .catch(erro=>{
-            alert(erro.message);
-        })
+    const progresso = await firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then(()=>true)
+        .catch(erro=>alert(erro.message));
+        
+    return progresso;
 
-    if(usuario) {
-        const dadosUsuario = retornaDadosUsuario(usuario.uid)
-        return dadosUsuario;
-    }
 }
 
 
@@ -195,7 +153,7 @@ export const novoUsuario = async (nome, email, senha)=>{
 
     const nomeAnalise = analisaInputNome(nome);
     if(!nomeAnalise) {
-        return null;
+        return false;
     }
 
     const usuario = await firebase.auth().createUserWithEmailAndPassword(email, senha)
@@ -203,6 +161,7 @@ export const novoUsuario = async (nome, email, senha)=>{
         .catch(erro=>{
             alert(erro.message);
         })
+
 
     if(usuario) {
         const imagemPadraoURL = "https://firebasestorage.googleapis.com/v0/b/bate-papo-a748b.appspot.com/o/perfil-imagem%2Fimagem-padrao.png?alt=media&token=0e81c112-493c-4c03-9e8d-386d2db7c268";
@@ -217,19 +176,15 @@ export const novoUsuario = async (nome, email, senha)=>{
             ],
             imagem: imagemPadraoURL
         }
-        db.collection("usuarios").doc(usuario.uid).set(dadosUsuario);
+        const progresso = db.collection("usuarios").doc(usuario.uid).set(dadosUsuario)
+            .then(()=>true)
+            .catch(erro=>alert(erro.message));
 
-        return {
+        
+        return progresso;
 
-            dadosUsuario: {
-                nome: dadosUsuario.nome,
-                id: dadosUsuario.id,
-                imagem: imagemPadraoURL
-            },
-
-            chats: dadosUsuario.chats
-        };
-
+    } else {
+        return false;
     }
 }
 
@@ -367,19 +322,11 @@ export const novoChatPrivado = async ({usuarioPrincipal, segundoUsuario})=>{
             })
         })
 
-        return {
-            novoChat: true,
-            nome: segundoUsuario.nome,
-            id: segundoUsuario.id,
-            imagem: segundoUsuario.imagem,
-            idChat: chatID,
-        }
+        return chatID
 
     } else {
-        return  {
-            novoChat: false,
-            idChat: chatExisteId
-        }
+        
+        return  chatExisteId
     }
 
     

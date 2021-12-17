@@ -1,46 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import './App.css';
 
 import Rotas from "./rotas";
 
-import { atualizaUsuario } from "./firebase";
+import { 
+    recebeInfoUsuario,
+    buscaUsuarioLogado 
+} from "./firebase";
 
 import { Creators as usuarioCreators } from "./store/ducks/usuario";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function App() {
 
-  const att = atualizaUsuario();
-  const [usuarioAtualizado, setUsuarioAtualizado] = useState("");
 
-  const usuario = useSelector(state=>state.usuario);
-  const dispatch = useDispatch();
+    const [fezRequisicaoID, setFezRequisicaoID] = useState(false);
+    const [reqID, setReqID] = useState("");
 
-  useEffect(()=>{
-    !usuario.dadosUsuario && dispatch(usuarioCreators.loginAutomatico());
-  }, [dispatch, usuario.dadosUsuario]);
+    const dispatch = useDispatch();
 
+    useEffect(()=>{
+        buscaUsuarioLogado(setReqID);
+        setFezRequisicaoID(true);
+    }, []);
 
-  useEffect(()=>{
-    /* Lembrar!
-      existe um bug aqui
-    */
-    usuario.dadosUsuario && att(setUsuarioAtualizado, usuario.dadosUsuario.id);
-    
-  }, [!!usuario.dadosUsuario]);
+    useLayoutEffect(()=>{
+        function callbackInfo(dados) {
+            if(dados) {
+                dispatch(usuarioCreators.setUsuario({...dados, load: true}));
+            };
+        };
 
+        if(fezRequisicaoID) {
+            if(reqID) {
+                const funcExecutaChamadaDadosUsuario = recebeInfoUsuario();
+                funcExecutaChamadaDadosUsuario(callbackInfo, reqID);
 
-  useEffect(()=>{
-    if(usuarioAtualizado){
-      dispatch(usuarioCreators.setUsuario(usuarioAtualizado));
-    }
-  }, [dispatch, usuarioAtualizado]);
+            } else {
+                dispatch(usuarioCreators.setUsuario({load: true}));
+            };
+        };
+        
+    }, [reqID, dispatch]);
 
-  return (
-    <React.Fragment>
-      <Rotas />
-    </React.Fragment>
-  )
-}
+    return (
+        <React.Fragment>
+        <Rotas />
+        </React.Fragment>
+    );
+};
 
 export default App;

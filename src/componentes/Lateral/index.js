@@ -13,16 +13,23 @@ import { Link } from "react-router-dom";
 
 import { Creators as componentesCreators } from "../../store/ducks/componentes";
 import { Creators as chatCreators } from "../../store/ducks/chats";
-import { Creators as usuarioCreators } from "../../store/ducks/usuario";
 
 import { useDispatch, useSelector } from "react-redux";
+import { sairUsuario } from "../../firebase";
+
+import { useHistory } from "react-router-dom";
 
 function  OpcoesLateral({ setOpcoesAbrir }) {
-    const dispatch = useDispatch();
+
+    const history = useHistory();
+
     return (
         <div className="lista-opcoes" onClick={()=>setOpcoesAbrir(false)}>
             <div className="usuario-sair" onClick={()=>{
-                dispatch(usuarioCreators.usuarioSair());
+                
+                sairUsuario();
+                localStorage.clear();
+                history.go(0);
             }}>
                 Sair
             </div>
