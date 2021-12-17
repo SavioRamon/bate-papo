@@ -1,29 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 import "../style.css";
 
-import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
-
-import { useSelector, useDispatch } from "react-redux";
+import { novoUsuario } from "../../../firebase";
 
 import { useHistory } from "react-router-dom";
+
+import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
+import { useDispatch } from "react-redux";
 
 function Registro(){
 
     const history = useHistory();
-
-    const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
 
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
-    useEffect(()=>{
-        if(dadosUsuario) {
+
+
+    async function verificaDados() {
+        const progresso = await novoUsuario(nome, email, senha);
+
+        if(progresso) {
+
+            localStorage.setItem("login", true);
+            dispatch(usuarioCreators.setUsuario({load: false}));
+            history.push("/");
+        } 
+    }
+    
+
+    useLayoutEffect(()=>{
+        const logado = JSON.parse(localStorage.getItem("login"));
+        if(logado) {
             history.push("/");
         }
-    }, [history, dadosUsuario]);
+    }, [history]);
 
     return (
         <div className="rota registro">
@@ -65,7 +79,7 @@ function Registro(){
                         type="button"
                         name="criar"
                         value="Criar conta" onClick={()=>{
-                            dispatch(usuarioCreators.registrarUsuario(nome, email, senha));
+                            verificaDados();
                         }}
                    /> 
 
