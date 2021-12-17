@@ -176,7 +176,7 @@ export const novoUsuario = async (nome, email, senha)=>{
             ],
             imagem: imagemPadraoURL
         }
-        const progresso = db.collection("usuarios").doc(usuario.uid).set(dadosUsuario)
+        const progresso = await db.collection("usuarios").doc(usuario.uid).set(dadosUsuario)
             .then(()=>true)
             .catch(erro=>alert(erro.message));
 

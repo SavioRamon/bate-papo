@@ -24,9 +24,7 @@ function Registro(){
         const progresso = await novoUsuario(nome, email, senha);
 
         if(progresso) {
-
             localStorage.setItem("login", true);
-            dispatch(usuarioCreators.setUsuario({load: false}));
             history.push("/");
         } 
     }
