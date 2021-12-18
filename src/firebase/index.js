@@ -10,23 +10,6 @@ const storageRef = firebase.storage().ref();
 
 const db = app.firestore();
 
-function retornaHorario() {
-    const data = new Date();
-
-    let hora = data.getHours();
-    let minuto = data.getMinutes();
-
-    if(hora < 10) {
-        hora = `0${hora}`;
-    }
-    if(minuto < 10) {
-        minuto = `0${minuto}`;
-    }
-
-    const horario = `${hora}:${minuto}`;
-
-    return horario;
-}
 
 function analisaInputNome(nome) {
     if(nome.length > 10) {
@@ -200,7 +183,7 @@ export const sairUsuario = ()=>{
 
 
 
-export const retornaMensagens = (callback, chatID) => {
+export const retornaMensagens = (chatID, callback) => {
     
     // retorna uma função que aceita uma função de callback como parâmetro
     // essa função de callback será usada para guardar as mensagens numa react rook
@@ -214,7 +197,7 @@ export const retornaMensagens = (callback, chatID) => {
 
 
 export const sendMensagemTexto = ({ chatID, mensagemUsuario }) => {
-    const horario = retornaHorario();
+    const horario = new Date().toISOString();
 
     db.collection("chats").doc(chatID).set({
         mensagens: firebase.firestore.FieldValue.arrayUnion({
@@ -228,7 +211,7 @@ export const sendMensagemTexto = ({ chatID, mensagemUsuario }) => {
 
 export const sendMensagemMidia = async ({ chatID, mensagemUsuario }) => {
 
-    const horario = retornaHorario();
+    const horario = new Date().toISOString();
     const midia = mensagemUsuario.midia;
 
     const tiposMidia = [

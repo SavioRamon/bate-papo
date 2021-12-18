@@ -5,6 +5,7 @@ import "./style.css";
 import { retornaMensagens } from "../../firebase";
 
 import Anexos from "./Anexos";
+import Mensagens from "./Mensagens";
 
 import chatGeralIMG from "../../imagens/chatGeral.jpg";
 
@@ -19,11 +20,11 @@ import { Creators as chatCreators } from "../../store/ducks/chats";
 function Chat() {
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const chatsUsuarioData = useSelector(state=>state.usuario.chats);
+    const mensagens = useSelector(state=>state.chats.mensagens);
 
     const chats = useSelector(state=>state.chats);
     const dispatch = useDispatch();
 
-    const [mensagens, setMensagens] = useState("");
     const [mensagemEnviar, setMensagemEnviar] = useState({
         imagem: "",
         nome: "",
@@ -54,7 +55,9 @@ function Chat() {
 
 
     useEffect(()=>{
-        retornaMensagens(setMensagens, chats.chatID);
+        retornaMensagens(chats.chatID, (mensagens)=>{
+            dispatch(chatCreators.setMensagens(mensagens));
+        });
     }, [chats.chatID]);
 
     useEffect(()=>{
@@ -116,70 +119,9 @@ function Chat() {
 
             <div className="chat">
                 <div className="chat-crescente">
-                    { Array.isArray(mensagens) &&
-                        mensagens.map((mensagem, key)=>{
-                            
+                    
+                    <Mensagens />
 
-                            let remetente = "outro-usuario";
-                            if(dadosUsuario) {
-                                remetente = mensagem.id === dadosUsuario.id?
-                                "usuario-principal"
-                                :
-                                "outro-usuario";
-                            }
-                            
-                            return (
-                                <div className={`area-mensagem`} key={key}>
-
-                                    <div className={`mensagem ${remetente}`}>
-                                        {remetente === "outro-usuario" &&
-                                            <div className="mensagem-conteudo-superior">
-                                                <img 
-                                                    className="imagem-perfil-chat"
-                                                    src={mensagem.imagem} 
-                                                    onClick={()=>{
-
-                                                        dadosUsuario &&
-                                                        dispatch(componentesCreators.setTelaDetalharUsuarioAbrir(
-                                                            mensagem
-                                                        ))
-                                                    }}
-                                                />
-                                                
-                                                <p className="nome-remetente">{mensagem.nome}</p>
-                                            </div>  
-                                        }
-                                        
-                                        
-                                        <div className="horario">
-                                            {mensagem.horarioEnvio}
-                                        </div>
-
-                                        <div className="conteudo">
-
-                                            
-                                            {mensagem.texto &&
-                                                <p className="mensagem-texto">{mensagem.texto}</p>
-                                            }
-                                            
-                                            
-                                            {mensagem.midia && mensagem.tipoMidia === "image" &&
-                                                <img src={mensagem.midia} className="mensagem-midia" />
-                                            }
-
-                                            {mensagem.midia && mensagem.tipoMidia === "video" &&
-                                                <video className="mensagem-midia" controls>
-                                                    <source src={mensagem.midia} />
-                                                </video>
-                                            }
-
-
-                                        </div>
-                                    </div>
-                                </div>  
-                            )
-                        })
-                    }
                 </div>
             </div>
     

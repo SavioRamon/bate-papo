@@ -1,8 +1,10 @@
 export const Types = {
     ENVIA_MENSAGEM: "ENVIA_MENSAGEM_ASYNC",
     ENVIA_MIDIA: "ENVIA_MIDIA_ASYNC",
-    CHAT_SELECIONADO: "CHAT_SELECIONADO_ASYNC",
     NOVO_CHAT: "NOVO_CHAT_ASYNC",
+
+    SET_CHAT_SELECIONADO: "SET_CHAT_SELECIONADO",
+    SET_MENSAGENS: "SET_MENSAGENS"
 }
 
 export const Creators = {
@@ -24,7 +26,7 @@ export const Creators = {
     }),
 
     chatSelecionado: (chatID)=>({
-        type: Types.CHAT_SELECIONADO,
+        type: Types.SET_CHAT_SELECIONADO,
         payload: {
             chatID
         }
@@ -38,6 +40,13 @@ export const Creators = {
         }
     }),
 
+    setMensagens: (mensagens)=>({
+        type: Types.SET_MENSAGENS,
+        payload: {
+            mensagens
+        }
+    })
+
 }
 
 const STATE_INICIAL = {
@@ -49,10 +58,16 @@ const STATE_INICIAL = {
 export default function chats(state=STATE_INICIAL, {type, payload}) {
     switch(type) {
 
-        case Types.CHAT_SELECIONADO:
+        case Types.SET_CHAT_SELECIONADO:
             return {
                 ...state,
                 chatID: payload.chatID
+            };
+
+        case Types.SET_MENSAGENS:
+            return {
+                ...state,
+                mensagens: payload.mensagens
             };
 
         default:
