@@ -122,11 +122,18 @@ export const buscaUsuarioLogado = (callback) => {
 }
 
 export const fazerLogin = async (email, senha)=>{
-    const progresso = await firebase.auth().signInWithEmailAndPassword(email, senha)
-        .then(()=>true)
-        .catch(erro=>alert(erro.message));
+    const usuarioID = await firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then((dados)=>dados.user.uid)
+        .catch(erro=>{
+            alert(erro.message)
+            return false;
+        });
         
-    return progresso;
+    if(usuarioID) {
+        return usuarioID;
+    } else {
+        return false;
+    }
 
 }
 
@@ -161,10 +168,17 @@ export const novoUsuario = async (nome, email, senha)=>{
         }
         const progresso = await db.collection("usuarios").doc(usuario.uid).set(dadosUsuario)
             .then(()=>true)
-            .catch(erro=>alert(erro.message));
+            .catch(erro=>{
+                alert(erro.message)
+                return false;
+            });
 
         
-        return progresso;
+        if(progresso) {
+            return usuario.uid;
+        } else {
+            return false;
+        }
 
     } else {
         return false;

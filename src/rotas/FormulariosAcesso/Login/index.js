@@ -20,11 +20,11 @@ function Login(){
 
 
     async function verificaDados() {
-        const progresso = await fazerLogin(email, senha);
+        const usuarioID = await fazerLogin(email, senha);
 
-        if(progresso) {
+        if(usuarioID) {
 
-            localStorage.setItem("login", true);
+            localStorage.setItem("login", usuarioID);
             dispatch(usuarioCreators.setUsuario({load: false}));
             history.push("/");
         } 
@@ -32,7 +32,7 @@ function Login(){
 
     
     useLayoutEffect(()=>{
-        const logado = JSON.parse(localStorage.getItem("login"));
+        const logado = localStorage.getItem("login");
         if(logado) {
             history.push("/");
         }

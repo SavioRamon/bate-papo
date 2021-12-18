@@ -21,17 +21,17 @@ function Registro(){
 
 
     async function verificaDados() {
-        const progresso = await novoUsuario(nome, email, senha);
+        const usuarioID = await novoUsuario(nome, email, senha);
 
-        if(progresso) {
-            localStorage.setItem("login", true);
+        if(usuarioID) {
+            localStorage.setItem("login", usuarioID);
             history.push("/");
         } 
     }
     
 
     useLayoutEffect(()=>{
-        const logado = JSON.parse(localStorage.getItem("login"));
+        const logado = localStorage.getItem("login");
         if(logado) {
             history.push("/");
         }

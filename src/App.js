@@ -20,8 +20,18 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        buscaUsuarioLogado(setReqID);
-        setFezRequisicaoID(true);
+        const idLoginStorage = localStorage.getItem("login");
+
+        if(idLoginStorage) {
+            
+            setFezRequisicaoID(true);
+            setReqID(idLoginStorage);
+        } else {
+            
+            buscaUsuarioLogado(setReqID);
+            setFezRequisicaoID(true);
+        }
+        
     }, []);
 
     useLayoutEffect(()=>{
