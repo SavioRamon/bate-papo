@@ -31,6 +31,28 @@ function Chat() {
         texto: ""
     });
 
+
+    function enviaMensagem() {
+        if(dadosUsuario) {
+
+            const preparaMensagem = {
+                ...mensagemEnviar,
+                texto: mensagemEnviar.texto.trim()
+            }
+
+            if(preparaMensagem.texto) {
+                dispatch(chatCreators.enviaMensagemTexto(chats.chatID, preparaMensagem))
+                setMensagemEnviar({
+                    ...mensagemEnviar,
+                    texto: ""
+                });
+            }
+                
+        }
+    }
+
+
+
     useEffect(()=>{
         retornaMensagens(setMensagens, chats.chatID);
     }, [chats.chatID]);
@@ -170,6 +192,12 @@ function Chat() {
                     className="input-mensagem" 
                     placeholder="Mensagem" 
                     value={mensagemEnviar.texto}
+                    onKeyPress={(e)=>{
+                        if(e.key === "Enter") {
+                            enviaMensagem();
+                            
+                        }
+                    }}
                     onChange={(e)=>{
                         setMensagemEnviar({
                             ...mensagemEnviar,
@@ -179,23 +207,8 @@ function Chat() {
                 />
 
                 <div className="botao-enviar" onClick={()=>{
-                    if(dadosUsuario) {
+                    enviaMensagem();
 
-                        const preparaMensagem = {
-                            ...mensagemEnviar,
-                            texto: mensagemEnviar.texto.trim()
-                        }
-
-                        if(preparaMensagem.texto) {
-                            dispatch(chatCreators.enviaMensagemTexto(chats.chatID, preparaMensagem))
-                            setMensagemEnviar({
-                                ...mensagemEnviar,
-                                texto: ""
-                            });
-                        }
-                            
-                    }
-                        
                 }}>
                     <FontAwesomeIcon icon={ faPaperPlane }/>
                 </div>
