@@ -1,9 +1,21 @@
 
+:root {
+    --margem-msgComSequencia: clamp(2px, 0.2vw, 0.2vw);
+    --margem-msgSemSequencia: clamp(20px, 0.6vw, 0.6vw);
+    
+    --cor-escura-transparente: rgba(0, 0, 0, 0.2);
+}
+
 .area-mensagem {
-    margin-bottom: 20px;
+    margin-top: var(--margem-msgSemSequencia);
     width: 100%;
     position: relative;
 }
+
+.sequencia {
+    margin-top: var(--margem-msgComSequencia);
+}
+
 .mensagem {
     max-width: 90%;
     height: min-content;
@@ -24,9 +36,6 @@
     float: left;
 }
 
-:root {
-    --cor-escura-transparente: rgba(0, 0, 0, 0.2);
-}
 
 .mensagem-conteudo-superior {
     padding: 5px;

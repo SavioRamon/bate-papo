@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useState, memo } from "react";
 import "./style.css";
 
 import { Creators as componentesCreators } from "../../../store/ducks/componentes";
@@ -6,12 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 
 function Mensagens() {
 
+    let msgSeguidasUserPrincp = 0;
+    let msgSeguidasUserSecund = 0;
+    let sequenciaMsg = false;
+
     const mensagens = useSelector(state=>state.chats.mensagens);
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
-
+    
     function retornaHorarioMensagem(horarioISO) {
-        console.log(horarioISO)
         const data = new Date(horarioISO);
 
         let hora = data.getHours();
@@ -34,18 +37,41 @@ function Mensagens() {
             { Array.isArray(mensagens) &&
                 mensagens.map((mensagem, key)=>{
                     let remetente = "outro-usuario";
+
                     if(dadosUsuario) {
-                        remetente = mensagem.id === dadosUsuario.id?
-                        "usuario-principal"
-                        :
-                        "outro-usuario";
+                        if(mensagem.id === dadosUsuario.id) {
+                            remetente = "usuario-principal";
+
+                        } else {
+                            remetente = "outro-usuario"
+
+                        }
+                    }
+
+                    if(remetente === "usuario-principal") {
+                        msgSeguidasUserPrincp++;
+                        msgSeguidasUserSecund = 0;
+
+                    } else {
+                        msgSeguidasUserSecund++;
+                        msgSeguidasUserPrincp = 0;
+                    }
+
+                    if(msgSeguidasUserPrincp >= 2 || msgSeguidasUserSecund >= 2) {
+                        sequenciaMsg = true;
+                    } else {
+                        sequenciaMsg = false;
                     }
                             
                     return (
-                        <div className={`area-mensagem`} key={key}>
+                        <div 
+                            className={`area-mensagem ${sequenciaMsg? "sequencia": ""}`} 
+                            key={key}
+                        >
 
                             <div className={`mensagem ${remetente}`}>
-                                {remetente === "outro-usuario" &&
+
+                                {remetente === "outro-usuario" && msgSeguidasUserSecund < 2 &&
                                     <div className="mensagem-conteudo-superior">
                                         <img 
                                             className="imagem-perfil-chat"
