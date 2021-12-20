@@ -5,15 +5,18 @@ import { Creators as componentesCreators } from "../../../store/ducks/componente
 import { useSelector, useDispatch } from "react-redux";
 
 function Mensagens() {
-
-    let msgSeguidasUserPrincp = 0;
-    let msgSeguidasUserSecund = 0;
-    let sequenciaMsg = false;
-
     const mensagens = useSelector(state=>state.chats.mensagens);
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
+
+
+    // variáveis para análise de sequência de mensagem.
+    let mensagensSeguidas = 0;
+    let idAtual = "";
+    let sequenciaAtivada = false;
     
+
+
     function retornaHorarioMensagem(horarioISO) {
         const data = new Date(horarioISO);
         const dia = String(data.getDate()).padStart(2, "0");
@@ -27,6 +30,40 @@ function Mensagens() {
 
         return dataCompleta;
     }
+
+
+
+    function analisaMensagensSeguidas(mensagemID) {
+        /* 
+            Essa função é chamada pelo mapeamento da lista de mensagens,
+            Então o parâmetro mensagemID se refere ao id de cada mensagem.
+        */
+
+        function iniciaCiclo(){
+            idAtual = mensagemID;
+            mensagensSeguidas = 1;
+            sequenciaAtivada = false;
+        }
+        
+        if(!idAtual) {
+            // adiciona um primeiro id para que haja a análise e encerra a função
+            iniciaCiclo();
+            return;
+        }
+
+        mensagensSeguidas++;
+
+        if(idAtual !== mensagemID) {
+            // aqui o idAtual muda, pois um usuário diferente enviou uma mensagem.
+            // Consequentemente o ciclo reinicia.
+            iniciaCiclo();
+        }
+
+        if(mensagensSeguidas >= 2) {
+            sequenciaAtivada = true;
+        }
+    }
+
 
     return (
         <React.Fragment>
@@ -44,30 +81,20 @@ function Mensagens() {
                         }
                     }
 
-                    if(remetente === "usuario-principal") {
-                        msgSeguidasUserPrincp++;
-                        msgSeguidasUserSecund = 0;
+                    analisaMensagensSeguidas(mensagem.id);
 
-                    } else {
-                        msgSeguidasUserSecund++;
-                        msgSeguidasUserPrincp = 0;
-                    }
-
-                    if(msgSeguidasUserPrincp >= 2 || msgSeguidasUserSecund >= 2) {
-                        sequenciaMsg = true;
-                    } else {
-                        sequenciaMsg = false;
-                    }
                             
                     return (
                         <div 
-                            className={`area-mensagem ${sequenciaMsg? "sequencia": ""}`} 
+                            
+                            className={`area-mensagem ${sequenciaAtivada? "sequencia": ""}`} 
                             key={key}
                         >
 
                             <div className={`mensagem ${remetente}`}>
 
-                                {remetente === "outro-usuario" && msgSeguidasUserSecund < 2 &&
+                                {remetente === "outro-usuario" && mensagensSeguidas < 2 &&
+                                
                                     <div className="mensagem-conteudo-superior">
                                         <img 
                                             className="imagem-perfil-chat"
