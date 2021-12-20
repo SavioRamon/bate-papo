@@ -16,20 +16,16 @@ function Mensagens() {
     
     function retornaHorarioMensagem(horarioISO) {
         const data = new Date(horarioISO);
+        const dia = String(data.getDate()).padStart(2, "0");
+        const mes = String(data.getMonth() + 1).padStart(2, "0");
+        const ano = String(data.getFullYear()).slice(2);
 
-        let hora = data.getHours();
-        let minuto = data.getMinutes();
+        let hora = String(data.getHours()).padStart(2, "0");
+        let minuto = String(data.getMinutes()).padStart(2, "0");
 
-        if(hora < 10) {
-            hora = `0${hora}`;
-        }
-        if(minuto < 10) {
-            minuto = `0${minuto}`;
-        }
+        const dataCompleta = `${dia}/${mes}/${ano} [${hora}:${minuto}]`;
 
-        const horario = `${hora}:${minuto}`;
-
-        return horario;
+        return dataCompleta;
     }
 
     return (
