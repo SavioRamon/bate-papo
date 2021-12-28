@@ -185,6 +185,18 @@ export const novoUsuario = async (nome, email, senha)=>{
     }
 }
 
+
+export const redefinirSenha = async(email)=>{
+    return await firebase.auth().sendPasswordResetEmail(email)
+        .then(()=>({
+            sucesso: true
+        }))
+        .catch((erro)=>({
+            sucesso: false,
+            erro: erro.message
+        }));
+}
+
 export const sairUsuario = ()=>{
     firebase.auth().signOut().catch((error) => {
         alert(error);

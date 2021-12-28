@@ -4,7 +4,7 @@ import "../style.css";
 
 import { fazerLogin } from "../../../firebase";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
 import { useDispatch } from "react-redux";
@@ -71,11 +71,11 @@ function Login(){
                             value="Login" onClick={()=>{
                                 verificaDados();
                             }}
-                    />
+                        />
                         
 
 
-                    <input 
+                        <input 
                             className="comum"
                             type="button"
                             name="criar"
@@ -84,8 +84,13 @@ function Login(){
                                 history.push("/registrar")
                             }}
                         />
-                    </div>
 
+                    </div>
+                    <div className="mais-opcoes">
+                        <Link to="/redefinir_senha" className="link-to-redefinir-senha">
+                            Esqueci minha senha
+                        </Link>
+                    </div>
                 </form>
             </div>
         </React.Fragment>

@@ -1,0 +1,57 @@
+
+:root {
+    --fonte-pequena: clamp(11px, 1.2vw, 1.2vw);
+}
+
+.redefinir-senha {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(18, 20, 18);
+    overflow: auto;
+}
+
+.redefinir-senha form {
+    padding: var(--fonte-pequena);
+    margin-top: clamp(70px, 5vw, 5vw);
+    width: clamp(350px, 30vw, 70%);
+    display: flex;
+    flex-direction: column;
+    color: #999;
+    background-color: rgb(8, 14, 11)
+}
+
+.titulo-redefinicao {
+    margin-bottom: var(--fonte-pequena);
+    font-size: calc(var(--fonte-pequena) * 1.5);
+    text-align: center;
+}
+
+.instrucoes {
+    font-size: var(--fonte-pequena);
+    text-align: center;
+}
+
+.redefinir-senha form input[type="email"] {
+    margin: var(--fonte-pequena) 0;
+    padding: calc(var(--fonte-pequena) / 2) var(--fonte-pequena);
+    border-bottom: 0.15vw solid rgb(0, 71, 0);
+    background-color: transparent;
+    color: #999;
+    font-size: var(--fonte-pequena);
+}
+
+.redefinir-senha form button {
+    padding: var(--fonte-pequena);
+    background-color: rgb(0, 128, 68);
+    font-size: var(--fonte-pequena);
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.redefinir-senha form button:hover {
+    background-color: rgb(0, 85, 45);
+}
