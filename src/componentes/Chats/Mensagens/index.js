@@ -36,7 +36,9 @@ function Mensagens() {
             
             if(dataAnalise !== dataConvertida){
                 // Se a dataAnalise for diferente de dataConvertida significa que elas são diferentes
-                // então retorna dataConvertida
+                // então retorna dataConvertida e atualiza a data de analise
+                
+                dataAnalise = dataConvertida;
                 return dataConvertida;
 
             } else {
