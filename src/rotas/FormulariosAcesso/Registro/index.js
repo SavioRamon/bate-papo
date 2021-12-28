@@ -6,13 +6,9 @@ import { novoUsuario } from "../../../firebase";
 
 import { useHistory } from "react-router-dom";
 
-import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
-import { useDispatch } from "react-redux";
-
 function Registro(){
 
     const history = useHistory();
-    const dispatch = useDispatch();
 
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
