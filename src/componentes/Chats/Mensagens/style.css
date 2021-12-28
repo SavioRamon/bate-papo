@@ -12,6 +12,25 @@
     position: relative;
 }
 
+.data {
+    margin: clamp(4px , 0.5vw, 0.5vw) 10%;
+    order: 2;
+    font-size: clamp(10px, 0.2vw, 0.2vw);
+    border-top: 0.1vw solid rgb(24, 63, 23);
+    display: flex;
+    justify-content: center;
+}
+
+.data div {
+
+    padding: clamp(5px, 0.5vw, 0.5vw);
+    background-color: rgba(16, 39, 15, 1);
+    border-radius: 0 0  clamp(10px, 0.5vw, 0.5vw) clamp(10px, 0.5vw, 0.5vw);
+    color: #999;
+    font-size: clamp(11px, 0.5vw, 0.5vw);
+    font-weight: bold;
+}
+
 .sequencia {
     margin-top: var(--margem-msgComSequencia);
 }
@@ -70,12 +89,11 @@
 
 .horario {
     order: 2;
-    padding: clamp(4px ,0.1vw, 0.1vw);
+    padding: 0 clamp(4px ,0.3vw, 0.3vw);
     font-size: clamp(10px, 0.2vw, 0.2vw);
     color: rgb(172, 172, 172);
     font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.2);
-    text-align: center;
+    text-align: end;
 }
 
 .conteudo {

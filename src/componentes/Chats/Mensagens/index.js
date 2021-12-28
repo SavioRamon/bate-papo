@@ -9,6 +9,10 @@ function Mensagens() {
     const dadosUsuario = useSelector(state=>state.usuario.dadosUsuario);
     const dispatch = useDispatch();
 
+    // variáveis para evitar que duas datas iguais apareçam no mesmo chat
+    let dataAnalise;
+    let dataRepetida = false;
+
 
     // variáveis para análise de sequência de mensagem.
     let mensagensSeguidas = 0;
@@ -17,18 +21,68 @@ function Mensagens() {
     
 
 
-    function retornaHorarioMensagem(horarioISO) {
+    // retorna o dia, mes e ano convertidos
+    function converteData(horarioISO) {
+
+        function analisaDataRepetida(dataConvertida){
+            // Essa função analisa se a proxima data é repetida, evita que duas datas se repitam
+            dataRepetida = false;
+
+            if(!dataAnalise) {
+                // se ainda não existe uma data para análise, adiciona uma e retorna dataConvertida.
+                dataAnalise = dataConvertida;
+                return dataConvertida;
+            }
+            
+            if(dataAnalise !== dataConvertida){
+                // Se a dataAnalise for diferente de dataConvertida significa que elas são diferentes
+                // então retorna dataConvertida
+                return dataConvertida;
+
+            } else {
+                // Senão, significa que a data é repetida
+                // Não retorna nada
+                dataRepetida = true;
+                return "";
+            }
+        
+        }
+
         const data = new Date(horarioISO);
-        const dia = String(data.getDate()).padStart(2, "0");
-        const mes = String(data.getMonth() + 1).padStart(2, "0");
-        const ano = String(data.getFullYear()).slice(2);
+        const diaEnvio = String(data.getDate()).padStart(2, "0");
+        const mesEnvio = String(data.getMonth() + 1).padStart(2, "0");
+        const anoEnvio = String(data.getFullYear()).slice(2);
 
-        let hora = String(data.getHours()).padStart(2, "0");
-        let minuto = String(data.getMinutes()).padStart(2, "0");
+        const dataAtual = new Date();
+        const diaAtual = String(dataAtual.getDate()).padStart(2, "0");
 
-        const dataCompleta = `${dia}/${mes}/${ano} [${hora}:${minuto}]`;
+        let dataConvertida;
 
-        return dataCompleta;
+        if(diaEnvio === diaAtual) {
+            dataConvertida = "Hoje";
+
+        } else if(diaEnvio + 1 === diaAtual) {
+            dataConvertida = "Ontem";
+
+        } else {
+            dataConvertida = `${diaEnvio} / ${mesEnvio} / ${anoEnvio}`;
+        }
+
+
+        return analisaDataRepetida(dataConvertida);
+        
+        
+    }
+
+    // retorna o horário convertido
+    function converteHorario(horarioISO) {
+        const data = new Date(horarioISO);
+        const hora = String(data.getHours()).padStart(2, "0");
+        const minuto = String(data.getMinutes()).padStart(2, "0");
+
+        const horarioConvertido = `${hora}:${minuto}`;
+
+        return horarioConvertido;
     }
 
 
@@ -82,7 +136,7 @@ function Mensagens() {
                     }
 
                     analisaMensagensSeguidas(mensagem.id);
-
+                    const data = converteData(mensagem.horarioEnvio);
                             
                     return (
                         <div 
@@ -90,6 +144,13 @@ function Mensagens() {
                             className={`area-mensagem ${sequenciaAtivada? "sequencia": ""}`} 
                             key={key}
                         >
+
+                            {!dataRepetida &&
+                                <div className="data">
+                                    <div>{data}</div>
+                                </div>
+                            }
+
 
                             <div className={`mensagem ${remetente}`}>
 
@@ -114,7 +175,7 @@ function Mensagens() {
                                         
                                         
                                 <div className="horario">
-                                    {retornaHorarioMensagem(mensagem.horarioEnvio)}
+                                    {converteHorario(mensagem.horarioEnvio)}
                                 </div>
 
                                 <div className="conteudo">
