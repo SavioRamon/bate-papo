@@ -11,7 +11,6 @@ function RedefinirSenha() {
     async function enviandoEmail() {
         const info = await redefinirSenha(email);
 
-        console.log(info);
         if(info.sucesso) {
             setEnviou(true);
         } else {
