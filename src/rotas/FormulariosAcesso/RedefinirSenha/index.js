@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState} from "react";
 import "./redefineSenha.css";
 
 import { redefinirSenha } from "../../../firebase";
@@ -24,19 +24,37 @@ function RedefinirSenha() {
             <form onSubmit={(e)=>{
                 e.preventDefault();
             }}>
-                <h1 className="titulo-redefinicao">Esqueci minha senha</h1>
-                <p className="instrucoes">Insira seu endereço de email para redefinir sua senha</p>
+                <h1 className="titulo-redefinicao">
+                    {enviou?
+                        "Email enviado"
+                        :
+                        "Esqueci minha senha"
+                    }
+                    
+                </h1>
+                
+                <p className="instrucoes">
+                    {enviou?
+                        "Agora acesse seu email e siga as instruções que enviamos para você!"
+                        :
+                        "Insira seu endereço de email cadastrado para redefinir sua senha"
+                    }
+                </p>
 
-                <input type="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
                 {enviou?
                     <button>
                         &#10003; Email enviado!
                     </button>
 
                     :
-                    <button onClick={()=>enviandoEmail()}>
-                        enviar
-                    </button>
+                    
+                    <React.Fragment>
+                        <input type="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
+                        <button onClick={()=>enviandoEmail()}>
+                            enviar
+                        </button>
+                    </React.Fragment>
+                    
                 }
             </form>
         </div>
