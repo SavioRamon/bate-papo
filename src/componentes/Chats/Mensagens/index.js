@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { memo } from "react";
 import "./style.css";
 
 import { Creators as componentesCreators } from "../../../store/ducks/componentes";
