@@ -63,7 +63,7 @@ function Mensagens() {
         if(diaEnvio === diaAtual) {
             dataConvertida = "Hoje";
 
-        } else if(diaEnvio + 1 === diaAtual) {
+        } else if(Number(diaEnvio) + 1 === Number(diaAtual)) {
             dataConvertida = "Ontem";
 
         } else {
