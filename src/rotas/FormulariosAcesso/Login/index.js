@@ -4,14 +4,14 @@ import "../style.css";
 
 import { fazerLogin } from "../../../firebase";
 
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { Creators as usuarioCreators } from "../../../store/ducks/usuario";
 import { useDispatch } from "react-redux";
 
 function Login(){
     
-    const history = useHistory();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ function Login(){
 
             localStorage.setItem("login", usuarioID);
             dispatch(usuarioCreators.setUsuario({load: false}));
-            history.push("/");
+            navigate("/");
         } 
     }
 
@@ -34,9 +34,9 @@ function Login(){
     useLayoutEffect(()=>{
         const logado = localStorage.getItem("login");
         if(logado) {
-            history.push("/");
+            navigate("/");
         }
-    }, [history])
+    }, [navigate]);
 
     return (
         <React.Fragment>
@@ -81,7 +81,7 @@ function Login(){
                             name="criar"
                             value="Criar conta" onClick={()=>{
                                 
-                                history.push("/registrar")
+                                navigate("/registrar")
                             }}
                         />
 

@@ -17,11 +17,11 @@ import { Creators as chatCreators } from "../../store/ducks/chats";
 import { useDispatch, useSelector } from "react-redux";
 import { sairUsuario } from "../../firebase";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function  OpcoesLateral({ setOpcoesAbrir }) {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <div className="lista-opcoes" onClick={()=>setOpcoesAbrir(false)}>
@@ -29,7 +29,7 @@ function  OpcoesLateral({ setOpcoesAbrir }) {
                 
                 sairUsuario();
                 localStorage.clear();
-                history.go(0);
+                navigate("/");
             }}>
                 Sair
             </div>

@@ -4,11 +4,11 @@ import "../style.css";
 
 import { novoUsuario } from "../../../firebase";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Registro(){
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ function Registro(){
 
         if(usuarioID) {
             localStorage.setItem("login", usuarioID);
-            history.push("/");
+            navigate("/");
         } 
     }
     
@@ -29,9 +29,9 @@ function Registro(){
     useLayoutEffect(()=>{
         const logado = localStorage.getItem("login");
         if(logado) {
-            history.push("/");
+            navigate("/");
         }
-    }, [history]);
+    }, [navigate]);
 
     return (
         <div className="rota registro">
@@ -82,7 +82,7 @@ function Registro(){
                         type="button"
                         name="Login"
                         value="Login" onClick={()=>{
-                            history.push("/login");
+                            navigate("/login");
                         }}
                     />
                 </div>
