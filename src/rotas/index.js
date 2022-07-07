@@ -10,10 +10,10 @@ function Rotas() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/" component={ Inicio } />
-                <Route path="/login" component={ Login } />
-                <Route path="/registrar" component={ Registro } />
-                <Route path="/redefinir_senha" component={ RedefinirSenha } />
+                <Route path="/" element={ <Inicio />} />
+                <Route path="/login" element={ <Login /> } />
+                <Route path="/registrar" element={ <Registro /> } />
+                <Route path="/redefinir_senha" element={ <RedefinirSenha /> } />
             </Routes>
         </BrowserRouter>
     )
